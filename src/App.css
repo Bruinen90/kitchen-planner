@@ -1,0 +1,103 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    padding-bottom: 5%;
+}
+
+.menuBar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10%;
+    background-color: #eee;
+    height: 50px;
+    border-bottom: 1px solid black;
+}
+
+.menuItem {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.menuItem:hover {
+    color: #e26b56;
+    cursor: pointer;
+}
+
+.App {
+  text-align: center;
+}
+
+.header {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 60px;
+}
+
+.red {
+    color: #e26b56;
+}
+
+.roomBorders {
+    border:  1px solid black;
+    border-top: 0px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.sizeInput {
+    width: 400px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    margin: 10px;
+}
+
+.innerHeaders {
+    font-weight: lighter;
+    font-size: 30px;
+    letter-spacing: -2px;
+    padding-top: 30px;
+}
+
+.instrukcja {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.listaIntrukcji {
+    text-align: left;
+}
+
+.nowaSzafkaFormularz {
+    line-height: 2rem;
+    padding: 20px;
+}
+
+.wizualizacjaSzafki {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 400px;
+    border: 1px solid black;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.szuflada {
+    margin: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+}
+
+.malaSzuflada {
+    height: 33%;
+}
