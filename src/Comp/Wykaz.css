@@ -3,7 +3,7 @@
     width: 600px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
 }
 
 @media (max-width: 800px) {
@@ -11,6 +11,15 @@
         width: 50%;
     }
 }
+
+.typeHeader {
+    font-size: 16px;
+    font-weight: bold;
+    margin: auto;
+    margin-top: 20px;
+    color: #e26b56;
+}
+
 
 .row {
     display: flex;

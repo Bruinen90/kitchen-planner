@@ -2,13 +2,23 @@ import React from 'react';
 import './Wykaz.css';
 
 const Wykaz = (props) => {
+    console.log(props.fronty)
+    const frontyWykaz = props.fronty.map(front => {
+        return(
+            <div className="row">
+            <div className="col">{front.wymiary}</div>
+            <div className="col">{front.ilosc}szt.</div>
+            <div className="col"><div className={front.okleina + ' okleina'}></div></div>
+            </div>
+        );
+    });
     return(
     <div className="output">
         <h1 className="innerHeaders">Wymiary formatek do zamówienia</h1>
         <div className="formatki">
         <div className="parent">
+        <div className="typeHeader">Płyta meblowa 18mm:</div>
             <div className="row">
-                <div className="col">Płyta meblowa 18mm:</div>
                 <div className="col">{props.trawersyWymiary}</div>
                 <div className="col">{props.trawersyIlosc}szt</div>
                 <div className="col"><div className={props.trawersyOkleina + ' okleina'}></div></div>
@@ -18,12 +28,10 @@ const Wykaz = (props) => {
                 <div className="col">{props.bokiIlosc}szt</div>
                 <div className="col"><div className={props.bokiOkleina + ' okleina'}></div></div>
             </div>
-            <div className="row">
-                <div className="col">Fronty:</div>
-                <div className="col">{props.frontyWymiary}</div>
-                <div className="col">{props.frontyIlosc}szt</div>
-                <div className="col"><div className={props.frontyOkleina + ' okleina'}></div></div>
-            </div>
+        <div className="typeHeader">Fronty</div>
+            {frontyWykaz}
+
+
         </div>
     </div>
 </div>

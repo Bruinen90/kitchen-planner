@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import MenuBar from './Comp/MenuBar';
-import SizeInput from './Comp/SizeInput';
-import Instrukcja from './Comp/JakKorzystac';
-import FormularzNowejSzafki from './Comp/FormularzNowejSzafki';
-import WizualizacjaWnetrze from './Comp/Szuflady';
-import WykazFormatek from './Comp/WykazFormatek';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import MenuBar from '../Comp/MenuBar';
+import SizeInput from '../Comp/SizeInput';
+import Instrukcja from '../Comp/JakKorzystac';
+import FormularzNowejSzafki from '../Comp/FormularzNowejSzafki';
+import WizualizacjaWnetrze from '../Comp/Szuflady';
+import WykazFormatek from '../Comp/WykazFormatek';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 
 class App extends Component {
@@ -47,7 +47,7 @@ class App extends Component {
     changeCabinetType = (event) => {
         const currentCabinet = {...this.state};
         currentCabinet.szafki[0].rodzaj = event.target.value;
-        this.setState(currentCabinet)
+        this.setState(currentCabinet);
     }
 
     changeCabinetWidth = (event) => {
@@ -90,12 +90,12 @@ class App extends Component {
 
         let fronty = "";
         if (this.state.szafki[0].rodzaj === 'jedneDrzwi') {
-            fronty = {
+            fronty = [{
                 ilosc: 1,
                 wymiary: (this.state.wysokoscSzafek-3).toString()+"x"+(this.state.szafki[0].szerokosc-3).toString()+"mm",
                 okleina: "full",
                 typPlyty: 'front',
-            }
+            }]
         } else if (this.state.szafki[0].rodzaj === 'szufladaDrzwi') {
             fronty = [{
                 ilosc: 1,
@@ -109,12 +109,12 @@ class App extends Component {
                 typPlyty: 'front',
             },]
         } else if (this.state.szafki[0].rodzaj === 'szuflady') {
-            fronty = {
+            fronty = [{
                 ilosc: this.state.szafki[0].iloscSzuflad,
                 wymiary: (this.state.wysokoscSzafek/this.state.szafki[0].iloscSzuflad-3).toString()+"x"+(this.state.szafki[0].szerokosc-3).toString()+"mm",
                 okleina: 'full',
                 typPlyty: 'front',
-            }
+            }]
         }
 
         newCabinetArray.push(fronty);
@@ -153,9 +153,7 @@ class App extends Component {
           bokiWymiary={this.state.formatki[1].wymiary}
           bokiIlosc={this.state.formatki[1].ilosc}
           bokiOkleina={this.state.formatki[1].okleina}
-          frontyWymiary={this.state.formatki[2].wymiary}
-          frontyIlosc={this.state.formatki[2].ilosc}
-          frontyOkleina={this.state.formatki[2].okleina}
+          fronty={this.state.formatki[2]}
           />
       }
 
