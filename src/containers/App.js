@@ -8,11 +8,12 @@ import WizualizacjaWnetrza from '../components/WizualizacjaWnetrza/WizualizacjaW
 import WykazFormatek from '../components/WykazFormatek';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
+import {connect} from 'react-redux';
+import * as actionTypes from '../store/actions/actionTypes';
+
 
 class App extends Component {
     state = {
-        sizeW: '1200px',
-        sizeH: '500px',
         sizeD: 550,
         wysokoscSzafek: 750,
         glebokoscSzafek: 550,
@@ -26,16 +27,6 @@ class App extends Component {
         ],
         formatki: [],
         iloscSzafek: 0,
-    }
-
-    changeRoomSize = (event) => {
-        if (event.charCode === 13) {
-            this.setState({
-                sizeW: event.target.value/(event.target.value*2/window.innerWidth) + 'px',
-                sizeH: 1000/(2*event.target.value/window.innerWidth) + 'px',
-                blat: event.target.value-3,
-            })
-        }
     }
 
     showHowToUse = () => {
@@ -130,8 +121,8 @@ class App extends Component {
 
   render() {
       let roomSize = {
-          width: this.state.sizeW,
-          height: this.state.sizeH,
+          width: this.props.sizeW,
+          height: this.props.sizeH,
       }
 
       // let blatPrint = "";
@@ -184,7 +175,7 @@ class App extends Component {
         </div>
 
         <SizeInput
-            enterSize={(event) => this.changeRoomSize(event)}
+            enterSize={(event) => this.props.onChangeRoomSize(event)}
         />
 
         {/* <PrzyciskDodaj
@@ -210,4 +201,17 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        sizeW: state.kitchenWidth,
+        sizeH: state.kitchenHeight,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onChangeRoomSize: (event) => dispatch({type: actionTypes.CHANGE_ROOM_SIZE, event: event})
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

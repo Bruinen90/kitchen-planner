@@ -1,0 +1,1 @@
+export const CHANGE_ROOM_SIZE = 'CHANGE_ROOM_SIZE';
