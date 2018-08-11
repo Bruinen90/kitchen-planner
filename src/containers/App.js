@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import MenuBar from '../Comp/MenuBar';
-import SizeInput from '../Comp/SizeInput';
-import Instrukcja from '../Comp/JakKorzystac';
-import FormularzNowejSzafki from '../Comp/FormularzNowejSzafki';
-import WizualizacjaWnetrze from '../Comp/Szuflady';
-import WykazFormatek from '../Comp/WykazFormatek';
+import MenuBar from '../components/UI/MenuBar';
+import SizeInput from '../components/SizeInput';
+import Instrukcja from '../components/Porady/JakKorzystac';
+import FormularzNowejSzafki from '../components/FormularzNowejSzafki/FormularzNowejSzafki';
+import WizualizacjaWnetrza from '../components/WizualizacjaWnetrza/WizualizacjaWnetrza';
+import WykazFormatek from '../components/WykazFormatek';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 
@@ -200,7 +200,7 @@ class App extends Component {
         />
 
         <div className="wizualizacjaSzafki" style={wizualizacjaWymiary}>
-            <WizualizacjaWnetrze rodzaj={this.state.szafki[0].rodzaj} ilosc={this.state.szafki[0].iloscSzuflad} />
+            <WizualizacjaWnetrza rodzaj={this.state.szafki[0].rodzaj} ilosc={this.state.szafki[0].iloscSzuflad} />
         </div>
 
             {listaFormatek}
