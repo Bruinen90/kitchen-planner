@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import MenuBar from '../components/UI/MenuBar';
 import SizeInput from '../components/SizeInput';
 import Instrukcja from '../components/Porady/JakKorzystac';
 import FormularzNowejSzafki from '../components/FormularzNowejSzafki/FormularzNowejSzafki';
 import WizualizacjaWnetrza from '../components/WizualizacjaWnetrza/WizualizacjaWnetrza';
 import WykazFormatek from '../components/WykazFormatek';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
@@ -14,17 +14,7 @@ import * as actionTypes from '../store/actions/actionTypes';
 
 class App extends Component {
     state = {
-        sizeD: 550,
-        wysokoscSzafek: 750,
-        glebokoscSzafek: 550,
         instrukcjaPrint: false,
-        szafki: [
-            {   id: 1,
-                rodzaj: "",
-                szerokosc: "600",
-                iloscSzuflad: 3,
-            }
-        ],
         formatki: [],
         iloscSzafek: 0,
     }
@@ -35,33 +25,15 @@ class App extends Component {
         })
     }
 
-    changeCabinetType = (event) => {
-        const currentCabinet = {...this.state};
-        currentCabinet.szafki[0].rodzaj = event.target.value;
-        this.setState(currentCabinet);
-    }
-
-    changeCabinetWidth = (event) => {
-        const currentCabinet = {...this.state};
-        currentCabinet.szafki[0].szerokosc = event.target.value;
-        this.setState(currentCabinet)
-    }
-
-    changeDrawerCount = (event) => {
-        const currentCabinet = {...this.state};
-        currentCabinet.szafki[0].iloscSzuflad = event.target.value;
-        this.setState(currentCabinet)
-    }
-
     cabinetComplete = () => {
         let newCabinetArray = [];
         const trawersy = {
             ilosc: 2,
-            wymiary: this.state.glebokoscSzafek.toString()+"x"+(this.state.szafki[0].szerokosc-36).toString()+"mm",
+            wymiary: this.props.glebokoscSzafek.toString()+"x"+(this.props.szafki[0].szerokosc-36).toString()+"mm",
             okleina: 'd1',
             typPlyty: '18mm',
         }
-        if (this.state.glebokoscSzafek > this.state.szafki[0].szerokosc-36) {
+        if (this.props.glebokoscSzafek > this.props.szafki[0].szerokosc-36) {
             trawersy.okleina = 'k1';
         }
 
@@ -69,40 +41,40 @@ class App extends Component {
 
         const boki = {
             ilosc: 2,
-            wymiary: this.state.glebokoscSzafek.toString()+"x"+this.state.wysokoscSzafek.toString()+"mm",
+            wymiary: this.props.glebokoscSzafek.toString()+"x"+this.props.wysokoscSzafek.toString()+"mm",
             okleina: 'd1',
             typPlyty: '18mm',
         }
-        if (this.state.glebokoscSzafek > this.state.wysokoscSzafek) {
+        if (this.props.glebokoscSzafek > this.props.wysokoscSzafek) {
             boki.okleina = 'k1';
         }
 
         newCabinetArray.push(boki);
 
         let fronty = "";
-        if (this.state.szafki[0].rodzaj === 'jedneDrzwi') {
+        if (this.props.szafki[0].rodzaj === 'jedneDrzwi') {
             fronty = [{
                 ilosc: 1,
-                wymiary: (this.state.wysokoscSzafek-3).toString()+"x"+(this.state.szafki[0].szerokosc-3).toString()+"mm",
+                wymiary: (this.props.wysokoscSzafek-3).toString()+"x"+(this.props.szafki[0].szerokosc-3).toString()+"mm",
                 okleina: "full",
                 typPlyty: 'front',
             }]
-        } else if (this.state.szafki[0].rodzaj === 'szufladaDrzwi') {
+        } else if (this.props.szafki[0].rodzaj === 'szufladaDrzwi') {
             fronty = [{
                 ilosc: 1,
-                wymiary: (this.state.wysokoscSzafek/3-3).toString()+"x"+(this.state.szafki[0].szerokosc-3).toString()+"mm",
+                wymiary: (this.props.wysokoscSzafek/3-3).toString()+"x"+(this.props.szafki[0].szerokosc-3).toString()+"mm",
                 okleina: "full",
                 typPlyty: 'front',
             },
             {   ilosc: 1,
-                wymiary: (2*this.state.wysokoscSzafek/3-3).toString()+"x"+(this.state.szafki[0].szerokosc-3).toString()+"mm",
+                wymiary: (2*this.props.wysokoscSzafek/3-3).toString()+"x"+(this.props.szafki[0].szerokosc-3).toString()+"mm",
                 okleina: 'full',
                 typPlyty: 'front',
             },]
-        } else if (this.state.szafki[0].rodzaj === 'szuflady') {
+        } else if (this.props.szafki[0].rodzaj === 'szuflady') {
             fronty = [{
-                ilosc: this.state.szafki[0].iloscSzuflad,
-                wymiary: (this.state.wysokoscSzafek/this.state.szafki[0].iloscSzuflad-3).toString()+"x"+(this.state.szafki[0].szerokosc-3).toString()+"mm",
+                ilosc: this.props.szafki[0].iloscSzuflad,
+                wymiary: (this.props.wysokoscSzafek/this.props.szafki[0].iloscSzuflad-3).toString()+"x"+(this.props.szafki[0].szerokosc-3).toString()+"mm",
                 okleina: 'full',
                 typPlyty: 'front',
             }]
@@ -156,8 +128,8 @@ class App extends Component {
       }
 
       let wizualizacjaWymiary = {
-          width: this.state.szafki[0].szerokosc/2 + "px",
-          height: this.state.wysokoscSzafek/2 + "px",
+          width: this.props.szafki[0].szerokosc/2 + "px",
+          height: this.props.wysokoscSzafek/2 + "px",
       }
 
 
@@ -183,15 +155,15 @@ class App extends Component {
         /> */}
 
         <FormularzNowejSzafki
-            changeType = {(event) => this.changeCabinetType(event)}
-            changeWidth = {(event) => this.changeCabinetWidth(event)}
-            changeDrawerCount = {(event) => this.changeDrawerCount(event)}
-            ilosc = {this.state.szafki[0].iloscSzuflad}
+            changeType = {(event) => this.props.onChangeCabinetType(event)}
+            changeWidth = {(event) => this.props.onChangeCabinetWidth(event)}
+            changeDrawerCount = {(event) => this.props.onChangeDrawerCount(event)}
+            ilosc = {this.props.szafki[0].iloscSzuflad}
             clickDodaj = {this.cabinetComplete}
         />
 
         <div className="wizualizacjaSzafki" style={wizualizacjaWymiary}>
-            <WizualizacjaWnetrza rodzaj={this.state.szafki[0].rodzaj} ilosc={this.state.szafki[0].iloscSzuflad} />
+            <WizualizacjaWnetrza rodzaj={this.props.szafki[0].rodzaj} ilosc={this.props.szafki[0].iloscSzuflad} />
         </div>
 
             {listaFormatek}
@@ -205,12 +177,18 @@ const mapStateToProps = state => {
     return {
         sizeW: state.kitchenWidth,
         sizeH: state.kitchenHeight,
+        wysokoscSzafek: state.cabinetHeight,
+        glebokoscSzafek: state.cabinetDepth,
+        szafki: state.cabinets,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onChangeRoomSize: (event) => dispatch({type: actionTypes.CHANGE_ROOM_SIZE, event: event})
+        onChangeRoomSize: (event) => dispatch({type: actionTypes.CHANGE_ROOM_SIZE, event: event}),
+        onChangeCabinetType: (event) => dispatch({type: actionTypes.CHANGE_CABINET_TYPE, event: event}),
+        onChangeDrawerCount: (event) => dispatch({type: actionTypes.CHANGE_DRAWER_COUNT, event: event}),
+        onChangeCabinetWidth: (event) => dispatch({type: actionTypes.CHANGE_CABINET_WIDTH, event: event})
     };
 };
 

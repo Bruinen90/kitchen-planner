@@ -3,12 +3,12 @@ import PoleSzuflady from './PoleSzuflady/PoleSzuflady';
 
 const FormularzSzuflad = (props) => {
     return(
-        <div class="formularzSzuflad">
+        <p className="formularzSzuflad">
             Wysokość szuflad:
             <PoleSzuflady
                 wysokosc={props.wysokoscSzuflady}
             />
-        </div>
+        </p>
     );
 }
 export default FormularzSzuflad;
