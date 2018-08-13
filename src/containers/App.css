@@ -96,8 +96,27 @@ body {
     border: 1px solid black;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    font-weight: 600;
+    color: #999;
 }
 
 .malaSzuflada {
     height: 33%;
+}
+
+.kreatorNowejSzafki {
+    display: flex;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: flex-start;
+    margin-top: 2rem;
+}
+
+.formularzNowejSzafki {
+    text-align: left;
 }

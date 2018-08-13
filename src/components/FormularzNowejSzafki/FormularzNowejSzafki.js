@@ -4,7 +4,7 @@ import FormularzSzuflad from './FormularzSzuflad/FormularzSzuflad';
 const FormularzNowejSzafki = (props) => {
     return (
         <form className="nowaSzafkaFormularz">
-        <div>Wybierz rodzaj szafki:<br/>
+        <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki:</b><br/>
             <input
                 type="radio"
                 name="typySzafek"

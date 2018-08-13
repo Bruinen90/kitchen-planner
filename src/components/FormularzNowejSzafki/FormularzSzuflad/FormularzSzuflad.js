@@ -1,14 +1,36 @@
-import React from 'react';
-import PoleSzuflady from './PoleSzuflady/PoleSzuflady';
+import React, {Component} from 'react';
 
-const FormularzSzuflad = (props) => {
-    return(
-        <p className="formularzSzuflad">
-            Wysokość szuflad:
-            <PoleSzuflady
-                wysokosc={props.wysokoscSzuflady}
-            />
-        </p>
-    );
+import WysokoscSzuflady from './WysokoscSzuflady/WysokoscSzuflady';
+
+import {connect} from 'react-redux';
+
+class FormularzSzuflad extends Component {
+    render() {
+        return(
+            this.props.drawersArray.length > 0 ?
+                <div className="formularzSzuflad">
+                    Wysokość szuflad{this.props.drawersArray.length === 1 ? "y" : null}:
+                    {this.props.drawersArray.map(szuflada => {
+                        return <WysokoscSzuflady
+                            key={szuflada.drawerId}
+                            wysokosc={this.props.wysokoscSzuflady}
+                            numerSzuflady={szuflada.drawerId}
+                            iloscSzuflad={this.props.drawersArray.length}
+                        />
+                    })}
+
+                </div>
+            :
+            null
+
+        );
+    }
 }
-export default FormularzSzuflad;
+
+const mapStateToProps = state => {
+    return {
+        drawersArray: state.drawersArray,
+    }
+}
+
+export default connect(mapStateToProps)(FormularzSzuflad);
