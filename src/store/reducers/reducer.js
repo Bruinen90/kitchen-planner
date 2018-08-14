@@ -56,13 +56,13 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):
-            const currentDrawerCount = {...state.cabinets};
-            currentDrawerCount[0].iloscSzuflad = action.event.target.value;
+            const currentDrawerCount = {...state.cabinets[0]};
+            currentDrawerCount.iloscSzuflad = action.event.target.value;
             return {
                 ...state,
-                cabinets: currentDrawerCount,
-                drawersCounterState: currentDrawerCount[0].iloscSzuflad,
-                drawersArray: updateDrawersArray(currentDrawerCount[0].iloscSzuflad),
+                cabinets: [currentDrawerCount],
+                drawersCounterState: currentDrawerCount.iloscSzuflad,
+                drawersArray: updateDrawersArray(currentDrawerCount.iloscSzuflad),
             }
 
         case(actionTypes.CHANGE_CABINET_WIDTH):
@@ -137,7 +137,36 @@ const reducer = (state = initialState, action) => {
                     formatki: newCabinetArray,
                     cabinetsCount: newIloscSzafek,
                 }
+
+        case(actionTypes.CHANGE_DRAWER_HEIGHT):
+            const drawersHeights = [];
+            let newHeightArray = state.drawersArray.map((szuflada, index) => {
+                if(index !== action.id)
+                return {
+                    ...szuflada
+                }
+                return {
+                    ...szuflada,
+                    height: parseInt(action.event.target.value),
+                }
+            })
+            for(let i in newHeightArray) {
+                drawersHeights.push(newHeightArray[i].height)
             }
+
+            if(drawersHeights.filter(a => a ===0).length === 1) {
+                const zeroIndex = drawersHeights.findIndex(a=> a=== 0);
+                const lastDrawerHeight = state.cabinetHeight - drawersHeights.reduce((a,b) => a + b, 0);
+                newHeightArray[zeroIndex].height=lastDrawerHeight;
+            };
+            return {
+                ...state,
+                drawersArray: newHeightArray,
+                drawersHeights: drawersHeights,
+            }
+        }
+
+
     return state;
 }
 

@@ -10,7 +10,9 @@ class WizualizacjaWnetrze extends Component {
                     drowersArray.push(
                         <div
                             className="szuflada"
-                            key={szuflada.drawerId}>
+                            key={szuflada.drawerId}
+                            style={{height: szuflada.drawerHeight}}
+                            >
                             {szuflada.drawerId}
                         </div>);
             })

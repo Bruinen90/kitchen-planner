@@ -72,8 +72,8 @@ class App extends Component {
         {instrukcja}
 
         <h1 className="header">Kitchen planner<span className="red">.</span></h1>
-        <div className="roomBorders" style={roomSize}>
-        </div>
+        {/* <div className="roomBorders" style={roomSize}>
+        </div> */}
 
         <SizeInput
             enterSize={(event) => this.props.onChangeRoomSize(event)}
@@ -95,7 +95,7 @@ class App extends Component {
                 />
             </div>
         </div>
-        
+
             {listaFormatek}
       </div>
     );

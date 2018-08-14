@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import WysokoscSzuflady from './WysokoscSzuflady/WysokoscSzuflady';
 
+import * as actionTypes from '../../../store/actions/actionTypes';
+
 import {connect} from 'react-redux';
 
 class FormularzSzuflad extends Component {
@@ -13,8 +15,8 @@ class FormularzSzuflad extends Component {
                     {this.props.drawersArray.map(szuflada => {
                         return <WysokoscSzuflady
                             key={szuflada.drawerId}
-                            wysokosc={this.props.wysokoscSzuflady}
                             numerSzuflady={szuflada.drawerId}
+                            zmianaWysokosci={(event) => this.props.onDrawerHeightChange(event, szuflada.drawerId-1)}
                             iloscSzuflad={this.props.drawersArray.length}
                         />
                     })}
@@ -33,4 +35,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(FormularzSzuflad);
+const mapDispatchToProps = dispatch => {
+    return {
+        onDrawerHeightChange: (event, id) => dispatch({type: actionTypes.CHANGE_DRAWER_HEIGHT, event: event, id: id}),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormularzSzuflad);
