@@ -9,18 +9,18 @@ import {connect} from 'react-redux';
 class FormularzSzuflad extends Component {
     render() {
         return(
-            this.props.drawersArray.length > 0 ?
+            this.props.drawersHeights.length > 0 ?
                 <div className="formularzSzuflad">
-                    Wysokość szuflad{this.props.drawersArray.length === 1 ? "y" : null}:
-                    {this.props.drawersArray.map(szuflada => {
+                    Wysokość szuflad{this.props.drawersHeights.length === 1 ? "y" : null}:
+                    {this.props.drawersHeights.map((wysokosc, id) => {
                         return <div><WysokoscSzuflady
-                            key={szuflada.drawerId}
-                            numerSzuflady={szuflada.drawerId}
-                            zmianaWysokosci={(event) => this.props.onDrawerHeightChange(event, szuflada.drawerId-1)}
-                            iloscSzuflad={this.props.drawersArray.length}
-                            wysokosc={this.props.wysokoscSzuflady[szuflada.drawerId-1]}
+                            key={id}
+                            numerSzuflady={id+1}
+                            zmianaWysokosci={(event) => this.props.onDrawerHeightChange(event, id)}
+                            iloscSzuflad={this.props.drawersHeights.length}
+                            wysokosc={wysokosc}
                         />
-                        <input type="button" onClick={() => this.props.onClickAutoFill(szuflada.drawerId-1)} value="Wypełnij" />
+                        <input type="button" onClick={() => this.props.onClickAutoFill(id)} value="Wypełnij" />
                         </div>
                     })}
 
@@ -34,8 +34,7 @@ class FormularzSzuflad extends Component {
 
 const mapStateToProps = state => {
     return {
-        drawersArray: state.drawersArray,
-        wysokoscSzuflady: state.drawersHeights,
+        drawersHeights: state.drawersHeights,
     }
 }
 

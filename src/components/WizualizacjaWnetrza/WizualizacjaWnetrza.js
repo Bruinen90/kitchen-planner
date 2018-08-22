@@ -6,14 +6,14 @@ class WizualizacjaWnetrze extends Component {
     render() {
         let drowersArray = [];
         if (this.props.rodzaj === "szuflady") {
-            this.props.drawersArray.map(szuflada => {
+            this.props.drawersHeights.map((wysokosc,id) => {
                     drowersArray.push(
                         <div
                             className="szuflada"
-                            key={szuflada.drawerId}
-                            style={{height: szuflada.drawerHeight}}
+                            key={id}
+                            style={{"height": wysokosc+"px"}}
                             >
-                            {szuflada.drawerId}
+                            {id+1}
                         </div>);
             })
         }
@@ -34,7 +34,7 @@ class WizualizacjaWnetrze extends Component {
 
 const mapStateToProps = state => {
     return {
-        drawersArray: state.drawersArray,
+        drawersHeights: state.drawersHeights,
     }
 }
 

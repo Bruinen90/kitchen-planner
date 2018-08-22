@@ -16,20 +16,24 @@ const initialState = {
     ],
     formatki: [],
     cabinetsCount: 0,
-    drawersArray: [],
     drawersCounterState: 3,
     drawersHeights: [],
 }
 
 const reducer = (state = initialState, action) => {
     const updateDrawersArray = (newArrayCount) => {
-        const drawersArray = [];
+        const drawersHeights = [];
         let i=1;
         while(i<=newArrayCount) {
-            drawersArray.push({drawerId: i, height: 0});
+            drawersHeights.push(
+                (state.cabinetHeight-
+                    state.spaceDrawersToTop-
+                    state.spaceBetweenDrawers*
+                    (newArrayCount-1))/newArrayCount
+                );
             i++;
         }
-        return drawersArray
+        return drawersHeights
     }
     switch (action.type) {
         case(actionTypes.CHANGE_ROOM_SIZE):
@@ -55,7 +59,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 cabinets: currentCabinet,
-                drawersArray: updateDrawersArray(updateDrawersCount),
+                drawersHeights: updateDrawersArray(updateDrawersCount),
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):
@@ -66,14 +70,15 @@ const reducer = (state = initialState, action) => {
             const newCabinets = currentCabinets.map(cabinet => {
                     return {
                         ... cabinet[0],
-                        iloscSzuflad: action.event.target.value
+                        iloscSzuflad: action.event.target.value,
+                        rodzaj: "szuflady"
                     }
             });
             return {
                 ...state,
                 cabinets: newCabinets,
                 drawersCounterState: action.event.target.value,
-                drawersArray: updateDrawersArray(action.event.target.value),
+                drawersHeights: updateDrawersArray(action.event.target.value),
             }
 
         case(actionTypes.CHANGE_CABINET_WIDTH):
@@ -135,12 +140,22 @@ const reducer = (state = initialState, action) => {
                     typPlyty: 'front',
                 },]
             } else if (state.cabinets[0].rodzaj === 'szuflady') {
-                fronty = [{
-                    ilosc: state.cabinets[0].iloscSzuflad,
-                    wymiary: (state.cabinetHeight/state.cabinets[0].iloscSzuflad-3).toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
-                    okleina: 'full',
-                    typPlyty: 'front',
-                }]
+                const allDrawers = [...state.drawersHeights];
+                const uniqueDrawers = Array.from(new Set(allDrawers));
+                const countDrawers = (wysokosc) => {
+                    return allDrawers.filter(height => {
+                        return height === wysokosc
+                    })
+                };
+                fronty =
+                    uniqueDrawers.map((wysokosc, id) => {
+                        return {
+                            ilosc: countDrawers(wysokosc).length,
+                            wymiary: wysokosc.toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
+                            okleina: 'full',
+                            typPlyty: 'front',
+                        }
+                    });
             }
 
             newCabinetArray.push(fronty);
@@ -154,32 +169,13 @@ const reducer = (state = initialState, action) => {
                 }
 
         case(actionTypes.CHANGE_DRAWER_HEIGHT):
-            const drawersHeights = [];
-            let newHeightArray = state.drawersArray.map((szuflada, index) => {
-                if(index !== action.id)
-                return {
-                    ...szuflada
-                }
-                return {
-                    ...szuflada,
-                    height: parseInt(action.event.target.value),
-                }
-            })
-            for(let i in newHeightArray) {
-                drawersHeights.push(newHeightArray[i].height)
-            }
-
-            // if(drawersHeights.filter(a => a ===0).length === 1) {
-            //     const zeroIndex = drawersHeights.findIndex(a=> a=== 0);
-            //     const lastDrawerHeight = state.cabinetHeight - drawersHeights.reduce((a,b) => a + b, 0);
-            //     newHeightArray[zeroIndex].height=lastDrawerHeight;
-            // };
-
+            const newDrawersHeights = [...state.drawersHeights];
+            newDrawersHeights[action.id] = parseInt(action.event.target.value);
             return {
                 ...state,
-                drawersArray: newHeightArray,
-                drawersHeights: drawersHeights,
+                drawersHeights: newDrawersHeights
             }
+
         case(actionTypes.DRAWERS_AUTO_FILL):
             const currentDrawers = [...state.drawersHeights];
             const otherDrawers = state.drawersHeights.map((szuflada, index) => {
