@@ -97,11 +97,27 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    padding: 10%;
     align-items: center;
     font-size: 36px;
     font-weight: 600;
     color: #999;
+    box-sizing: border-box
+}
+
+.aktywnaSzuflada {
+    color: green;
+    border: 1px solid green;
+    background-color: #e7ffbf;
+}
+
+.aktualnaWysokosc {
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 .malaSzuflada {

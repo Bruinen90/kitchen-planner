@@ -84,14 +84,14 @@ class App extends Component {
                 changeType = {(event) => this.props.onChangeCabinetType(event)}
                 changeWidth = {(event) => this.props.onChangeCabinetWidth(event)}
                 changeDrawerCount = {(event) => this.props.onChangeDrawerCount(event)}
-                ilosc = {this.props.szafki[0].iloscSzuflad}
+                ilosc = {this.props.iloscSzuflad}
                 clickDodaj = {this.props.onAddCabinet}
             />
 
             <div className="wizualizacjaSzafki" style={wizualizacjaWymiary}>
                 <WizualizacjaWnetrza
                     rodzaj={this.props.szafki[0].rodzaj}
-                    ilosc={this.props.szafki[0].iloscSzuflad}
+                    ilosc={this.props.iloscSzuflad}
                 />
             </div>
         </div>
@@ -111,6 +111,7 @@ const mapStateToProps = state => {
         szafki: state.cabinets,
         iloscSzafek: state.cabinetsCount,
         formatki: state.formatki,
+        iloscSzuflad: state.drawersHeights.length,
     };
 };
 

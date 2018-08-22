@@ -30,17 +30,11 @@ const FormularzNowejSzafki = (props) => {
                 onChange={props.changeType}
                 required
             />
-            Szafka z szufladami. Liczba szuflad:
-            <input
-                type="number"
-                min="2"
-                max="4"
-                onChange={props.changeDrawerCount}
-                value={props.ilosc}
-                required
-            />
+            Szafka z szufladami.
             <FormularzSzuflad
                 wysokoscSzuflady={props.wysokoscSzuflady}
+                changeDrawerCount = {props.changeDrawerCount}
+                ilosc={props.ilosc}
             />
             <br />
         </div>

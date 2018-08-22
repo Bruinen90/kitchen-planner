@@ -11,27 +11,31 @@ const initialState = {
         {   id: 1,
             rodzaj: "",
             szerokosc: "600",
-            iloscSzuflad: 3,
         }
     ],
     formatki: [],
     cabinetsCount: 0,
     drawersCounterState: 3,
     drawersHeights: [],
+    activeDrawer: null,
 }
 
 const reducer = (state = initialState, action) => {
     const updateDrawersArray = (newArrayCount) => {
         const drawersHeights = [];
-        let i=1;
-        while(i<=newArrayCount) {
-            drawersHeights.push(
-                (state.cabinetHeight-
-                    state.spaceDrawersToTop-
-                    state.spaceBetweenDrawers*
-                    (newArrayCount-1))/newArrayCount
-                );
-            i++;
+        if(newArrayCount===1) {
+            drawersHeights.push(150)
+        } else {
+            let i=1;
+            while(i<=newArrayCount) {
+                drawersHeights.push(
+                    (state.cabinetHeight-
+                        state.spaceDrawersToTop-
+                        state.spaceBetweenDrawers*
+                        (newArrayCount-1))/newArrayCount
+                    );
+                i++;
+            }
         }
         return drawersHeights
     }
@@ -130,12 +134,12 @@ const reducer = (state = initialState, action) => {
             } else if (state.cabinets[0].rodzaj === 'szufladaDrzwi') {
                 fronty = [{
                     ilosc: 1,
-                    wymiary: (state.cabinetHeight/3-3).toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
+                    wymiary: state.drawersHeights[0].toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
                     okleina: "full",
                     typPlyty: 'front',
                 },
                 {   ilosc: 1,
-                    wymiary: (2*state.cabinetHeight/3-3).toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
+                    wymiary: (state.cabinetHeight-state.drawersHeights[0]-6).toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
                     okleina: 'full',
                     typPlyty: 'front',
                 },]
@@ -145,12 +149,12 @@ const reducer = (state = initialState, action) => {
                 const countDrawers = (wysokosc) => {
                     return allDrawers.filter(height => {
                         return height === wysokosc
-                    })
+                    }).length
                 };
                 fronty =
                     uniqueDrawers.map((wysokosc, id) => {
                         return {
-                            ilosc: countDrawers(wysokosc).length,
+                            ilosc: countDrawers(wysokosc),
                             wymiary: wysokosc.toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
                             okleina: 'full',
                             typPlyty: 'front',
@@ -195,7 +199,20 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 drawersHeights: newHeightsCabinet
             }
-        }
+
+        case(actionTypes.ACTIVE_DRAWER):
+            return {
+                ...state,
+                activeDrawer: action.id,
+            }
+
+        case(actionTypes.DISACTIVE_DRAWER):
+            return {
+                ...state,
+                activeDrawer: null,
+            }
+
+    }
 
 
 

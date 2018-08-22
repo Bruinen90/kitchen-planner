@@ -4,9 +4,11 @@ const WysokoscSzuflady = (props) => (
 
         <input
             type="number"
-            value={props.wysokosc}
+            value={props.iloscSzuflad > 1 ? props.wysokosc : null}
             onChange = {props.zmianaWysokosci}
-            placeholder={props.iloscSzuflad > 1 ? "Szuflada numer "+props.numerSzuflady : null}
+            onFocus = {props.aktywnaSzuflada}
+            onBlur=  {props.nieaktywnaSzuflada}
+            placeholder="Szuflada (mm)"
         />
 
 );
