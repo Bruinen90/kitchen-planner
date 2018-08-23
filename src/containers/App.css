@@ -3,6 +3,10 @@ body {
     padding-bottom: 5%;
 }
 
+.wrapper {
+    display: inline-block;
+}
+
 .menuBar {
     display: flex;
     justify-content: flex-end;

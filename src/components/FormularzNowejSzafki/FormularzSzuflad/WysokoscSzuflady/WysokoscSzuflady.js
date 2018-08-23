@@ -1,7 +1,6 @@
 import React from 'react';
+
 const WysokoscSzuflady = (props) => (
-
-
         <input
             type="number"
             value={props.iloscSzuflad > 1 ? props.wysokosc : null}
@@ -10,6 +9,5 @@ const WysokoscSzuflady = (props) => (
             onBlur=  {props.nieaktywnaSzuflada}
             placeholder="Szuflada (mm)"
         />
-
 );
 export default WysokoscSzuflady;

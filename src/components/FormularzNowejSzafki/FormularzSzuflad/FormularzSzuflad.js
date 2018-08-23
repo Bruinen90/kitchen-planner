@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import WysokoscSzuflady from './WysokoscSzuflady/WysokoscSzuflady';
+import ErrorMessage from '../../UI/ErrorMessage/ErrorMessage';
 
 import * as actionTypes from '../../../store/actions/actionTypes';
 
@@ -36,6 +37,10 @@ class FormularzSzuflad extends Component {
                         {this.props.drawersHeights.length > 1 ?
                             <input type="button" onClick={() => this.props.onClickAutoFill(id)} value="Wypełnij" /> :
                             null }
+                        {this.props.errorTypes[id] ? <ErrorMessage
+                            errorType={this.props.errorTypes[id]}
+                        /> : null}
+
                         </div>
                     })}
 
@@ -50,6 +55,7 @@ class FormularzSzuflad extends Component {
 const mapStateToProps = state => {
     return {
         drawersHeights: state.drawersHeights,
+        errorTypes: state.errorTypes,
     }
 }
 

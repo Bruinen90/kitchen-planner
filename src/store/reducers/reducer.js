@@ -18,6 +18,7 @@ const initialState = {
     drawersCounterState: 3,
     drawersHeights: [],
     activeDrawer: null,
+    errorTypes: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -207,10 +208,24 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.DISACTIVE_DRAWER):
-            return {
-                ...state,
-                activeDrawer: null,
+            const curDrawerHeight = [...state.drawersHeights];
+            const badDrawersIds = curDrawerHeight.map(height => {
+                return null;
+            })
+            for (let index in state.drawersHeights) {
+                if (curDrawerHeight[index] > 400) {
+                    badDrawersIds.splice(parseInt(index), 1, "tooHeight");
+                }
+                if (curDrawerHeight[index] < 120) {
+                    badDrawersIds.splice(parseInt(index), 1, "tooLow");
+                }
+
             }
+                return {
+                    ...state,
+                    activeDrawer: null,
+                    errorTypes: badDrawersIds,
+                }
 
     }
 
