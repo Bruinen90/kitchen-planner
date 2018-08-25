@@ -10,7 +10,7 @@ const initialState = {
     cabinets: [
         {   id: 1,
             rodzaj: "",
-            szerokosc: "600",
+            szerokosc: 600,
         }
     ],
     formatki: [],
@@ -19,6 +19,7 @@ const initialState = {
     drawersHeights: [],
     activeDrawer: null,
     errorTypes: [],
+    cabinetValid: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -40,6 +41,12 @@ const reducer = (state = initialState, action) => {
         }
         return drawersHeights
     }
+
+    const calculateSpacing = (frontsQuantity = state.drawersHeights.length) => {
+        const spacesSum = state.spaceDrawersToTop + state.spaceBetweenDrawers*(frontsQuantity-1);
+        return spacesSum;
+    }
+
     switch (action.type) {
         case(actionTypes.CHANGE_ROOM_SIZE):
             if (action.event.charCode === 13) {
@@ -65,12 +72,10 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 cabinets: currentCabinet,
                 drawersHeights: updateDrawersArray(updateDrawersCount),
+                errorTypes: [],
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):
-            // const currentDrawerCount = {...state.cabinets[0]};
-            // currentDrawerCount.iloscSzuflad = action.event.target.value;
-
             const currentCabinets = [state.cabinets];
             const newCabinets = currentCabinets.map(cabinet => {
                     return {
@@ -95,10 +100,12 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.ADD_CABINET):
+            //Check if sum of fronts isn't too big
             if(state.drawersHeights.reduce((a,b) => a+b, 0) >
-            state.cabinetHeight-(state.drawersHeights.length-1)*state.spaceBetweenDrawers-state.spaceDrawersToTop) {
+            state.cabinetHeight - calculateSpacing()) {
                 prompt("Error!")
             }
+
             let newCabinetArray = [];
             const trawersy = {
                 ilosc: 2,
@@ -189,9 +196,7 @@ const reducer = (state = initialState, action) => {
             });
             const sumOtherDrawersHeight = otherDrawers.reduce((a,b) => a+b, 0);
             const missingHeight = state.cabinetHeight -
-                sumOtherDrawersHeight -
-                state.spaceBetweenDrawers*(state.drawersHeights.length-1) -
-                state.spaceDrawersToTop;
+                sumOtherDrawersHeight - calculateSpacing();
             const newHeightsCabinet = state.drawersHeights.map((szuflada, index) => {
                 if (index !== action.id) return szuflada;
                 return missingHeight
@@ -227,10 +232,31 @@ const reducer = (state = initialState, action) => {
                     errorTypes: badDrawersIds,
                 }
 
+        case(actionTypes.CHECK_CABINET):
+            let cabinetValid = false;
+            const sumOfDrawersHeights = state.drawersHeights.reduce((a,b) => a+b, 0);
+            if ((
+                    state.cabinets[0].rodzaj === "jedneDrzwi" ||
+                (
+                    state.cabinets[0].rodzaj === "szufladaDrzwi" &&
+                    sumOfDrawersHeights + calculateSpacing() + 100 <= state.cabinetHeight &&
+                    sumOfDrawersHeights >= 100
+                ) ||
+                (
+                    sumOfDrawersHeights + calculateSpacing() === state.cabinetHeight
+                )) && state.cabinets[0].szerokosc > 299 && state.cabinets[0].szerokosc <901
+
+
+
+            ) {
+                cabinetValid = true
+                }
+            return {
+                ...state,
+                cabinetValid: cabinetValid,
+            }
+
     }
-
-
-
 
     return state;
 }

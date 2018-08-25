@@ -17,7 +17,7 @@ class WizualizacjaWnetrze extends Component {
                             className={"szuflada" + " " + aktywnaSzuflada}
                             key={id}
                             style={{"height": wysokosc+"px"}}
-                            >
+                        >
                             {id+1}
                             {wysokosc ?
                                 <div className="aktualnaWysokosc">
@@ -35,12 +35,14 @@ class WizualizacjaWnetrze extends Component {
             }
                 drowersArray.push(<div
                                     className={"szuflada malaSzuflada" + " " + aktywnaSzuflada}
-                                    style={{"height": this.props.drawersHeights[0]+"px"}}>Szuflada</div>);
-                drowersArray.push(<div className="szuflada">Drzwi</div>);
+                                    style={{"height": this.props.drawersHeights[0]+"px"}}
+                                    key="szuflada"
+                                    >Szuflada</div>);
+                drowersArray.push(<div className="szuflada" key="drzwi">Drzwi</div>);
         }
 
         if (this.props.rodzaj === "jedneDrzwi") {
-                drowersArray.push(<div className="szuflada"></div>);
+                drowersArray.push(<div className="szuflada" key="drzwiPojedyncze"></div>);
         }
             return(
                 drowersArray

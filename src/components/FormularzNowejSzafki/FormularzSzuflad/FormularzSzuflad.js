@@ -8,6 +8,10 @@ import * as actionTypes from '../../../store/actions/actionTypes';
 import {connect} from 'react-redux';
 
 class FormularzSzuflad extends Component {
+    componentDidUpdate () {
+        this.props.onCabinetFormUpdate();
+    }
+
     render() {
         return(
             this.props.drawersHeights.length > 0 ?
@@ -47,7 +51,6 @@ class FormularzSzuflad extends Component {
                 </div>
             :
             null
-
         );
     }
 }
@@ -65,6 +68,7 @@ const mapDispatchToProps = dispatch => {
         onClickAutoFill: (id) => dispatch({type: actionTypes.DRAWERS_AUTO_FILL, id: id}),
         onActiveDrawer: (id) => dispatch({type: actionTypes.ACTIVE_DRAWER, id: id}),
         onDisactiveDrawer: () => dispatch({type: actionTypes.DISACTIVE_DRAWER}),
+        onCabinetFormUpdate: () => dispatch({type: actionTypes.CHECK_CABINET})
     }
 }
 

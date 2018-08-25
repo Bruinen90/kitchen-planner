@@ -86,13 +86,21 @@ class App extends Component {
                 changeDrawerCount = {(event) => this.props.onChangeDrawerCount(event)}
                 ilosc = {this.props.iloscSzuflad}
                 clickDodaj = {this.props.onAddCabinet}
+                canAddCabinet = {this.props.canAddCabinet}
             />
-
-            <div className="wizualizacjaSzafki" style={wizualizacjaWymiary}>
-                <WizualizacjaWnetrza
-                    rodzaj={this.props.szafki[0].rodzaj}
-                    ilosc={this.props.iloscSzuflad}
-                />
+            <div className="wizualizacjaSzafki">
+                <div className="ramySzafki" style={wizualizacjaWymiary}>
+                    <WizualizacjaWnetrza
+                        rodzaj={this.props.szafki[0].rodzaj}
+                        ilosc={this.props.iloscSzuflad}
+                    />
+                </div>
+                <div className="nogaSzafki">
+                    <div></div>
+                </div>
+                <div className="nogaSzafki" style={{float: "right"}}>
+                    <div></div>
+                </div>
             </div>
         </div>
 
@@ -112,6 +120,7 @@ const mapStateToProps = state => {
         iloscSzafek: state.cabinetsCount,
         formatki: state.formatki,
         iloscSzuflad: state.drawersHeights.length,
+        canAddCabinet: state.cabinetValid,
     };
 };
 
