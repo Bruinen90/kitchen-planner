@@ -71,7 +71,7 @@ class App extends Component {
 
         {instrukcja}
 
-        <h1 className="header">Kitchen planner<span className="red">.</span></h1>
+        <h1 className="header">Kitchen planner<span className="redDot">.</span></h1>
         {/* <div className="roomBorders" style={roomSize}>
         </div> */}
 

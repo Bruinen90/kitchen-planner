@@ -17,9 +17,11 @@ const initialState = {
     cabinetsCount: 0,
     drawersCounterState: 3,
     drawersHeights: [],
+    blockedDrawers: [],
     activeDrawer: null,
     errorTypes: [],
     cabinetValid: false,
+    cabinetError: "noCabinetType",
 }
 
 const reducer = (state = initialState, action) => {
@@ -62,17 +64,23 @@ const reducer = (state = initialState, action) => {
             const currentCabinet = {...state.cabinets};
             currentCabinet[0].rodzaj = action.event.target.value;
             let updateDrawersCount = 0;
+            const drawersBlocked = [];
             switch(currentCabinet[0].rodzaj) {
                 case('szufladaDrzwi'): updateDrawersCount = 1; break;
                 case('jedneDrzwi'): updateDrawersCount = 0; break;
                 case('szuflady'): updateDrawersCount = state.drawersCounterState; break;
             }
-
+            let i=0;
+            while(i<updateDrawersCount) {
+                drawersBlocked.push(false);
+                i++
+            }
             return {
                 ...state,
                 cabinets: currentCabinet,
                 drawersHeights: updateDrawersArray(updateDrawersCount),
                 errorTypes: [],
+                blockedDrawers: drawersBlocked,
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):
@@ -206,6 +214,45 @@ const reducer = (state = initialState, action) => {
                 drawersHeights: newHeightsCabinet
             }
 
+        case(actionTypes.AUTO_ADJUST_DRAWERS):
+            const curDrawers = [...state.drawersHeights];
+            const unBlockedDrawersCount = [...state.blockedDrawers].filter((a)=> a===false).length;
+
+            const blockedDrawers = curDrawers.map((height, id) => {
+                if(state.blockedDrawers[id]) {
+                    return state.drawersHeights[id]
+                } else {
+                    return 0
+                }
+            });
+            const blockedDrawersSum = blockedDrawers.reduce((a, b) => a+b, 0);
+
+            const adjustedHeight = (state.cabinetHeight-calculateSpacing()-blockedDrawersSum)/unBlockedDrawersCount;
+
+            const newDrawers = curDrawers.map((height, id) => {
+                if(state.blockedDrawers[id]) {
+                    return height
+                } else {
+                    return adjustedHeight
+                }
+            })
+            // const newDrawersArray = updateDrawersArray(state.drawersHeights.length)
+            return {
+                ...state,
+                drawersHeights: newDrawers,
+            }
+
+        case(actionTypes.BLOCK_DRAWER):
+            const blockedDrawersArray = [...state.drawersHeights].map((_, id) => {
+                if(action.id === id) {return !state.blockedDrawers[id]} else {
+                    return state.blockedDrawers[id]
+                    }
+            })
+            return {
+                ...state,
+                blockedDrawers: blockedDrawersArray,
+            }
+
         case(actionTypes.ACTIVE_DRAWER):
             return {
                 ...state,
@@ -234,6 +281,7 @@ const reducer = (state = initialState, action) => {
 
         case(actionTypes.CHECK_CABINET):
             let cabinetValid = false;
+            let cabinetError = false;
             const sumOfDrawersHeights = state.drawersHeights.reduce((a,b) => a+b, 0);
             if ((
                     state.cabinets[0].rodzaj === "jedneDrzwi" ||
@@ -250,10 +298,20 @@ const reducer = (state = initialState, action) => {
 
             ) {
                 cabinetValid = true
-                }
+            } else {
+                if(state.cabinets[0].szerokosc > 900) cabinetError = "tooWide";
+                if(state.cabinets[0].szerokosc < 300) cabinetError = "tooNarrow";
+                if (state.cabinets[0].rodzaj === "szufladaDrzwi" &&
+                sumOfDrawersHeights + calculateSpacing() + 100 > state.cabinetHeight) cabinetError = "tooHeightOneDrawer";
+                if (state.cabinets[0].rodzaj === "szufladaDrzwi" && sumOfDrawersHeights < 100) cabinetError = "tooLowOneDrawer";
+                if (state.cabinets[0].rodzaj === "szuflady" && sumOfDrawersHeights + calculateSpacing() > state.cabinetHeight) cabinetError = "tooHeight";
+                if (state.cabinets[0].rodzaj === "szuflady" && sumOfDrawersHeights + calculateSpacing() < state.cabinetHeight)  cabinetError = "tooLow"
+
+            }
             return {
                 ...state,
                 cabinetValid: cabinetValid,
+                cabinetError: cabinetError,
             }
 
     }

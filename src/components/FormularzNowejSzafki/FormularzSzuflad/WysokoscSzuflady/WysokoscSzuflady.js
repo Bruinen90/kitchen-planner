@@ -8,6 +8,8 @@ const WysokoscSzuflady = (props) => (
             onFocus = {props.aktywnaSzuflada}
             onBlur=  {props.nieaktywnaSzuflada}
             placeholder="Szuflada (mm)"
+            className="poleFormularzaSzuflad poleWysokosc"
+            disabled={props.zablokowana}
         />
 );
 export default WysokoscSzuflady;
