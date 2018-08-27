@@ -47,6 +47,8 @@ class App extends Component {
                   bokiIlosc={formatki[1].ilosc}
                   bokiOkleina={formatki[1].okleina}
                   fronty={formatki[2]}
+                  plecySzuflad={formatki[3]}
+                  dnaSzuflad={formatki[4]}
               />
       }
 

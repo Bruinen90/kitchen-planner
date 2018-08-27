@@ -37,7 +37,7 @@ class FormularzSzuflad extends Component {
                             blockButtonClasses = blockButtonClasses+ " " + "red";
                         }
                         return (
-                            <div>
+                            <div key={id}>
                             {this.props.drawersHeights.length > 1 ?
                                 <input
                                     type="button"

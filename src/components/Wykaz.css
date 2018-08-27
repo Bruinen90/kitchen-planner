@@ -18,16 +18,21 @@
     margin: auto;
     margin-top: 20px;
     color: #e26b56;
+    border-bottom: 2px solid #e26b56;
+    width: 345px;
+    padding: 10px;
 }
 
 
 .row {
     display: flex;
+    border-bottom: 1px solid #ccc;
 }
 
 .col {
-    padding: 20px;
+    padding: 15px;
     text-align: center;
+    width: 90px;
 }
 
 .okleina {
