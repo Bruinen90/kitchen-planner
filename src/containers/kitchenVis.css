@@ -1,0 +1,39 @@
+.rzadSzafek {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 300px;
+    border: 1px solid black;
+    border-top: 0;
+    align-items: flex-end;
+
+}
+
+.maleRamy {
+    box-sizing: border-box;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.malaNoga {
+    width: 25px;
+    height: 25px;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+.malaNoga div {
+    background-color: black;
+    height: 100%;
+    width: 12.5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.small {
+    font-size: 16px;
+    margin: 1px;
+    width: 100%;
+    justify-content: center;
+}

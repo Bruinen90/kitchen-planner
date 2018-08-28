@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 
-import {connect} from 'react-redux';
-
 class WizualizacjaWnetrze extends Component {
     render() {
-
+        const wysokoscPrzeliczeniowa = (wysokosc) => {
+            if(this.props.rozmiar==="small") {
+                return (
+                    (wysokosc+this.props.szczelina)/4
+                )}
+            else {
+                return (wysokosc+this.props.szczelina)
+            };
+        }
         let drowersArray = [];
         if (this.props.rodzaj === "szuflady") {
             this.props.drawersHeights.map((wysokosc,id) => {
@@ -12,19 +18,30 @@ class WizualizacjaWnetrze extends Component {
                 if (this.props.activeDrawer === id) {
                     aktywnaSzuflada = "aktywnaSzuflada"
                 }
-                    drowersArray.push(
+                drowersArray.push(
+                    !this.props.rozmiar ?
                         <div
                             className={"szuflada" + " " + aktywnaSzuflada}
                             key={id}
-                            style={{"height": wysokosc+"px"}}
+                            style={{"height": wysokoscPrzeliczeniowa(wysokosc)+"px"}}
                         >
-                            {id+1}
-                            {wysokosc ?
-                                <div className="aktualnaWysokosc">
+                        {id+1}
+                        {wysokosc ?
+                            <div className="aktualnaWysokosc">
                                     <span style={{"fontSize": "12px"}}>Wysokość frontu:</span>
-                                    <br/>{wysokosc+"mm"}
-                                </div> : null}
-                        </div>);
+                                <br/>{wysokosc+"mm"}
+                            </div> : null}
+                        </div>
+                        :
+                        <div
+                            className={"szuflada" + " " + aktywnaSzuflada + " small" }
+                            key={id}
+                            style={{"height": wysokoscPrzeliczeniowa(wysokosc)+"px"}}
+                        >
+                        {wysokosc ? wysokosc+"mm" : null}
+                        </div>
+
+                        );
             })
         }
 
@@ -33,12 +50,16 @@ class WizualizacjaWnetrze extends Component {
             if (this.props.activeDrawer !== null) {
                 aktywnaSzuflada = "aktywnaSzuflada"
             }
+            let wysokoscSzuflady = this.props.drawersHeights[0];
+            if (this.props.rozmiar==="small") {
+                wysokoscSzuflady = this.props.drawersHeights[0];
+            }
                 drowersArray.push(<div
-                                    className={"szuflada malaSzuflada" + " " + aktywnaSzuflada}
-                                    style={{"height": this.props.drawersHeights[0]+"px"}}
+                                    className={"szuflada malaSzuflada" + " " + aktywnaSzuflada + " " + this.props.rozmiar}
+                                    style={{"height": wysokoscPrzeliczeniowa(wysokoscSzuflady) +"px"}}
                                     key="szuflada"
                                     >Szuflada</div>);
-                drowersArray.push(<div className="szuflada" key="drzwi">Drzwi</div>);
+                drowersArray.push(<div className={"szuflada"} key="drzwi">Drzwi</div>);
         }
 
         if (this.props.rodzaj === "jedneDrzwi") {
@@ -50,11 +71,4 @@ class WizualizacjaWnetrze extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        drawersHeights: state.drawersHeights,
-        activeDrawer: state.activeDrawer,
-    }
-}
-
-export default connect(mapStateToProps)(WizualizacjaWnetrze);
+export default WizualizacjaWnetrze;

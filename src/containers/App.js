@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './kitchenVis.css';
 
 import MenuBar from '../components/UI/MenuBar';
 import SizeInput from '../components/SizeInput';
@@ -24,6 +25,36 @@ class App extends Component {
     }
 
   render() {
+      const kitchenVisual = this.props.cabinets.map(cabinet => {
+          let szafkaWymiary = {
+              width: cabinet.cabinetWidth/4 + "px",
+              height: this.props.wysokoscSzafek/4 + "px",
+          }
+          return (
+
+                  <div className="wizualizacjaSzafki malaSzafka">
+                      <div className="ramySzafki maleRamy" style={szafkaWymiary}>
+                          <WizualizacjaWnetrza
+                              rodzaj={cabinet.cabinetType}
+                              ilosc={cabinet.drawersHeights.length}
+                              drawersHeights={cabinet.drawersHeights}
+                              szczelina={this.props.szczelina}
+                              activeDrawer={null}
+                              rozmiar="small"
+                          />
+                      </div>
+                      <div className="nogaSzafki malaNoga">
+                          <div></div>
+                      </div>
+                      <div className="nogaSzafki malaNoga" style={{float: "right"}}>
+                          <div></div>
+                      </div>
+                  </div>
+
+
+          )
+      })
+
       let roomSize = {
           width: this.props.sizeW,
           height: this.props.sizeH,
@@ -40,15 +71,6 @@ class App extends Component {
           const formatki = this.props.formatki;
           listaFormatek=
               <WykazFormatek
-                  trawersyWymiary={formatki[0].wymiary}
-                  trawersyIlosc={formatki[0].ilosc}
-                  trawersyOkleina={formatki[0].okleina}
-                  bokiWymiary={formatki[1].wymiary}
-                  bokiIlosc={formatki[1].ilosc}
-                  bokiOkleina={formatki[1].okleina}
-                  fronty={formatki[2]}
-                  plecySzuflad={formatki[3]}
-                  dnaSzuflad={formatki[4]}
               />
       }
 
@@ -59,7 +81,7 @@ class App extends Component {
       }
 
       let wizualizacjaWymiary = {
-          width: this.props.szafki[0].szerokosc/2 + "px",
+          width: this.props.cabinetWidth/2 + "px",
           height: this.props.wysokoscSzafek/2 + "px",
       }
 
@@ -76,10 +98,11 @@ class App extends Component {
         <h1 className="header">Kitchen planner<span className="redDot">.</span></h1>
         {/* <div className="roomBorders" style={roomSize}>
         </div> */}
+        <div className="rzadSzafek">{kitchenVisual}</div>
 
-        <SizeInput
+        {/*<SizeInput
             enterSize={(event) => this.props.onChangeRoomSize(event)}
-        />
+        /> */}
 
         <div className="kreatorNowejSzafki">
             <FormularzNowejSzafki
@@ -93,8 +116,11 @@ class App extends Component {
             <div className="wizualizacjaSzafki">
                 <div className="ramySzafki" style={wizualizacjaWymiary}>
                     <WizualizacjaWnetrza
-                        rodzaj={this.props.szafki[0].rodzaj}
-                        ilosc={this.props.iloscSzuflad}
+                        rodzaj={this.props.cabinetType}
+                        ilosc={this.props.drawersHeights.length}
+                        drawersHeights={this.props.drawersHeights}
+                        activeDrawer={this.props.activeDrawer}
+                        szczelina={this.props.szczelina}
                     />
                 </div>
                 <div className="nogaSzafki">
@@ -114,15 +140,20 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
+        cabinets: state.cabinets,
         sizeW: state.kitchenWidth,
         sizeH: state.kitchenHeight,
+        szczelina: state.spaceBetweenDrawers,
         wysokoscSzafek: state.cabinetHeight,
         glebokoscSzafek: state.cabinetDepth,
-        szafki: state.cabinets,
         iloscSzafek: state.cabinetsCount,
         formatki: state.formatki,
+        drawersHeights: state.drawersHeights,
+        activeDrawer: state.activeDrawer,
         iloscSzuflad: state.drawersHeights.length,
         canAddCabinet: state.cabinetValid,
+        cabinetWidth: state.cabinetWidth,
+        cabinetType: state.cabinetType,
     };
 };
 

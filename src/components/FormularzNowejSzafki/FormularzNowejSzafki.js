@@ -102,7 +102,7 @@ class FormularzNowejSzafki extends Component {
 const mapStateToProps = state => {
     return {
         canAddCabinet: state.cabinetValid,
-        szerokoscSzafki: state.cabinets[0].szerokosc,
+        szerokoscSzafki: state.cabinetWidth,
         errorType: state.cabinetError,
 
     }

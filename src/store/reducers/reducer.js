@@ -1,27 +1,25 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    cabinets: [],
+    cabinetsCount: 0,
     kitchenWidth: '1200px',
     kitchenHeight: '500px',
-    cabinetDepth: 550,
-    cabinetHeight: 750,
     spaceBetweenDrawers: 3,
     spaceDrawersToTop: 3,
-    cabinets: [
-        {   id: 1,
-            rodzaj: "",
-            szerokosc: 600,
-        }
-    ],
-    formatki: [],
-    cabinetsCount: 0,
-    drawersCounterState: 3,
+    cabinetDepth: 550,
+    cabinetHeight: 750,
+    cabinetId: 1,
+    cabinetType: "",
+    cabinetWidth: 600,
     drawersHeights: [],
+    drawersCounterState: 3,
     blockedDrawers: [],
     activeDrawer: null,
     errorTypes: [],
     cabinetValid: false,
     cabinetError: "noCabinetType",
+    formatki: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +47,7 @@ const reducer = (state = initialState, action) => {
         return spacesSum;
     }
 
+
     switch (action.type) {
         case(actionTypes.CHANGE_ROOM_SIZE):
             if (action.event.charCode === 13) {
@@ -61,52 +60,34 @@ const reducer = (state = initialState, action) => {
         }
 
         case(actionTypes.CHANGE_CABINET_TYPE):
-            const currentCabinet = {...state.cabinets};
-            currentCabinet[0].rodzaj = action.event.target.value;
             let updateDrawersCount = 0;
-            const drawersBlocked = [];
-            switch(currentCabinet[0].rodzaj) {
+            switch(action.event.target.value) {
                 case('szufladaDrzwi'): updateDrawersCount = 1; break;
                 case('jedneDrzwi'): updateDrawersCount = 0; break;
                 case('szuflady'): updateDrawersCount = state.drawersCounterState; break;
             }
-            let i=0;
-            while(i<updateDrawersCount) {
-                drawersBlocked.push(false);
-                i++
-            }
+            const drawersBlocked = Array(updateDrawersCount).fill(false);
             return {
                 ...state,
-                cabinets: currentCabinet,
+                cabinetType: action.event.target.value,
                 drawersHeights: updateDrawersArray(updateDrawersCount),
                 errorTypes: [],
                 blockedDrawers: drawersBlocked,
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):
-            const currentCabinets = [state.cabinets];
-            const newCabinets = currentCabinets.map(cabinet => {
-                    return {
-                        ... cabinet[0],
-                        iloscSzuflad: action.event.target.value,
-                        rodzaj: "szuflady"
-                    }
-            });
             const newBlockedDrawers = Array(parseInt(action.event.target.value)).fill(false);
             return {
                 ...state,
-                cabinets: newCabinets,
                 drawersCounterState: action.event.target.value,
                 drawersHeights: updateDrawersArray(action.event.target.value),
                 blockedDrawers: newBlockedDrawers,
             }
 
         case(actionTypes.CHANGE_CABINET_WIDTH):
-            const currentCabinetWidth = {...state.cabinets};
-            currentCabinetWidth[0].szerokosc = action.event.target.value;
             return {
                 ...state,
-                cabinets: currentCabinetWidth,
+                cabinetWidth: parseInt(action.event.target.value),
             }
 
         case(actionTypes.ADD_CABINET):
@@ -119,11 +100,11 @@ const reducer = (state = initialState, action) => {
             let newCabinetArray = [];
             const trawersy = {
                 ilosc: 2,
-                wymiary: state.cabinetDepth.toString()+"x"+(state.cabinets[0].szerokosc-36).toString()+"mm",
+                wymiary: state.cabinetDepth.toString()+"x"+(state.cabinetWidth-36).toString()+"mm",
                 okleina: 'd1',
                 typPlyty: '18mm',
             }
-            if (state.cabinetDepth > state.cabinets[0].szerokosc-36) {
+            if (state.cabinetDepth > state.cabinetWidth-36) {
                 trawersy.okleina = 'k1';
             }
 
@@ -144,28 +125,28 @@ const reducer = (state = initialState, action) => {
             let fronty = "";
             let szufladyPlecy= [];
             let wymiaryPlecow = "";
-            if (state.cabinets[0].rodzaj === 'jedneDrzwi') {
+            if (state.cabinetType === 'jedneDrzwi') {
                 fronty = [{
                     ilosc: 1,
-                    wymiary: (state.cabinetHeight-3).toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
+                    wymiary: (state.cabinetHeight-3).toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
                     okleina: "full",
                     typPlyty: 'front',
                 }]
-            } else if (state.cabinets[0].rodzaj === 'szufladaDrzwi') {
+            } else if (state.cabinetType === 'szufladaDrzwi') {
                 fronty = [{
                     ilosc: 1,
-                    wymiary: state.drawersHeights[0].toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
+                    wymiary: state.drawersHeights[0].toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
                     okleina: "full",
                     typPlyty: 'front',
                 },
                 {   ilosc: 1,
-                    wymiary: (state.cabinetHeight-state.drawersHeights[0]-6).toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
+                    wymiary: (state.cabinetHeight-state.drawersHeights[0]-6).toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
                     okleina: 'full',
                     typPlyty: 'front',
                 },];
 
-                if (state.drawersHeights[0] < 224) wymiaryPlecow = state.cabinets[0].szerokosc-123+"x84mm";
-                else wymiaryPlecow = state.cabinets[0].szerokosc-123+"x199mm";
+                if (state.drawersHeights[0] < 224) wymiaryPlecow = state.cabinetWidth-123+"x84mm";
+                else wymiaryPlecow = state.cabinetWidth-123+"x199mm";
                 szufladyPlecy.push(
                     {
                         ilosc: 1,
@@ -175,7 +156,7 @@ const reducer = (state = initialState, action) => {
                     }
                 )
 
-            } else if (state.cabinets[0].rodzaj === 'szuflady') {
+            } else if (state.cabinetType === 'szuflady') {
                 const allDrawers = [...state.drawersHeights];
                 const uniqueDrawers = Array.from(new Set(allDrawers));
                 const countDrawers = (wysokosc) => {
@@ -187,15 +168,15 @@ const reducer = (state = initialState, action) => {
                     uniqueDrawers.map((wysokosc, id) => {
                         return {
                             ilosc: countDrawers(wysokosc),
-                            wymiary: wysokosc.toString()+"x"+(state.cabinets[0].szerokosc-3).toString()+"mm",
+                            wymiary: wysokosc.toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
                             okleina: 'full',
                             typPlyty: 'front',
                         }
                     });
                 szufladyPlecy =
                     uniqueDrawers.map((wysokosc, id) => {
-                        if (wysokosc < 224) wymiaryPlecow = state.cabinets[0].szerokosc-123+"x84mm";
-                        else wymiaryPlecow = state.cabinets[0].szerokosc-123+"x199mm";
+                        if (wysokosc < 224) wymiaryPlecow = state.cabinetWidth-123+"x84mm";
+                        else wymiaryPlecow = state.cabinetWidth-123+"x199mm";
                         return {
                             ilosc: countDrawers(wysokosc),
                             wymiary: wymiaryPlecow,
@@ -209,18 +190,31 @@ const reducer = (state = initialState, action) => {
 
             let szufladyDna = {
                     ilosc: state.drawersHeights.length,
-                    wymiary: (state.cabinets[0].szerokosc-111).toString()+"x"+"476mm",
+                    wymiary: (state.cabinetWidth-111).toString()+"x"+"476mm",
                     okleina: null,
             };
             newCabinetArray.push(szufladyDna);
 
 
             const newIloscSzafek = state.cabinetsCount+1;
+            const newCabinetId = state.cabinetId+1;
+
+            const newCabinetParams = {
+                cabinetId: state.cabinetId,
+                cabinetType: state.cabinetType,
+                cabinetWidth: state.cabinetWidth,
+                drawersHeights: [...state.drawersHeights],
+            }
+
+            const updateCabinets = [...state.cabinets];
+            updateCabinets.push(newCabinetParams)
 
             return {
                     ...state,
+                    cabinetId: newCabinetId,
                     formatki: newCabinetArray,
                     cabinetsCount: newIloscSzafek,
+                    cabinets: updateCabinets,
                 }
 
         case(actionTypes.CHANGE_DRAWER_HEIGHT):
@@ -319,28 +313,28 @@ const reducer = (state = initialState, action) => {
             let cabinetError = false;
             const sumOfDrawersHeights = state.drawersHeights.reduce((a,b) => a+b, 0);
             if ((
-                    state.cabinets[0].rodzaj === "jedneDrzwi" ||
+                    state.cabinetType === "jedneDrzwi" ||
                 (
-                    state.cabinets[0].rodzaj === "szufladaDrzwi" &&
+                    state.cabinetType === "szufladaDrzwi" &&
                     sumOfDrawersHeights + calculateSpacing() + 100 <= state.cabinetHeight &&
                     sumOfDrawersHeights >= 100
                 ) ||
                 (
                     sumOfDrawersHeights + calculateSpacing() === state.cabinetHeight
-                )) && state.cabinets[0].szerokosc > 299 && state.cabinets[0].szerokosc <901
+                )) && state.cabinetWidth > 299 && state.cabinetWidth <901
 
 
 
             ) {
                 cabinetValid = true
             } else {
-                if(state.cabinets[0].szerokosc > 900) cabinetError = "tooWide";
-                if(state.cabinets[0].szerokosc < 300) cabinetError = "tooNarrow";
-                if (state.cabinets[0].rodzaj === "szufladaDrzwi" &&
+                if(state.cabinetWidth > 900) cabinetError = "tooWide";
+                if(state.cabinetWidth < 300) cabinetError = "tooNarrow";
+                if (state.cabinetType === "szufladaDrzwi" &&
                 sumOfDrawersHeights + calculateSpacing() + 100 > state.cabinetHeight) cabinetError = "tooHeightOneDrawer";
-                if (state.cabinets[0].rodzaj === "szufladaDrzwi" && sumOfDrawersHeights < 100) cabinetError = "tooLowOneDrawer";
-                if (state.cabinets[0].rodzaj === "szuflady" && sumOfDrawersHeights + calculateSpacing() > state.cabinetHeight) cabinetError = "tooHeight";
-                if (state.cabinets[0].rodzaj === "szuflady" && sumOfDrawersHeights + calculateSpacing() < state.cabinetHeight)  cabinetError = "tooLow"
+                if (state.cabinetType === "szufladaDrzwi" && sumOfDrawersHeights < 100) cabinetError = "tooLowOneDrawer";
+                if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() > state.cabinetHeight) cabinetError = "tooHeight";
+                if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() < state.cabinetHeight)  cabinetError = "tooLow"
 
             }
             return {

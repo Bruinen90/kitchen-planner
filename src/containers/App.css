@@ -126,8 +126,6 @@ input:focus {
 
 .szuflada {
     margin: 3px;
-    margin-left: 3px;
-    margin-right: 3px;
     border: 1px solid black;
     width: 100%;
     height: 100%;
@@ -138,7 +136,7 @@ input:focus {
     font-size: 30px;
     font-weight: 600;
     color: #999;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .aktywnaSzuflada {
@@ -153,10 +151,6 @@ input:focus {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-}
-
-.malaSzuflada {
-    height: 33%;
 }
 
 .kreatorNowejSzafki {
