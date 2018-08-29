@@ -5,7 +5,7 @@ class WizualizacjaWnetrze extends Component {
         const wysokoscPrzeliczeniowa = (wysokosc) => {
             if(this.props.rozmiar==="small") {
                 return (
-                    (wysokosc+this.props.szczelina)/4
+                    (wysokosc+this.props.szczelina)/this.props.skala
                 )}
             else {
                 return (wysokosc+this.props.szczelina)

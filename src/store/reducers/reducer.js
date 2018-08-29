@@ -4,7 +4,8 @@ const initialState = {
     cabinets: [],
     cabinetsCount: 0,
     kitchenWidth: '1200px',
-    kitchenHeight: '500px',
+    kitchenHeight: '300px',
+    scale: 3,
     spaceBetweenDrawers: 3,
     spaceDrawersToTop: 3,
     cabinetDepth: 550,
@@ -20,6 +21,7 @@ const initialState = {
     cabinetValid: false,
     cabinetError: "noCabinetType",
     formatki: [],
+    hoveredCabinet: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -51,12 +53,14 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case(actionTypes.CHANGE_ROOM_SIZE):
             if (action.event.charCode === 13) {
-            return {
-                ...state,
-                kitchenWidth: action.event.target.value/(action.event.target.value*2/window.innerWidth) + 'px',
-                kitchenHeight: 1000/(2*action.event.target.value/window.innerWidth) + 'px',
-                blat: action.event.target.value-3,
-            }
+                const scale = action.event.target.value*1.2/window.innerWidth;
+                return {
+                    ...state,
+                    kitchenWidth: action.event.target.value/scale + 'px',
+                    kitchenHeight: 1000/scale + 'px',
+                    blat: action.event.target.value-3,
+                    scale: scale,
+                }
         }
 
         case(actionTypes.CHANGE_CABINET_TYPE):
@@ -341,6 +345,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 cabinetValid: cabinetValid,
                 cabinetError: cabinetError,
+            }
+
+        case(actionTypes.HOVER_CABINET_ON_VISUALIZATION):
+            return {
+                ...state,
+                hoveredCabinet: action.cabinetId,
             }
 
     }

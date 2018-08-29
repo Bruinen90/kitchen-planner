@@ -114,6 +114,8 @@ input:focus {
     border-top: 10px solid black;
     border-bottom: 10px solid black;
     box-sizing: border-box;
+    margin-left: 1px;
+    margin-right: 1px;
 }
 
 .nogaSzafki div {

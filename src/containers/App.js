@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import './kitchenVis.css';
 
 import MenuBar from '../components/UI/MenuBar';
 import SizeInput from '../components/SizeInput';
@@ -8,6 +7,7 @@ import Instrukcja from '../components/Porady/JakKorzystac';
 import FormularzNowejSzafki from '../components/FormularzNowejSzafki/FormularzNowejSzafki';
 import WizualizacjaWnetrza from '../components/WizualizacjaWnetrza/WizualizacjaWnetrza';
 import WykazFormatek from '../components/WykazFormatek';
+import WizualizacjaKuchni from '../components/WizualizacjaKuchni/WizualizacjaKuchni';
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
@@ -25,41 +25,6 @@ class App extends Component {
     }
 
   render() {
-      const kitchenVisual = this.props.cabinets.map(cabinet => {
-          let szafkaWymiary = {
-              width: cabinet.cabinetWidth/4 + "px",
-              height: this.props.wysokoscSzafek/4 + "px",
-          }
-          return (
-
-                  <div className="wizualizacjaSzafki malaSzafka">
-                      <div className="ramySzafki maleRamy" style={szafkaWymiary}>
-                          <WizualizacjaWnetrza
-                              rodzaj={cabinet.cabinetType}
-                              ilosc={cabinet.drawersHeights.length}
-                              drawersHeights={cabinet.drawersHeights}
-                              szczelina={this.props.szczelina}
-                              activeDrawer={null}
-                              rozmiar="small"
-                          />
-                      </div>
-                      <div className="nogaSzafki malaNoga">
-                          <div></div>
-                      </div>
-                      <div className="nogaSzafki malaNoga" style={{float: "right"}}>
-                          <div></div>
-                      </div>
-                  </div>
-
-
-          )
-      })
-
-      let roomSize = {
-          width: this.props.sizeW,
-          height: this.props.sizeH,
-      }
-
       // let blatPrint = "";
       //
       // if (this.state.blat) {
@@ -96,13 +61,11 @@ class App extends Component {
         {instrukcja}
 
         <h1 className="header">Kitchen planner<span className="redDot">.</span></h1>
-        {/* <div className="roomBorders" style={roomSize}>
-        </div> */}
-        <div className="rzadSzafek">{kitchenVisual}</div>
+        <WizualizacjaKuchni />
 
-        {/*<SizeInput
+        <SizeInput
             enterSize={(event) => this.props.onChangeRoomSize(event)}
-        /> */}
+        />
 
         <div className="kreatorNowejSzafki">
             <FormularzNowejSzafki
@@ -143,6 +106,7 @@ const mapStateToProps = state => {
         cabinets: state.cabinets,
         sizeW: state.kitchenWidth,
         sizeH: state.kitchenHeight,
+        scale: state.scale,
         szczelina: state.spaceBetweenDrawers,
         wysokoscSzafek: state.cabinetHeight,
         glebokoscSzafek: state.cabinetDepth,
