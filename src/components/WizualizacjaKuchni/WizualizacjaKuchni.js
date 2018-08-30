@@ -16,24 +16,33 @@ class WizualizacjaKuchni extends Component {
                 height: this.props.wysokoscSzafek/this.props.scale + "px",
             }
             let showIfHovered = {};
+            let overlayOpacity = {};
             if(cabinet.cabinetId === this.props.hoveredCabinet) {
-                showIfHovered = {opacity: "1"}
+                showIfHovered = {opacity: "1"};
+                overlayOpacity = {opacity: "0.7"};
             }
 
             return (
-                    <div className="cabinetWrapper">
-                        <div
-                            className="ramySzafki maleRamy"
-                            style={szafkaWymiary}
-                            onMouseOver={()=>this.props.onHoverCabinet(cabinet.cabinetId)}
-                            onMouseOut={()=>this.props.onHoverCabinet(false)}
-                        >
-                            <div
-                                className="buttons"
-                                style={showIfHovered}
-                            >
-                                <button className="green">Edytuj</button>
-                                <button className="red">Usuń</button>
+                    <div
+                        key={cabinet.cabinetId}
+                        className="cabinetWrapper"
+                        onMouseOver={()=>this.props.onHoverCabinet(cabinet.cabinetId)}
+                        onMouseOut={()=>this.props.onHoverCabinet(false)}
+                    >
+                        <div className="ramySzafki maleRamy" style={szafkaWymiary}>
+                            <div className="buttons" style={showIfHovered}>
+                                <button
+                                    className="green"
+                                    onClick={()=>this.props.onClickEditCabinet(cabinet.cabinetId)}
+                                >
+                                    Edytuj
+                                </button>
+                                <button
+                                    className="red"
+                                    onClick={()=>this.props.onClickDeleteCabinet(cabinet.cabinetId)}
+                                >
+                                    Usuń
+                                </button>
                             </div>
                             <WizualizacjaWnetrza
                                 rodzaj={cabinet.cabinetType}
@@ -44,6 +53,7 @@ class WizualizacjaKuchni extends Component {
                                 rozmiar="small"
                                 skala={this.props.scale}
                             />
+                            <div className="cabinetOverlay" style={overlayOpacity}></div>
                         </div>
                         <div className="nogaSzafki malaNoga">
                           <div></div>
@@ -51,6 +61,7 @@ class WizualizacjaKuchni extends Component {
                         <div className="nogaSzafki malaNoga" style={{float: "right"}}>
                             <div></div>
                         </div>
+
                     </div>
             )
         })
@@ -76,6 +87,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onHoverCabinet: (cabinetId) => dispatch({type: actionTypes.HOVER_CABINET_ON_VISUALIZATION, cabinetId: cabinetId}),
+        onClickEditCabinet: (cabinetId) => dispatch({type: actionTypes.EDIT_CABINET, cabinetId: cabinetId}),
+        onClickDeleteCabinet: (cabinetId) => dispatch({type: actionTypes.DELETE_CABINET, cabinetId: cabinetId}),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WizualizacjaKuchni);

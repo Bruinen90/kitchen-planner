@@ -353,6 +353,21 @@ const reducer = (state = initialState, action) => {
                 hoveredCabinet: action.cabinetId,
             }
 
+        case(actionTypes.DELETE_CABINET):
+            const checkCabinetId = (cabinet) => {
+                return cabinet.cabinetId === action.cabinetId;
+            }
+            const deletionIndex = state.cabinets.findIndex(checkCabinetId);
+            console.log(deletionIndex)
+            const updatedCabinetsArray = [
+                ...state.cabinets.slice(0,deletionIndex),
+                ...state.cabinets.slice(deletionIndex+1)
+            ]
+            return {
+                ...state,
+                cabinets: updatedCabinetsArray,
+            }
+
     }
 
     return state;
