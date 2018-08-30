@@ -4,13 +4,13 @@ class WizualizacjaWnetrze extends Component {
     render() {
         const wysokoscPrzeliczeniowa = (wysokosc) => {
             if(this.props.rozmiar==="small") {
-                return (
-                    (wysokosc+this.props.szczelina)/this.props.skala
-                )}
+                return (wysokosc+this.props.szczelina)/this.props.skala
+                }
             else {
                 return (wysokosc+this.props.szczelina)
             };
         }
+        console.log(wysokoscPrzeliczeniowa(12))
         let drowersArray = [];
         if (this.props.rodzaj === "szuflady") {
             this.props.drawersHeights.map((wysokosc,id) => {

@@ -78,7 +78,7 @@ class FormularzSzuflad extends Component {
                         type="button"
                         onClick={this.props.onClickAutoDrawers}
                         value="Wyrównaj wysokość szuflad"
-                        className="przyciskWyrownajSzuflady" />
+                        className="przyciskWyrownajSzuflady blue" />
                     : null}
                 </div>
             :

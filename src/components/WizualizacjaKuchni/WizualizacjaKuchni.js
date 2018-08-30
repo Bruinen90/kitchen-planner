@@ -81,6 +81,7 @@ const mapStateToProps = state => {
         scale: state.scale,
         wysokoscSzafek: state.cabinetHeight,
         hoveredCabinet: state.hoveredCabinet,
+        szczelina: state.spaceBetweenDrawers,
     }
 }
 

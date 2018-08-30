@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import FormularzSzuflad from './FormularzSzuflad/FormularzSzuflad';
+import './FormularzNowejSzafki.css';
 
 import * as actionTypes from '../../store/actions/actionTypes';
 
@@ -45,6 +46,7 @@ class FormularzNowejSzafki extends Component {
                     value="jedneDrzwi"
                     onChange={this.props.changeType}
                     required
+                    checked={this.props.cabinetType === "jedneDrzwi"}
                 />
                 Szafka z pojedynczymi drzwiczkami
                 <br />
@@ -54,6 +56,7 @@ class FormularzNowejSzafki extends Component {
                     value="szufladaDrzwi"
                     onClick={this.props.changeType}
                     required
+                    checked={this.props.cabinetType === "szufladaDrzwi"}
                 />
                 Szafka z niską szufladą i drzwiczkami
                 <br />
@@ -63,6 +66,7 @@ class FormularzNowejSzafki extends Component {
                     value="szuflady"
                     onChange={this.props.changeType}
                     required
+                    checked={this.props.cabinetType === "szuflady"}
                 />
                 Szafka z szufladami
                 <FormularzSzuflad
@@ -79,15 +83,24 @@ class FormularzNowejSzafki extends Component {
                     max="900"
                     onChange={this.props.changeWidth}
                     value={this.props.szerokoscSzafki}
+
                 />
                 <br />
+                {!this.props.editInProgress ?
                 <input
-                    className="addCabinetButton"
+                    className="confirmCabinetButton green"
                     type="button"
                     disabled={!this.props.canAddCabinet}
                     value="Dodaj szafkę"
                     onClick={this.props.canAddCabinet? this.props.clickDodaj : null}
-                />
+                /> :
+                <input
+                    className="confirmCabinetButton blue"
+                    type="button"
+                    disabled={!this.props.canAddCabinet}
+                    value="Zapisz zmiany"
+                    onClick={this.props.onClickSaveCabinet}
+                />}
                 <div className={this.props.canAddCabinet ? "szafkaPrawidlowa" : "szafkaNieprawidlowa" }>
                 <b>Błąd</b><br/>
                     {errorsArray}
@@ -104,7 +117,8 @@ const mapStateToProps = state => {
         canAddCabinet: state.cabinetValid,
         szerokoscSzafki: state.cabinetWidth,
         errorType: state.cabinetError,
-
+        cabinetType: state.cabinetType,
+        editInProgress: state.editInProgress,
     }
 }
 
@@ -112,6 +126,7 @@ const mapDispatchToProps = dispatch => {
     return {
             onCabinetFormUpdate: () => dispatch({type: actionTypes.CHECK_CABINET}),
             onHoverAddCabinet: () => dispatch({type: actionTypes.HOVER_ADD_CABINET}),
+            onClickSaveCabinet: () => dispatch({type: actionTypes.SAVE_CABINET}),
     }
 }
 

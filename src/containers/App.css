@@ -84,12 +84,6 @@ input:focus {
     text-align: left;
 }
 
-.nowaSzafkaFormularz {
-    line-height: 2rem;
-    padding: 20px;
-    width: 500px;
-}
-
 .ramySzafki {
     margin: auto;
     display: flex;
@@ -155,79 +149,6 @@ input:focus {
     width: 100%;
 }
 
-.kreatorNowejSzafki {
-    display: flex;
-    width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    align-items: flex-start;
-    margin-top: 2rem;
-}
-
-.formularzNowejSzafki {
-    text-align: left;
-}
-
-.szafkaNieprawidlowa {
-    color: #e26b56;
-    line-height: 1.2rem;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #e26b56;
-}
-
-.szafkaPrawidlowa {
-    display: none;
-}
-
-.addCabinetButton {
-    font-size: 20px;
-    font-weight: 600;
-    color: white;
-    background-color: #5b9e72;
-    box-shadow: 3px 5px 8px #ccc;
-    border: none;
-    padding: 10px;
-    margin: 20px;
-    cursor: pointer;
-    transition: all 0.5s;
-}
-
-.addCabinetButton:hover {
-    transform: scale(1.05);
-}
-
-.addCabinetButton[disabled] {
-    background-color: #5b9e72;
-    box-shadow: none;
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.przyciskWyrownajSzuflady {
-    font-size: 16px;
-    font-weight: 600;
-    color: white;
-    background-color: #5b9e72;
-    width: 300px;
-    cursor: pointer;
-}
-
-.poleFormularzaSzuflad {
-    font-size: 16px;
-    box-sizing: border-box;
-    padding-left: 10px;
-    padding-right: 10px;
-    width: 100px;
-    cursor: pointer;
-}
-
-.poleFormularzaSzuflad[disabled] {
-    background-color: #ddd;
-}
 
 .green {
     color: white;
@@ -242,10 +163,4 @@ input:focus {
 .blue {
     color: white;
     background-color: #64a6d6;
-}
-
-.poleWysokosc {
-    border-left: 0px;
-    border-right: 0px;
-    cursor: auto;
 }

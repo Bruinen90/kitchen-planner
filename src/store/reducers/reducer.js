@@ -22,6 +22,8 @@ const initialState = {
     cabinetError: "noCabinetType",
     formatki: [],
     hoveredCabinet: false,
+    uniqueId: 1,
+    editInProgress: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -49,8 +51,60 @@ const reducer = (state = initialState, action) => {
         return spacesSum;
     }
 
+    const findCabinetId = (cabinet) => {
+        return cabinet.cabinetId === action.cabinetId;
+    }
+
+    const createBlockedDrawersArray = (countOfDrawers = state.drawersHeights.length) => {
+        return Array(countOfDrawers).fill(false)
+    }
+
 
     switch (action.type) {
+        case(actionTypes.EDIT_CABINET):
+            const editIndex = state.cabinets.findIndex(findCabinetId);
+            const cabinetToBeEdited = {...state.cabinets[editIndex]};
+            let editedDrawersHeights = [];
+            cabinetToBeEdited.type !== "drzwi" ? editedDrawersHeights = [...cabinetToBeEdited.drawersHeights] : null;
+            return {
+                ...state,
+                cabinetId: cabinetToBeEdited.cabinetId,
+                cabinetType: cabinetToBeEdited.cabinetType,
+                cabinetWidth: cabinetToBeEdited.cabinetWidth,
+                drawersHeights: editedDrawersHeights,
+                drawersCounterState: editedDrawersHeights.length,
+                blockedDrawers: [],
+                activeDrawer: null,
+                errorTypes: [],
+                editInProgress: true,
+                blockedDrawers: createBlockedDrawersArray(),
+            }
+
+        case(actionTypes.SAVE_CABINET):
+            const savedCabinetParams = {
+                cabinetId: state.cabinetId,
+                cabinetType: state.cabinetType,
+                cabinetWidth: state.cabinetWidth,
+                drawersHeights: [...state.drawersHeights],
+                blockedDrawers: createBlockedDrawersArray(),
+            }
+
+            const beforeCabinetsArray = [...state.cabinets];
+            const afterCabinetsArray = beforeCabinetsArray.map(cabinet => {
+                if(cabinet.cabinetId !== state.cabinetId) {
+                    return cabinet
+                }
+                return {
+                    ...savedCabinetParams
+                }
+            })
+
+            return {
+                    ...state,
+                    cabinets: afterCabinetsArray,
+                    editInProgress: false,
+                }
+
         case(actionTypes.CHANGE_ROOM_SIZE):
             if (action.event.charCode === 13) {
                 const scale = action.event.target.value*1.2/window.innerWidth;
@@ -68,7 +122,7 @@ const reducer = (state = initialState, action) => {
             switch(action.event.target.value) {
                 case('szufladaDrzwi'): updateDrawersCount = 1; break;
                 case('jedneDrzwi'): updateDrawersCount = 0; break;
-                case('szuflady'): updateDrawersCount = state.drawersCounterState; break;
+                case('szuflady'): updateDrawersCount = 3; break;
             }
             const drawersBlocked = Array(updateDrawersCount).fill(false);
             return {
@@ -201,10 +255,10 @@ const reducer = (state = initialState, action) => {
 
 
             const newIloscSzafek = state.cabinetsCount+1;
-            const newCabinetId = state.cabinetId+1;
+            const newCabinetId = state.uniqueId;
 
             const newCabinetParams = {
-                cabinetId: state.cabinetId,
+                cabinetId: state.uniqueId,
                 cabinetType: state.cabinetType,
                 cabinetWidth: state.cabinetWidth,
                 drawersHeights: [...state.drawersHeights],
@@ -219,6 +273,7 @@ const reducer = (state = initialState, action) => {
                     formatki: newCabinetArray,
                     cabinetsCount: newIloscSzafek,
                     cabinets: updateCabinets,
+                    uniqueId: state.uniqueId+1,
                 }
 
         case(actionTypes.CHANGE_DRAWER_HEIGHT):
@@ -249,7 +304,7 @@ const reducer = (state = initialState, action) => {
 
         case(actionTypes.AUTO_ADJUST_DRAWERS):
             const curDrawers = [...state.drawersHeights];
-            const unBlockedDrawersCount = [...state.blockedDrawers].filter((a)=> a==false).length;
+            const unBlockedDrawersCount = [...state.blockedDrawers].filter((a)=> a!=true).length;
                         console.log(unBlockedDrawersCount);
             const blockedDrawers = curDrawers.map((height, id) => {
                 if(state.blockedDrawers[id]) {
@@ -354,19 +409,20 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.DELETE_CABINET):
-            const checkCabinetId = (cabinet) => {
-                return cabinet.cabinetId === action.cabinetId;
-            }
-            const deletionIndex = state.cabinets.findIndex(checkCabinetId);
+            const deletionIndex = state.cabinets.findIndex(findCabinetId);
             console.log(deletionIndex)
             const updatedCabinetsArray = [
                 ...state.cabinets.slice(0,deletionIndex),
-                ...state.cabinets.slice(deletionIndex+1)
+                ...state.cabinets.slice(deletionIndex+1
+
+
+                )
             ]
             return {
                 ...state,
                 cabinets: updatedCabinetsArray,
             }
+
 
     }
 
