@@ -10,7 +10,6 @@ class WizualizacjaWnetrze extends Component {
                 return (wysokosc+this.props.szczelina)
             };
         }
-        console.log(wysokoscPrzeliczeniowa(12))
         let drowersArray = [];
         if (this.props.rodzaj === "szuflady") {
             this.props.drawersHeights.map((wysokosc,id) => {

@@ -43,6 +43,20 @@ class WizualizacjaKuchni extends Component {
                                 >
                                     Usuń
                                 </button>
+                                <div className="moveCabinetButtons">
+                                <button
+                                    className={this.props.canMove.left? "blue" : "disabledButton"}
+                                    onClick={this.props.canMove.left ? ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, -1) : null}
+                                >
+                                    &#11207;
+                                </button>
+                                <button
+                                    className={this.props.canMove.right ? "blue" : "disabledButton"}
+                                    onClick={this.props.canMove.right ? ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, +1) : null}
+                                >
+                                    &#11208;
+                                </button>
+                                </div>
                             </div>
                             <WizualizacjaWnetrza
                                 rodzaj={cabinet.cabinetType}
@@ -82,14 +96,20 @@ const mapStateToProps = state => {
         wysokoscSzafek: state.cabinetHeight,
         hoveredCabinet: state.hoveredCabinet,
         szczelina: state.spaceBetweenDrawers,
+        canMove: state.canMove,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onHoverCabinet: (cabinetId) => dispatch({type: actionTypes.HOVER_CABINET_ON_VISUALIZATION, cabinetId: cabinetId}),
-        onClickEditCabinet: (cabinetId) => dispatch({type: actionTypes.EDIT_CABINET, cabinetId: cabinetId}),
-        onClickDeleteCabinet: (cabinetId) => dispatch({type: actionTypes.DELETE_CABINET, cabinetId: cabinetId}),
+        onHoverCabinet: (cabinetId) =>
+            dispatch({type: actionTypes.HOVER_CABINET_ON_VISUALIZATION, cabinetId: cabinetId}),
+        onClickEditCabinet: (cabinetId) =>
+            dispatch({type: actionTypes.EDIT_CABINET, cabinetId: cabinetId}),
+        onClickDeleteCabinet: (cabinetId) =>
+            dispatch({type: actionTypes.DELETE_CABINET, cabinetId: cabinetId}),
+        onClickMoveCabinet: (cabinetId, positionChange) =>
+            dispatch({type: actionTypes.MOVE_CABINET, cabinetId: cabinetId, positionChange: positionChange})
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WizualizacjaKuchni);

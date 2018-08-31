@@ -24,6 +24,10 @@ const initialState = {
     hoveredCabinet: false,
     uniqueId: 1,
     editInProgress: false,
+    canMove: {
+        left: true,
+        right: true,
+    }
 }
 
 const reducer = (state = initialState, action) => {
@@ -58,7 +62,6 @@ const reducer = (state = initialState, action) => {
     const createBlockedDrawersArray = (countOfDrawers = state.drawersHeights.length) => {
         return Array(countOfDrawers).fill(false)
     }
-
 
     switch (action.type) {
         case(actionTypes.EDIT_CABINET):
@@ -403,9 +406,16 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.HOVER_CABINET_ON_VISUALIZATION):
+            const hoveredCabinetArrayIndex = state.cabinets.findIndex(findCabinetId);
+            let canMoveLeft = true;
+            let canMoveRight = true;
+            if(hoveredCabinetArrayIndex === 0) canMoveLeft = false;
+            if(hoveredCabinetArrayIndex === state.cabinets.length-1) canMoveRight = false;
+            const canMove = {left: canMoveLeft, right: canMoveRight}
             return {
                 ...state,
                 hoveredCabinet: action.cabinetId,
+                canMove: canMove,
             }
 
         case(actionTypes.DELETE_CABINET):
@@ -423,6 +433,26 @@ const reducer = (state = initialState, action) => {
                 cabinets: updatedCabinetsArray,
             }
 
+        case(actionTypes.MOVE_CABINET):
+            const cabinetsBeforeMove = [...state.cabinets];
+            const cabinetToBeMovedIndex = state.cabinets.findIndex(findCabinetId);
+            const cabinetToBeMoved = {...cabinetsBeforeMove[cabinetToBeMovedIndex]}
+            const collidingCabinet = {...cabinetsBeforeMove[cabinetToBeMovedIndex+action.positionChange]}
+            const cabinetsAfterMove = cabinetsBeforeMove.map((cabinet, index) => {
+                if(index !== cabinetToBeMovedIndex && index !== cabinetToBeMovedIndex+action.positionChange) {
+                    return cabinet
+                }
+                if(index === cabinetToBeMovedIndex) {
+                    return collidingCabinet
+                }
+                if (index === cabinetToBeMovedIndex+action.positionChange) {
+                    return cabinetToBeMoved
+                }
+            })
+            return {
+                ...state,
+                cabinets: cabinetsAfterMove,
+            }
 
     }
 
