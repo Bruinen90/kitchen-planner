@@ -28,6 +28,7 @@ const initialState = {
         left: true,
         right: true,
     },
+    showForms: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -70,6 +71,42 @@ const reducer = (state = initialState, action) => {
         if(calculateCabinestWidthSum + currentCabinetWidth > state.kitchenWidth) {
             return false} else {return true}
         }
+
+    const summarizeForms = (formsArray) => {
+        const uniqueFormsArray = [];
+
+        for(let i = 0; i<formsArray.length; i++) {
+            let duplicate = false;
+            for (let u = 0; u<uniqueFormsArray.length; u++) {
+                if(
+                    formsArray[i].wymiary === uniqueFormsArray[u].wymiary
+                    &&
+                    formsArray[i].okleina === uniqueFormsArray[u].okleina
+                ) {
+                    duplicate = true;
+                }
+            }
+            if(!duplicate) {
+                uniqueFormsArray.push(formsArray[i])
+            }
+        }
+        const shortedFormsArray = uniqueFormsArray.map(formatka=> {
+            let ilosc = 0;
+            for(let i = 0; i< formsArray.length; i++) {
+                if(
+                    formatka.wymiary === formsArray[i].wymiary &&
+                    formatka.okleina === formsArray[i].okleina
+                ) {
+                    ilosc = ilosc + formsArray[i].ilosc;
+                };
+            }
+            return {
+                ...formatka,
+                ilosc: ilosc,
+            }
+        });
+        return shortedFormsArray;
+    }
 
     switch (action.type) {
         case(actionTypes.EDIT_CABINET):
@@ -160,122 +197,20 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.ADD_CABINET):
-            let newCabinetArray = [];
-            const trawersy = {
-                ilosc: 2,
-                wymiary: state.cabinetDepth.toString()+"x"+(state.cabinetWidth-36).toString()+"mm",
-                okleina: 'd1',
-                typPlyty: '18mm',
-            }
-            if (state.cabinetDepth > state.cabinetWidth-36) {
-                trawersy.okleina = 'k1';
-            }
-
-            newCabinetArray.push(trawersy);
-
-            const boki = {
-                ilosc: 2,
-                wymiary: state.cabinetDepth.toString()+"x"+state.cabinetHeight.toString()+"mm",
-                okleina: 'd1',
-                typPlyty: '18mm',
-            }
-            if (state.cabinetDepth > state.cabinetHeight) {
-                boki.okleina = 'k1';
-            }
-
-            newCabinetArray.push(boki);
-
-            let fronty = "";
-            let szufladyPlecy= [];
-            let wymiaryPlecow = "";
-            if (state.cabinetType === 'jedneDrzwi') {
-                fronty = [{
-                    ilosc: 1,
-                    wymiary: (state.cabinetHeight-3).toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
-                    okleina: "full",
-                    typPlyty: 'front',
-                }]
-            } else if (state.cabinetType === 'szufladaDrzwi') {
-                fronty = [{
-                    ilosc: 1,
-                    wymiary: state.drawersHeights[0].toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
-                    okleina: "full",
-                    typPlyty: 'front',
-                },
-                {   ilosc: 1,
-                    wymiary: (state.cabinetHeight-state.drawersHeights[0]-6).toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
-                    okleina: 'full',
-                    typPlyty: 'front',
-                },];
-
-                if (state.drawersHeights[0] < 224) wymiaryPlecow = state.cabinetWidth-123+"x84mm";
-                else wymiaryPlecow = state.cabinetWidth-123+"x199mm";
-                szufladyPlecy.push(
-                    {
-                        ilosc: 1,
-                        wymiary: wymiaryPlecow,
-                        okleina: 'd1',
-                        typPlyty: '16mm'
-                    }
-                )
-
-            } else if (state.cabinetType === 'szuflady') {
-                const allDrawers = [...state.drawersHeights];
-                const uniqueDrawers = Array.from(new Set(allDrawers));
-                const countDrawers = (wysokosc) => {
-                    return allDrawers.filter(height => {
-                        return height === wysokosc
-                    }).length
-                };
-                fronty =
-                    uniqueDrawers.map((wysokosc, id) => {
-                        return {
-                            ilosc: countDrawers(wysokosc),
-                            wymiary: wysokosc.toString()+"x"+(state.cabinetWidth-3).toString()+"mm",
-                            okleina: 'full',
-                            typPlyty: 'front',
-                        }
-                    });
-                szufladyPlecy =
-                    uniqueDrawers.map((wysokosc, id) => {
-                        if (wysokosc < 224) wymiaryPlecow = state.cabinetWidth-123+"x84mm";
-                        else wymiaryPlecow = state.cabinetWidth-123+"x199mm";
-                        return {
-                            ilosc: countDrawers(wysokosc),
-                            wymiary: wymiaryPlecow,
-                            okleina: 'd1',
-                            typPlyty: '16mm'
-                        }
-                    })
-            }
-            newCabinetArray.push(fronty);
-            newCabinetArray.push(szufladyPlecy)
-
-            let szufladyDna = {
-                    ilosc: state.drawersHeights.length,
-                    wymiary: (state.cabinetWidth-111).toString()+"x"+"476mm",
-                    okleina: null,
-            };
-            newCabinetArray.push(szufladyDna);
-
-
             const newIloscSzafek = state.cabinetsCount+1;
             const newCabinetId = state.uniqueId;
-
             const newCabinetParams = {
                 cabinetId: state.uniqueId,
                 cabinetType: state.cabinetType,
                 cabinetWidth: state.cabinetWidth,
                 drawersHeights: [...state.drawersHeights],
             }
-
             const updateCabinets = [...state.cabinets];
             updateCabinets.push(newCabinetParams)
 
             return {
                     ...state,
                     cabinetId: newCabinetId,
-                    formatki: newCabinetArray,
                     cabinetsCount: newIloscSzafek,
                     cabinets: updateCabinets,
                     uniqueId: state.uniqueId+1,
@@ -471,48 +406,62 @@ const reducer = (state = initialState, action) => {
                 primaryAllFormsArray.plyta18mm.push(trawers);
                 primaryAllFormsArray.plyta18mm.push({
                     wymiary: state.cabinetDepth.toString()+"x"+state.cabinetHeight.toString()+"mm",
-                    okleina: state.cabinetDepth > state.cabinetHeight ? 'd1' : 'k1',
+                    okleina: state.cabinetDepth < state.cabinetHeight ? 'd1' : 'k1',
                     ilosc: 2,
                 });
 
                 let szufladyPlecy= [];
                 let wymiaryPlecow = "";
                 if (cabinet.cabinetType === 'jedneDrzwi') {
-                    primaryAllFormsArray.fronty.push((state.cabinetHeight-3).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm");
+                    primaryAllFormsArray.fronty.push({
+                        wymiary: (state.cabinetHeight-3).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                        okleina: "full",
+                        ilosc: 1,
+                    })
                 } else if (cabinet.cabinetType === 'szufladaDrzwi') {
-                    primaryAllFormsArray.fronty.push(cabinet.drawersHeights[0].toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm");
-                    primaryAllFormsArray.fronty.push((state.cabinetHeight-cabinet.drawersHeights[0]-6).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm");
-
-                    if (cabinet.drawersHeights[0] < 224) wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
-                    else wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
-                    primaryAllFormsArray.plyta16mm.push([
-                        wymiaryPlecow,
-                        'd1',
-                        1,
-                    ]);
-                    primaryAllFormsArray.plyta16mm.push([
-                        (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
-                        null,
-                        cabinet.drawersHeights.length,
-                    ]);
-
+                    primaryAllFormsArray.fronty.push({
+                        wymiary: cabinet.drawersHeights[0].toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                        okleina: "full",
+                        ilosc: 1,
+                    })
+                    primaryAllFormsArray.fronty.push({
+                        wymiary: (state.cabinetHeight-cabinet.drawersHeights[0]-6).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                        okleina: "full",
+                        ilosc: 1,
+                    });
+                    if (cabinet.drawersHeights[0] < 224) {wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";}
+                    else {wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";}
+                    primaryAllFormsArray.plyta16mm.push({
+                        wymiary: wymiaryPlecow,
+                        okleina: 'd1',
+                        ilosc: 1,
+                    });
+                    primaryAllFormsArray.plyta16mm.push({
+                        wymiary: (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
+                        okleina: null,
+                        ilosc: cabinet.drawersHeights.length,
+                    });
                 } else if (cabinet.cabinetType === 'szuflady') {
                     const allDrawers = cabinet.drawersHeights;
                     allDrawers.map(wysokoscFrontu => {
-                        primaryAllFormsArray.fronty.push(wysokoscFrontu.toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",);
+                        primaryAllFormsArray.fronty.push({
+                            wymiary: wysokoscFrontu.toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                            okleina: "full",
+                            ilosc: 1,
+                        })
                         if (wysokoscFrontu < 224) wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
                             else wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
-                            primaryAllFormsArray.plyta16mm.push([
-                                wymiaryPlecow,
-                                'd1',
-                                1,
-                            ]);
+                            primaryAllFormsArray.plyta16mm.push({
+                                wymiary: wymiaryPlecow,
+                                okleina: 'd1',
+                                ilosc: 1,
+                            });
                     });
-                    primaryAllFormsArray.plyta16mm.push([
-                        (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
-                        null,
-                        cabinet.drawersHeights.length,
-                    ]);
+                    primaryAllFormsArray.plyta16mm.push({
+                        wymiary: (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
+                        okleina: null,
+                        ilosc: cabinet.drawersHeights.length,
+                    });
                     // const uniqueDrawers = Array.from(new Set(allDrawers));
                     // const countDrawers = (wysokosc) => {
                     //     return allDrawers.filter(height => {
@@ -539,41 +488,15 @@ const reducer = (state = initialState, action) => {
                     //     })
                 }
             });
-            const unique18mmArray = [];
 
-            for(let i = 0; i<primaryAllFormsArray.plyta18mm.length; i++) {
-                let duplicate = false;
-                for (let u = 0; u<unique18mmArray.length; u++) {
-                    if(
-                        primaryAllFormsArray.plyta18mm[i].wymiary === unique18mmArray[u].wymiary
-                        &&
-                        primaryAllFormsArray.plyta18mm[i].okleina === unique18mmArray[u].okleina
-                    ) {
-                        duplicate = true;
-                    }
-                }
-                if(!duplicate) {
-                    unique18mmArray.push(primaryAllFormsArray.plyta18mm[i])
-                }
-            }
 
-            const shorted18mmArray = unique18mmArray.map((formatka, index)=> {
-                let ilosc = 0;
-                for(let i = 0; i< primaryAllFormsArray.plyta18mm.length; i++) {
-                    if(formatka.wymiary === primaryAllFormsArray.plyta18mm[i].wymiary) {
-                        ilosc = ilosc + primaryAllFormsArray.plyta18mm[i].ilosc;
-                    };
-                }
-                return {
-                    ...formatka,
-                    ilosc: ilosc,
-                }
-            });
-
-            primaryAllFormsArray.plyta18mm = shorted18mmArray
+            primaryAllFormsArray.plyta18mm = summarizeForms(primaryAllFormsArray.plyta18mm);
+            primaryAllFormsArray.fronty = summarizeForms(primaryAllFormsArray.fronty);
+            primaryAllFormsArray.plyta16mm = summarizeForms(primaryAllFormsArray.plyta16mm);
             return {
                 ...state,
-                formatkisuma: primaryAllFormsArray,
+                formatki: primaryAllFormsArray,
+                showForms: !state.showForms,
             }
 
     }

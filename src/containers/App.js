@@ -32,7 +32,7 @@ class App extends Component {
       // }
 
       let listaFormatek = "";
-      if (this.props.iloscSzafek > 0) {
+      if (this.props.showForms) {
           const formatki = this.props.formatki;
           listaFormatek=
               <WykazFormatek
@@ -118,6 +118,7 @@ const mapStateToProps = state => {
         canAddCabinet: state.cabinetValid,
         cabinetWidth: state.cabinetWidth,
         cabinetType: state.cabinetType,
+        showForms: state.showForms,
     };
 };
 
