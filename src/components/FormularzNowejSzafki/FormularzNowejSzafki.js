@@ -35,6 +35,9 @@ class FormularzNowejSzafki extends Component {
             case("tooLowOneDrawer"):
                 errorsArray = "Wysokość frontu szuflady nie może być mniejsza niż 100mm";
                 break;
+            case("tooWideCabinet"):
+                errorsArray = "Suma szerokości szafek będzie większa od szerokości kuchni. Zmniejsz szerokość szafek.";
+                break;
         }
 
         return (
@@ -87,13 +90,21 @@ class FormularzNowejSzafki extends Component {
                 />
                 <br />
                 {!this.props.editInProgress ?
+                <div className="wrapper">
                 <input
                     className="confirmCabinetButton green"
                     type="button"
                     disabled={!this.props.canAddCabinet}
                     value="Dodaj szafkę"
                     onClick={this.props.canAddCabinet? this.props.clickDodaj : null}
-                /> :
+                />
+                <input
+                    className="confirmCabinetButton green"
+                    type="button"
+                    value="Oblicz formatki"
+                    onClick={this.props.calculateForms}
+                /></div>
+                 :
                 <input
                     className="confirmCabinetButton blue"
                     type="button"
@@ -127,6 +138,7 @@ const mapDispatchToProps = dispatch => {
             onCabinetFormUpdate: () => dispatch({type: actionTypes.CHECK_CABINET}),
             onHoverAddCabinet: () => dispatch({type: actionTypes.HOVER_ADD_CABINET}),
             onClickSaveCabinet: () => dispatch({type: actionTypes.SAVE_CABINET}),
+            calculateForms: () => dispatch({type: actionTypes.CALCULATE_FORMS}),
     }
 }
 

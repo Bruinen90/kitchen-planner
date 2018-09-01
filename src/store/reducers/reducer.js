@@ -3,8 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     cabinets: [],
     cabinetsCount: 0,
-    kitchenWidth: '1200px',
-    kitchenHeight: '300px',
+    kitchenWidth: 2400,
+    kitchenHeight: 1000,
     scale: 3,
     spaceBetweenDrawers: 3,
     spaceDrawersToTop: 3,
@@ -27,7 +27,7 @@ const initialState = {
     canMove: {
         left: true,
         right: true,
-    }
+    },
 }
 
 const reducer = (state = initialState, action) => {
@@ -62,6 +62,14 @@ const reducer = (state = initialState, action) => {
     const createBlockedDrawersArray = (countOfDrawers = state.drawersHeights.length) => {
         return Array(countOfDrawers).fill(false)
     }
+
+    const checkCabinetWidthValid = (currentCabinetWidth) => {
+        const calculateCabinestWidthSum = [...state.cabinets].map(cabinet => {
+            return cabinet.cabinetWidth
+            }).reduce((a,b) => a+b, 0);
+        if(calculateCabinestWidthSum + currentCabinetWidth > state.kitchenWidth) {
+            return false} else {return true}
+        }
 
     switch (action.type) {
         case(actionTypes.EDIT_CABINET):
@@ -113,8 +121,8 @@ const reducer = (state = initialState, action) => {
                 const scale = action.event.target.value*1.2/window.innerWidth;
                 return {
                     ...state,
-                    kitchenWidth: action.event.target.value/scale + 'px',
-                    kitchenHeight: 1000/scale + 'px',
+                    kitchenWidth: action.event.target.value,
+                    kitchenHeight: 1000,
                     blat: action.event.target.value-3,
                     scale: scale,
                 }
@@ -152,12 +160,6 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.ADD_CABINET):
-            //Check if sum of fronts isn't too big
-            if(state.drawersHeights.reduce((a,b) => a+b, 0) >
-            state.cabinetHeight - calculateSpacing()) {
-                prompt("Error!")
-            }
-
             let newCabinetArray = [];
             const trawersy = {
                 ilosc: 2,
@@ -384,9 +386,6 @@ const reducer = (state = initialState, action) => {
                 (
                     sumOfDrawersHeights + calculateSpacing() === state.cabinetHeight
                 )) && state.cabinetWidth > 299 && state.cabinetWidth <901
-
-
-
             ) {
                 cabinetValid = true
             } else {
@@ -397,8 +396,13 @@ const reducer = (state = initialState, action) => {
                 if (state.cabinetType === "szufladaDrzwi" && sumOfDrawersHeights < 100) cabinetError = "tooLowOneDrawer";
                 if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() > state.cabinetHeight) cabinetError = "tooHeight";
                 if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() < state.cabinetHeight)  cabinetError = "tooLow"
-
             }
+
+            if(!checkCabinetWidthValid(parseInt(state.cabinetWidth))) {
+                cabinetValid = false;
+                cabinetError = "tooWideCabinet";
+            }
+
             return {
                 ...state,
                 cabinetValid: cabinetValid,
@@ -424,8 +428,6 @@ const reducer = (state = initialState, action) => {
             const updatedCabinetsArray = [
                 ...state.cabinets.slice(0,deletionIndex),
                 ...state.cabinets.slice(deletionIndex+1
-
-
                 )
             ]
             return {
@@ -436,8 +438,8 @@ const reducer = (state = initialState, action) => {
         case(actionTypes.MOVE_CABINET):
             const cabinetsBeforeMove = [...state.cabinets];
             const cabinetToBeMovedIndex = state.cabinets.findIndex(findCabinetId);
-            const cabinetToBeMoved = {...cabinetsBeforeMove[cabinetToBeMovedIndex]}
-            const collidingCabinet = {...cabinetsBeforeMove[cabinetToBeMovedIndex+action.positionChange]}
+            const cabinetToBeMoved = {...cabinetsBeforeMove[cabinetToBeMovedIndex]};
+            const collidingCabinet = {...cabinetsBeforeMove[cabinetToBeMovedIndex+action.positionChange]};
             const cabinetsAfterMove = cabinetsBeforeMove.map((cabinet, index) => {
                 if(index !== cabinetToBeMovedIndex && index !== cabinetToBeMovedIndex+action.positionChange) {
                     return cabinet
@@ -448,10 +450,130 @@ const reducer = (state = initialState, action) => {
                 if (index === cabinetToBeMovedIndex+action.positionChange) {
                     return cabinetToBeMoved
                 }
-            })
+            });
             return {
                 ...state,
                 cabinets: cabinetsAfterMove,
+            };
+
+        case(actionTypes.CALCULATE_FORMS):
+            const primaryAllFormsArray = {
+                plyta18mm: [],
+                fronty: [],
+                plyta16mm: [],
+            };
+            state.cabinets.map(cabinet => {
+                let trawers = {
+                    wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
+                    okleina: state.cabinetDepth > cabinet.cabinetWidth-36? 'k1' : 'd1',
+                    ilosc: 2,
+                }
+                primaryAllFormsArray.plyta18mm.push(trawers);
+                primaryAllFormsArray.plyta18mm.push({
+                    wymiary: state.cabinetDepth.toString()+"x"+state.cabinetHeight.toString()+"mm",
+                    okleina: state.cabinetDepth > state.cabinetHeight ? 'd1' : 'k1',
+                    ilosc: 2,
+                });
+
+                let szufladyPlecy= [];
+                let wymiaryPlecow = "";
+                if (cabinet.cabinetType === 'jedneDrzwi') {
+                    primaryAllFormsArray.fronty.push((state.cabinetHeight-3).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm");
+                } else if (cabinet.cabinetType === 'szufladaDrzwi') {
+                    primaryAllFormsArray.fronty.push(cabinet.drawersHeights[0].toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm");
+                    primaryAllFormsArray.fronty.push((state.cabinetHeight-cabinet.drawersHeights[0]-6).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm");
+
+                    if (cabinet.drawersHeights[0] < 224) wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
+                    else wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
+                    primaryAllFormsArray.plyta16mm.push([
+                        wymiaryPlecow,
+                        'd1',
+                        1,
+                    ]);
+                    primaryAllFormsArray.plyta16mm.push([
+                        (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
+                        null,
+                        cabinet.drawersHeights.length,
+                    ]);
+
+                } else if (cabinet.cabinetType === 'szuflady') {
+                    const allDrawers = cabinet.drawersHeights;
+                    allDrawers.map(wysokoscFrontu => {
+                        primaryAllFormsArray.fronty.push(wysokoscFrontu.toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",);
+                        if (wysokoscFrontu < 224) wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
+                            else wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
+                            primaryAllFormsArray.plyta16mm.push([
+                                wymiaryPlecow,
+                                'd1',
+                                1,
+                            ]);
+                    });
+                    primaryAllFormsArray.plyta16mm.push([
+                        (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
+                        null,
+                        cabinet.drawersHeights.length,
+                    ]);
+                    // const uniqueDrawers = Array.from(new Set(allDrawers));
+                    // const countDrawers = (wysokosc) => {
+                    //     return allDrawers.filter(height => {
+                    //         return height === wysokosc
+                    //     }).length
+                    // };
+                    // fronty =
+                    //     uniqueDrawers.map((wysokosc, id) => {
+                    //         return {
+                    //             ilosc: countDrawers(wysokosc),
+                    //             wymiary: wysokosc.toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                    //         }
+                    //     });
+                    // szufladyPlecy =
+                    //     uniqueDrawers.map((wysokosc, id) => {
+                    //         if (wysokosc < 224) wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
+                    //         else wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
+                    //         return {
+                    //             ilosc: countDrawers(wysokosc),
+                    //             wymiary: wymiaryPlecow,
+                    //             okleina: 'd1',
+                    //             typPlyty: '16mm'
+                    //         }
+                    //     })
+                }
+            });
+            const unique18mmArray = [];
+
+            for(let i = 0; i<primaryAllFormsArray.plyta18mm.length; i++) {
+                let duplicate = false;
+                for (let u = 0; u<unique18mmArray.length; u++) {
+                    if(
+                        primaryAllFormsArray.plyta18mm[i].wymiary === unique18mmArray[u].wymiary
+                        &&
+                        primaryAllFormsArray.plyta18mm[i].okleina === unique18mmArray[u].okleina
+                    ) {
+                        duplicate = true;
+                    }
+                }
+                if(!duplicate) {
+                    unique18mmArray.push(primaryAllFormsArray.plyta18mm[i])
+                }
+            }
+
+            const shorted18mmArray = unique18mmArray.map((formatka, index)=> {
+                let ilosc = 0;
+                for(let i = 0; i< primaryAllFormsArray.plyta18mm.length; i++) {
+                    if(formatka.wymiary === primaryAllFormsArray.plyta18mm[i].wymiary) {
+                        ilosc = ilosc + primaryAllFormsArray.plyta18mm[i].ilosc;
+                    };
+                }
+                return {
+                    ...formatka,
+                    ilosc: ilosc,
+                }
+            });
+
+            primaryAllFormsArray.plyta18mm = shorted18mmArray
+            return {
+                ...state,
+                formatkisuma: primaryAllFormsArray,
             }
 
     }

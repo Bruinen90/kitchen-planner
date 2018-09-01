@@ -7,8 +7,8 @@ import './WizualizacjaKuchni.css';
 class WizualizacjaKuchni extends Component {
     render() {
         let roomSize = {
-            width: this.props.kitchenWidth,
-            height: this.props.kitchenHeight,
+            width: this.props.kitchenWidth/this.props.scale + 'px',
+            height: this.props.kitchenHeight/this.props.scale + 'px',
         }
         const kitchenVisual = this.props.cabinets.map(cabinet => {
             let szafkaWymiary = {
@@ -46,13 +46,18 @@ class WizualizacjaKuchni extends Component {
                                 <div className="moveCabinetButtons">
                                 <button
                                     className={this.props.canMove.left? "blue" : "disabledButton"}
-                                    onClick={this.props.canMove.left ? ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, -1) : null}
+                                    onClick={
+                                        this.props.canMove.left ?
+                                        ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, -1)
+                                        : null}
                                 >
                                     &#11207;
                                 </button>
                                 <button
                                     className={this.props.canMove.right ? "blue" : "disabledButton"}
-                                    onClick={this.props.canMove.right ? ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, +1) : null}
+                                    onClick={this.props.canMove.right ?
+                                        ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, +1)
+                                        : null}
                                 >
                                     &#11208;
                                 </button>
