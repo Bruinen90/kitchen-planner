@@ -13,7 +13,8 @@ const MenuBar = (props) => {
             <div className="menuItem">FAQ</div>
             <div className="menuItem">Kontakt</div>
             <NavLink to="/kreator" className="newProjectButton">
-                {props.inProgress ? "Edytuj" : "Nowy"} Projekt</NavLink>
+                {props.inProgress ? "Edytuj" : "Nowy"} Projekt
+            </NavLink>
         </div>
     )
 };

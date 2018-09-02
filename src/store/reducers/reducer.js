@@ -499,6 +499,11 @@ const reducer = (state = initialState, action) => {
                 showForms: !state.showForms,
             }
 
+        case(actionTypes.CHANGE_KITCHEN_PARAM):
+            return {
+                ...state,
+                [action.paramName]: parseInt(action.paramValue),
+            }
     }
 
     return state;

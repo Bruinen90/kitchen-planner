@@ -5,9 +5,9 @@ import MenuBar from '../components/UI/MenuBar';
 import SizeInput from '../components/SizeInput';
 import Instrukcja from '../components/Porady/JakKorzystac';
 import WykazFormatek from '../components/WykazFormatek';
-import WizualizacjaKuchni from '../components/WizualizacjaKuchni/WizualizacjaKuchni';
 import KreatorSzafki from './KreatorSzafki/KreatorSzafki';
 import Home from './Home/Home';
+import ParametryKuchni from './ParametryKuchni/ParametryKuchni';
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
@@ -24,6 +24,7 @@ class App extends Component {
         />
         <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/parametry-kuchni" component={ParametryKuchni} />
             <Route path="/kreator" component={KreatorSzafki} />
             <Route path="/formatki" component={WykazFormatek} />
         </Switch>
