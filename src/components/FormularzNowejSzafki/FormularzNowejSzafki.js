@@ -6,6 +6,8 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import {connect} from 'react-redux';
 
+import {Link} from 'react-router-dom';
+
 class FormularzNowejSzafki extends Component {
     componentDidUpdate () {
         this.props.onCabinetFormUpdate();
@@ -98,12 +100,15 @@ class FormularzNowejSzafki extends Component {
                     value="Dodaj szafkę"
                     onClick={this.props.canAddCabinet? this.props.clickDodaj : null}
                 />
+                <Link to='/formatki'>
                 <input
                     className="confirmCabinetButton green"
                     type="button"
                     value="Oblicz formatki"
                     onClick={this.props.calculateForms}
-                /></div>
+                />
+                </Link>
+                </div>
                  :
                 <input
                     className="confirmCabinetButton blue"

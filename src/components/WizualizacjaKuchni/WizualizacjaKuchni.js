@@ -85,11 +85,15 @@ class WizualizacjaKuchni extends Component {
             )
         })
 
-      return (
-          <div className="roomBorders rzadSzafek" style={roomSize}>
-          {kitchenVisual}
-          </div>
-      );
+    return (
+        <div className="contentWrapper" style={{opacity: this.props.cabinets.length > 0 ? "1" : "0"}}>
+            <div className="header">Twoja kuchnia</div>
+            <div className="rzadSzafek" style={roomSize}>
+              {kitchenVisual}
+            </div>
+        </div>
+
+    );
   }
 }
 const mapStateToProps = state => {

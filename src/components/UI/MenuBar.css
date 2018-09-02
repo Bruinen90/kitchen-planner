@@ -1,0 +1,63 @@
+.menuBar {
+    position: sticky;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #ddd;
+    height: 50px;
+    border-bottom: 1px solid black;
+    z-index: 500;
+}
+
+@media print {
+    .menuBar {
+        display: none;
+    }
+}
+
+.menuBar a {
+    text-decoration: none;
+}
+
+.menuItem {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.menuItem:hover {
+    color: #e26b56;
+    cursor: pointer;
+}
+
+.newProjectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e26b56;
+    height: 30px;
+    width: 120px;
+    padding: 4px;
+    color: white;
+    box-shadow: 3px 3px 5px #999;
+    cursor: pointer;
+    transition: all 0.5s;
+    margin-right: 5%;
+}
+
+.newProjectButton:hover {
+    transform: scale(1.05);
+}
+
+.menuLogo {
+    color: black;
+    font-size: 40px;
+    margin-right: auto;
+    margin-left: 5%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.activeItem {
+    background-color: #64a6d6;
+}

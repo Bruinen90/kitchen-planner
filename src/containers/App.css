@@ -18,24 +18,9 @@ input:focus {
     display: inline-block;
 }
 
-.menuBar {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 10%;
-    background-color: #eee;
-    height: 50px;
-    border-bottom: 1px solid black;
-}
-
-.menuItem {
-    display: inline-block;
-    margin-right: 30px;
-}
-
-.menuItem:hover {
-    color: #e26b56;
-    cursor: pointer;
+.contentWrapper {
+    padding: 5%;
+    transition: all 1s;
 }
 
 .App {
@@ -49,13 +34,6 @@ input:focus {
 
 .redDot {
     color: #e26b56;
-}
-
-.roomBorders {
-    border:  1px solid black;
-    border-top: 0px;
-    margin: auto;
-    margin-bottom: 10px;
 }
 
 .sizeInput {

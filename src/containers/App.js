@@ -4,98 +4,36 @@ import './App.css';
 import MenuBar from '../components/UI/MenuBar';
 import SizeInput from '../components/SizeInput';
 import Instrukcja from '../components/Porady/JakKorzystac';
-import FormularzNowejSzafki from '../components/FormularzNowejSzafki/FormularzNowejSzafki';
-import WizualizacjaWnetrza from '../components/WizualizacjaWnetrza/WizualizacjaWnetrza';
 import WykazFormatek from '../components/WykazFormatek';
 import WizualizacjaKuchni from '../components/WizualizacjaKuchni/WizualizacjaKuchni';
+import KreatorSzafki from './KreatorSzafki/KreatorSzafki';
+import Home from './Home/Home';
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
 
+import {Route, Switch, withRouter} from 'react-router-dom';
 
 class App extends Component {
-    state = {
-        instrukcjaPrint: false,
-    }
-
-    showHowToUse = () => {
-        this.setState({
-            instrukcjaPrint: !this.state.instrukcjaPrint,
-        })
-    }
-
   render() {
-      // let blatPrint = "";
-      //
-      // if (this.state.blat) {
-      //     blatPrint = "Blat: " + this.state.blat + " mm"
-      // }
-
-      let listaFormatek = "";
-      if (this.props.showForms) {
-          const formatki = this.props.formatki;
-          listaFormatek=
-              <WykazFormatek
-              />
-      }
-
-
-      let instrukcja = ""
-      if (this.state.instrukcjaPrint) {
-          instrukcja = <Instrukcja />;
-      }
-
-      let wizualizacjaWymiary = {
-          width: this.props.cabinetWidth/2 + "px",
-          height: this.props.wysokoscSzafek/2 + "px",
-      }
-
-
     return (
       <div className="App">
 
         <MenuBar
-            jakKorzystac={this.showHowToUse}
+            inProgress={this.props.cabinets.length > 0}
         />
+        <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/kreator" component={KreatorSzafki} />
+            <Route path="/formatki" component={WykazFormatek} />
+        </Switch>
+        {/* <h1 className="header">Kitchen planner<span className="redDot">.</span></h1> */}
 
-        {instrukcja}
 
-        <h1 className="header">Kitchen planner<span className="redDot">.</span></h1>
-        <WizualizacjaKuchni />
-
-        <SizeInput
+        {/* <SizeInput
             enterSize={(event) => this.props.onChangeRoomSize(event)}
-        />
+        /> */}
 
-        <div className="kreatorNowejSzafki">
-            <FormularzNowejSzafki
-                changeType = {(event) => this.props.onChangeCabinetType(event)}
-                changeWidth = {(event) => this.props.onChangeCabinetWidth(event)}
-                changeDrawerCount = {(event) => this.props.onChangeDrawerCount(event)}
-                ilosc = {this.props.iloscSzuflad}
-                clickDodaj = {this.props.onAddCabinet}
-                canAddCabinet = {this.props.canAddCabinet}
-            />
-            <div className="wizualizacjaSzafki">
-                <div className="ramySzafki" style={wizualizacjaWymiary}>
-                    <WizualizacjaWnetrza
-                        rodzaj={this.props.cabinetType}
-                        ilosc={this.props.drawersHeights.length}
-                        drawersHeights={this.props.drawersHeights}
-                        activeDrawer={this.props.activeDrawer}
-                        szczelina={this.props.szczelina}
-                    />
-                </div>
-                <div className="nogaSzafki">
-                    <div></div>
-                </div>
-                <div className="nogaSzafki" style={{float: "right"}}>
-                    <div></div>
-                </div>
-            </div>
-        </div>
-
-            {listaFormatek}
       </div>
     );
   }
@@ -132,4 +70,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

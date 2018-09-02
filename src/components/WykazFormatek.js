@@ -8,7 +8,7 @@ class Wykaz extends Component {
         const wykazFormatek = (formsArray) => {
             return(formsArray.map(formatka => {
                 return(
-                    <div className="row">
+                    <div className="row" key={formatka.wymiary+formatka.okleina}>
                         <div className="col">{formatka.wymiary}</div>
                         <div className="col">{formatka.ilosc}szt</div>
                         <div className="col"><div className={formatka.okleina + ' okleina'}></div></div>
