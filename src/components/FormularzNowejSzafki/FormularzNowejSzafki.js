@@ -100,14 +100,6 @@ class FormularzNowejSzafki extends Component {
                     value="Dodaj szafkę"
                     onClick={this.props.canAddCabinet? this.props.clickDodaj : null}
                 />
-                <Link to='/formatki'>
-                <input
-                    className="confirmCabinetButton green"
-                    type="button"
-                    value="Oblicz formatki"
-                    onClick={this.props.calculateForms}
-                />
-                </Link>
                 </div>
                  :
                 <input
@@ -121,7 +113,6 @@ class FormularzNowejSzafki extends Component {
                 <b>Błąd</b><br/>
                     {errorsArray}
                 </div>
-
             </form>
         )
     }
@@ -143,7 +134,6 @@ const mapDispatchToProps = dispatch => {
             onCabinetFormUpdate: () => dispatch({type: actionTypes.CHECK_CABINET}),
             onHoverAddCabinet: () => dispatch({type: actionTypes.HOVER_ADD_CABINET}),
             onClickSaveCabinet: () => dispatch({type: actionTypes.SAVE_CABINET}),
-            calculateForms: () => dispatch({type: actionTypes.CALCULATE_FORMS}),
     }
 }
 

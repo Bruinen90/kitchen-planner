@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import './ParametryKuchni.css';
+import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 import ParamsInput from '../../components/UI/ParamsInput/ParamsInput';
-import * as actionTypes from '../../store/actions/actionTypes'
+import * as actionTypes from '../../store/actions/actionTypes';
 
 import {connect} from 'react-redux';
 
@@ -33,6 +34,10 @@ class ParametryKuchni extends Component {
               description: "Szczelina pomiędzy frontami szuflad: ",
               type: "spaceBetweenDrawers"
           },
+          {
+              description: "Szczelina pomiędzy szafkami: ",
+              type: "spaceBetweenCabinets"
+          },
       ]
 
       const formInputs = formInputsArray.map(input => {
@@ -41,6 +46,7 @@ class ParametryKuchni extends Component {
                   paramDescription={input.description}
                   changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, input.type)}
                   value={this.props[input.type]}
+                  key={input.type}
               />
           )
       })
@@ -55,6 +61,7 @@ class ParametryKuchni extends Component {
                 Miejsce na wizualizacje wskazanego parametru
             </div>
         </div>
+        <SaveAndContinueButton href='/projekt/kreator-szafki' />
       </div>
     );
   }
@@ -68,13 +75,17 @@ const mapStateToProps = state => {
         cabinetHeight: state.cabinetHeight,
         spaceDrawersToTop: state.spaceDrawersToTop,
         spaceBetweenDrawers: state.spaceBetweenDrawers,
+        spaceBetweenCabinets: state.spaceBetweenCabinets,
+        validParams: state.validParams,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         onChangeKitchenParam: (paramValue, paramName) =>
-            dispatch({type: actionTypes.CHANGE_KITCHEN_PARAM, paramValue: paramValue, paramName: paramName})
+            dispatch({type: actionTypes.CHANGE_KITCHEN_PARAM, paramValue: paramValue, paramName: paramName}),
+        onClickSaveAndContinue: ()=> dispatch({type: actionTypes.SAVE_PARAMS})
+
     };
 };
 

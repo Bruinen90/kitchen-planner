@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import WizualizacjaWnetrza from '../../components/WizualizacjaWnetrza/WizualizacjaWnetrza';
 import FormularzNowejSzafki from '../../components/FormularzNowejSzafki/FormularzNowejSzafki';
 import WizualizacjaKuchni from '../../components/WizualizacjaKuchni/WizualizacjaKuchni';
+import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -43,7 +44,7 @@ class KreatorSzafki extends Component {
                 </div>
             </div>
             <WizualizacjaKuchni />
-
+            <SaveAndContinueButton href='/projekt/lista-zakupow' onClick={this.props.calculateForms}/>
         </div>
     );
   }
@@ -74,6 +75,7 @@ const mapDispatchToProps = dispatch => {
         onChangeDrawerCount: (event) => dispatch({type: actionTypes.CHANGE_DRAWER_COUNT, event: event}),
         onChangeCabinetWidth: (event) => dispatch({type: actionTypes.CHANGE_CABINET_WIDTH, event: event}),
         onAddCabinet: () => dispatch({type: actionTypes.ADD_CABINET}),
+        calculateForms: () => dispatch({type: actionTypes.CALCULATE_FORMS}),
     };
 };
 

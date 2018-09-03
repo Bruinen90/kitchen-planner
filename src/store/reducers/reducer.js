@@ -1,15 +1,20 @@
 import * as actionTypes from '../actions/actionTypes';
 
+import axios from '../../axios-db';
+
+import {Route} from 'react-router-dom';
+
 const initialState = {
     cabinets: [],
     cabinetsCount: 0,
-    kitchenWidth: null,
-    kitchenHeight: null,
+    kitchenWidth: "",
+    kitchenHeight: "",
     scale: 3,
-    spaceBetweenDrawers: null,
-    spaceDrawersToTop: null,
-    cabinetDepth: null,
-    cabinetHeight: null,
+    spaceBetweenDrawers: "",
+    spaceDrawersToTop: "",
+    spaceBetweenCabinets: "",
+    cabinetDepth: "",
+    cabinetHeight: "",
     cabinetId: 1,
     cabinetType: "",
     cabinetWidth: 600,
@@ -414,18 +419,18 @@ const reducer = (state = initialState, action) => {
                 let wymiaryPlecow = "";
                 if (cabinet.cabinetType === 'jedneDrzwi') {
                     primaryAllFormsArray.fronty.push({
-                        wymiary: (state.cabinetHeight-3).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                        wymiary: (state.cabinetHeight-state.spaceDrawersToTop).toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                         okleina: "full",
                         ilosc: 1,
                     })
                 } else if (cabinet.cabinetType === 'szufladaDrzwi') {
                     primaryAllFormsArray.fronty.push({
-                        wymiary: cabinet.drawersHeights[0].toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                        wymiary: cabinet.drawersHeights[0].toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                         okleina: "full",
                         ilosc: 1,
                     })
                     primaryAllFormsArray.fronty.push({
-                        wymiary: (state.cabinetHeight-cabinet.drawersHeights[0]-6).toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                        wymiary: (state.cabinetHeight-cabinet.drawersHeights[0]-2*state.spaceBetweenDrawers).toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                         okleina: "full",
                         ilosc: 1,
                     });
@@ -445,7 +450,7 @@ const reducer = (state = initialState, action) => {
                     const allDrawers = cabinet.drawersHeights;
                     allDrawers.map(wysokoscFrontu => {
                         primaryAllFormsArray.fronty.push({
-                            wymiary: wysokoscFrontu.toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
+                            wymiary: wysokoscFrontu.toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                             okleina: "full",
                             ilosc: 1,
                         })
@@ -504,6 +509,29 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 [action.paramName]: parseInt(action.paramValue),
             }
+
+        case(actionTypes.SAVE_PARAMS):
+            // const curProjects = [];
+            // axios.get('/projekty.json')
+            //     .then(res => {
+            //         for(let key in res.data) {
+            //             curProjects.push(res.data[key])
+            //         }
+            //
+            //     });
+            // console.log(curProjects.length)
+            // const kitchenParams = {
+            //     kitchenWidth: state.kitchenWidth,
+            //     kitchenHeight: state.kitchenHeight,
+            //     spaceBetweenDrawers: state.spaceBetweenDrawers,
+            //     spaceDrawersToTop: state.spaceDrawersToTop,
+            //     spaceBetweenCabinets: state.spaceBetweenCabinets,
+            //     cabinetDepth: state.cabinetDepth,
+            //     cabinetHeight: state.cabinetHeight,
+            // }
+            // axios.post('/projekty.json', {projectKey: curProjects.length, kitchenParams: kitchenParams,})
+            //     .then(response => console.log(response))
+            //     .catch(error => console.log(error));
     }
 
     return state;

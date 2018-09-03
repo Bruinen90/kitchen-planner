@@ -28,3 +28,18 @@
 .activeProjectStage {
     border-bottom: 5px solid #64a6d6 !important;
 }
+
+.saveAndContinueLink {
+    font-size: 20px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #e26b56;
+    width: 250px;
+    height: 50px;
+    box-shadow: 5px 5px 8px #ccc;
+}
