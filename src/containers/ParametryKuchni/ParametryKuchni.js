@@ -8,39 +8,48 @@ import {connect} from 'react-redux';
 
 class ParametryKuchni extends Component {
   render() {
+      const formInputsArray = [
+          {
+              description: "Szerokość kuchni",
+              type: "kitchenWidth",
+          },
+          {
+              description: "Wysokość kuchni",
+              type: "kitchenHeight",
+          },
+          {
+              description: "Głębokość szafek",
+              type: "cabinetDepth",
+          },
+          {
+              description: "Wysokość szafek",
+              type: "cabinetHeight",
+          },
+          {
+              description: "Szczelina pomiędzy blatem, a górnym frontem: ",
+              type: "spaceDrawersToTop",
+          },
+          {
+              description: "Szczelina pomiędzy frontami szuflad: ",
+              type: "spaceBetweenDrawers"
+          },
+      ]
+
+      const formInputs = formInputsArray.map(input => {
+          return (
+              <ParamsInput
+                  paramDescription={input.description}
+                  changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, input.type)}
+                  value={this.props[input.type]}
+              />
+          )
+      })
     return (
       <div>
-        <h2 className="header">Podstawowe parametry kuchni</h2>
+        <h2 className="header">Podstawowe parametry kuchni<span className="redDot">.</span></h2>
         <div className="paramsContainer">
             <div className="paramsForm">
-                <ParamsInput
-                    paramDescription="Szerokość kuchni: "
-                    changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, "kitchenWidth")}
-                />
-                <ParamsInput
-                    paramDescription="Wysokość kuchni: "
-                    changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, "kitchenHeight")}
-                />
-                <ParamsInput
-                    paramDescription="Głębokość szafek kuchennych: "
-                    changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, "cabinetDepth")}
-                />
-                <ParamsInput
-                    paramDescription="Wysokość szafek kuchennych: "
-                    changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, "cabinetHeight")}
-                />
-                <ParamsInput
-                    paramDescription="Szczelina pomiędzy blatem, a górnym frontem: "
-                    changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, "spaceDrawersToTop")}
-                />
-                <ParamsInput
-                    paramDescription="Szczelina pomiędzy frontami szuflad: "
-                    changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, "spaceBetweenDrawers")}
-                />
-                <ParamsInput
-                    paramDescription="Szczelina pomiędzy frontami szafek: "
-                    changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, "spaceBetweenCabinets")}
-                />
+                {formInputs}
             </div>
             <div className="paramVisualization">
                 Miejsce na wizualizacje wskazanego parametru

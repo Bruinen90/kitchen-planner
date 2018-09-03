@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 import './MenuBar.css';
 
@@ -12,9 +12,9 @@ const MenuBar = (props) => {
             <div className="menuItem">Zamawianie płyt i okuć meblowych</div>
             <div className="menuItem">FAQ</div>
             <div className="menuItem">Kontakt</div>
-            <NavLink to="/kreator" className="newProjectButton">
+            <Link to="/projekt/parametry-kuchni" className="newProjectButton">
                 {props.inProgress ? "Edytuj" : "Nowy"} Projekt
-            </NavLink>
+            </Link>
         </div>
     )
 };

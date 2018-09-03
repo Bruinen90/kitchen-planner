@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import MenuBar from '../components/UI/MenuBar';
+import MenuBar from '../components/UI/MenuBar/MenuBar';
 import SizeInput from '../components/SizeInput';
 import Instrukcja from '../components/Porady/JakKorzystac';
 import WykazFormatek from '../components/WykazFormatek';
 import KreatorSzafki from './KreatorSzafki/KreatorSzafki';
 import Home from './Home/Home';
 import ParametryKuchni from './ParametryKuchni/ParametryKuchni';
-
+import ProjectBar from '../components/UI/ProjectBar/ProjectBar';
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
 
@@ -22,11 +22,12 @@ class App extends Component {
         <MenuBar
             inProgress={this.props.cabinets.length > 0}
         />
+        <Route path="/projekt/" component={ProjectBar} />
         <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/parametry-kuchni" component={ParametryKuchni} />
-            <Route path="/kreator" component={KreatorSzafki} />
-            <Route path="/formatki" component={WykazFormatek} />
+            <Route path="/projekt/kreator-szafki" component={KreatorSzafki} />
+            <Route path="/projekt/parametry-kuchni" component={ParametryKuchni} />
+            <Route path="/projekt/lista-zakupow" component={WykazFormatek} />
         </Switch>
         {/* <h1 className="header">Kitchen planner<span className="redDot">.</span></h1> */}
 

@@ -5,6 +5,7 @@ const ParamsInput = (props) => (
         <input
             type="number"
             onChange={props.changeInputValue}
+            value={props.value}
         />
     </div>
 );
