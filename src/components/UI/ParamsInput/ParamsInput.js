@@ -5,7 +5,9 @@ const ParamsInput = (props) => (
         <input
             type="number"
             onChange={props.changeInputValue}
+            onFocus={props.focusParamInput}
             value={props.value}
+            autoFocus={props.autofocus}
         />
     </div>
 );

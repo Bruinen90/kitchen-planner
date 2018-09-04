@@ -8,7 +8,7 @@ const initialState = {
     cabinets: [],
     cabinetsCount: 0,
     kitchenWidth: "",
-    kitchenHeight: "",
+    kitchenHeight: 1200,
     scale: 3,
     spaceBetweenDrawers: "",
     spaceDrawersToTop: "",
@@ -34,6 +34,7 @@ const initialState = {
         right: true,
     },
     showForms: false,
+    focusedParamInput: "",
 }
 
 const reducer = (state = initialState, action) => {
@@ -532,6 +533,12 @@ const reducer = (state = initialState, action) => {
             // axios.post('/projekty.json', {projectKey: curProjects.length, kitchenParams: kitchenParams,})
             //     .then(response => console.log(response))
             //     .catch(error => console.log(error));
+
+        case(actionTypes.FOCUS_INPUT):
+            return{
+                ...state,
+                focusedParamInput: action.paramName,
+            }
     }
 
     return state;

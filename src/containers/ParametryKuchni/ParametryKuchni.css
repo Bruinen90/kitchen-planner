@@ -1,9 +1,8 @@
 .paramsContainer {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     width: 85%;
     height: 500px;
-    border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
 }
@@ -14,8 +13,22 @@
 }
 
 .paramsForm {
+    width: 50%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: flex-end;
+}
+
+.paramVisualization {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 50%;
+}
+
+.paramVisualization img {
+    margin: 35px;
+    width: 300px;
 }
