@@ -1,7 +1,9 @@
 import React from 'react';
+import './ParamInput.css';
+
 const ParamsInput = (props) => {
     let showedError = "";
-    if(props.typedValue < props.minValue || props.typedValue > props.maxValue) {
+    if(!props.valid) {
       showedError = props.error;
     }
     return(
@@ -13,9 +15,10 @@ const ParamsInput = (props) => {
                 onFocus={props.focusParamInput}
                 value={props.value}
                 autoFocus={props.autofocus}
+                placeholder={props.placeholder}
             />
             {props.showErrors ?
-                <div className="errorMessage">{showedError}</div> : ""}
+                <div className="invalidValue">{showedError}</div> : ""}
         </div>
     )
 }

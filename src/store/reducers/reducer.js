@@ -35,8 +35,17 @@ const initialState = {
     },
     showForms: false,
     focusedParamInput: "",
-    validParams: false,
     showErrors: false,
+    validParams: {
+        kitchenWidth: false,
+        cabinetDepth: false,
+        cabinetHeight: false,
+        spaceDrawersToTop: false,
+        spaceBetweenDrawers: false,
+        spaceBetweenCabinets: false,
+    },
+    validForm: false,
+    kitchenCabinetsValid: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -72,11 +81,16 @@ const reducer = (state = initialState, action) => {
         return Array(countOfDrawers).fill(false)
     }
 
+    const calculateCabinestWidthSum = (spaceAroundCabinets = 5) => {
+        return (
+            [...state.cabinets].map(cabinet => {
+                return cabinet.cabinetWidth
+            }).reduce((a,b) => a+b, 0) +spaceAroundCabinets
+        )
+    }
+
     const checkCabinetWidthValid = (currentCabinetWidth) => {
-        const calculateCabinestWidthSum = [...state.cabinets].map(cabinet => {
-            return cabinet.cabinetWidth
-            }).reduce((a,b) => a+b, 0);
-        if(calculateCabinestWidthSum + currentCabinetWidth > state.kitchenWidth) {
+        if(calculateCabinestWidthSum() + currentCabinetWidth > state.kitchenWidth) {
             return false} else {return true}
         }
 
@@ -345,11 +359,17 @@ const reducer = (state = initialState, action) => {
                 cabinetValid = false;
                 cabinetError = "tooWideCabinet";
             }
+            //check whole kitchen validation
+            let kitchenCabinetsValid = true;
+            if(calculateCabinestWidthSum(15) < state.kitchenWidth) {
+                kitchenCabinetsValid = false;
+            }
 
             return {
                 ...state,
                 cabinetValid: cabinetValid,
                 cabinetError: cabinetError,
+                kitchenCabinetsValid: kitchenCabinetsValid,
             }
 
         case(actionTypes.HOVER_CABINET_ON_VISUALIZATION):
@@ -508,9 +528,26 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.CHANGE_KITCHEN_PARAM):
+            let valueValid = true;
+            if(
+                action.paramValue < action.paramMinValue ||
+                action.paramValue > action.paramMaxValue
+            ) {
+                valueValid = false;
+            }
+            const newValidParams = {...state.validParams};
+            newValidParams[action.paramName] = valueValid;
+            let validForm = true;
+            for (const a in newValidParams) {
+                if(newValidParams[a] === false) {
+                    validForm = false;
+                }
+            }
             return {
                 ...state,
                 [action.paramName]: parseInt(action.paramValue),
+                validParams: newValidParams,
+                validForm: validForm,
             }
 
         case(actionTypes.SAVE_PARAMS):
@@ -545,8 +582,9 @@ const reducer = (state = initialState, action) => {
         case(actionTypes.SHOW_ERRORS):
             return {
                 ...state,
-                showErrors: true,
+                showErrors: action.ifShow,
             }
+
     }
 
     return state;

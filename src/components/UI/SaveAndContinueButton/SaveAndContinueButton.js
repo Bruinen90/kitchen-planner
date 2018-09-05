@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 const SaveAndContinueButton = (props) => (
     props.active ?
-        <Link onClick={props.onClick} to={props.href}>
+        <Link onClick={props.resetErrors} to={props.href}>
             <div className="saveAndContinueLink">Zapisz i przejdź dalej</div>
         </Link>
         :

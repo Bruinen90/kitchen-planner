@@ -23,7 +23,7 @@ class ParametryKuchni extends Component {
               type: "kitchenWidth",
               error: "Szerokość kuchni powinna wynosić od 400 do 10 000mm",
               minValue: 400,
-              maxValue: 10000,
+              maxValue: 9000,
           },
           // {
           //     description: "Wysokość kuchni",
@@ -71,19 +71,20 @@ class ParametryKuchni extends Component {
 
       const formInputs = formInputsArray.map(input => {
           return (
-              <div className="wrapper">
+              <div className="wrapper" key={input.type}>
                   <ParamsInput
                       paramDescription={input.description}
-                      changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, input.type)}
+                      changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, input.type, input.minValue, input.maxValue)}
                       focusParamInput={()=>this.props.onFocusParamInput(input.type)}
                       value={this.props[input.type]}
                       typedValue={this.props[input.type]}
                       minValue={input.minValue}
                       maxValue={input.maxValue}
                       error={input.error}
-                      key={input.type}
                       autofocus={input.type==="kitchenWidth"}
                       showErrors={this.props.showErrors}
+                      valid={this.props.validParams[input.type]}
+                      placeholder={input.minValue+"-"+input.maxValue+"mm"}
                   />
             </div>
           )
@@ -136,8 +137,9 @@ class ParametryKuchni extends Component {
         </div>
         <SaveAndContinueButton
             href='/projekt/kreator-szafki'
-            active={this.props.validParams}
-            showErrors={this.props.onClickShowErrors}
+            active={this.props.validForm}
+            showErrors={()=>this.props.onClickShowErrors(true)}
+            resetErrors={()=>this.props.onClickShowErrors(false)}
         />
       </div>
     );
@@ -156,16 +158,25 @@ const mapStateToProps = state => {
         focusedParamInput: state.focusedParamInput,
         validParams: state.validParams,
         showErrors: state.showErrors,
+        validForm: state.validForm,
+        validParams: state.validParams,
+
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onChangeKitchenParam: (paramValue, paramName) =>
-            dispatch({type: actionTypes.CHANGE_KITCHEN_PARAM, paramValue: paramValue, paramName: paramName}),
+        onChangeKitchenParam: (paramValue, paramName, paramMinValue, paramMaxValue) =>
+            dispatch({
+                type: actionTypes.CHANGE_KITCHEN_PARAM,
+                paramValue: paramValue,
+                paramName: paramName,
+                paramMinValue: paramMinValue,
+                paramMaxValue: paramMaxValue
+            }),
         onClickSaveAndContinue: ()=> dispatch({type: actionTypes.SAVE_PARAMS}),
         onFocusParamInput: (paramName)=> dispatch({type: actionTypes.FOCUS_INPUT, paramName: paramName}),
-        onClickShowErrors: ()=> dispatch({type: actionTypes.SHOW_ERRORS})
+        onClickShowErrors: (ifShow)=> dispatch({type: actionTypes.SHOW_ERRORS, ifShow: ifShow}),
     };
 };
 

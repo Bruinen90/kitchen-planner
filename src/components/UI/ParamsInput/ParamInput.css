@@ -1,0 +1,10 @@
+.paramsForm input {
+    width: 110px;
+    margin: 10px;
+}
+
+.invalidValue {
+    font-size: 12px;
+    color: #e26b56;
+    text-align: right;
+}

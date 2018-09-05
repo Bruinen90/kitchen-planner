@@ -38,7 +38,7 @@ class FormularzNowejSzafki extends Component {
                 errorsArray = "Wysokość frontu szuflady nie może być mniejsza niż 100mm";
                 break;
             case("tooWideCabinet"):
-                errorsArray = "Suma szerokości szafek będzie większa od szerokości kuchni. Zmniejsz szerokość szafek.";
+                errorsArray = "Suma szerokości szafek będzie większa od szerokości kuchni pomniejszonej o minimalny zalecany luz 5mm. Zmniejsz szerokość szafek.";
                 break;
         }
 

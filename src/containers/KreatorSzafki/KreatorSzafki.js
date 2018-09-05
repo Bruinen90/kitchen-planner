@@ -7,15 +7,18 @@ import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/Sav
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
+import {Redirect} from 'react-router-dom';
 
 class KreatorSzafki extends Component {
   render() {
+
       let wizualizacjaWymiary = {
           width: this.props.cabinetWidth/2 + "px",
           height: this.props.wysokoscSzafek/2 + "px",
       }
     return (
         <div className="contentWrapper">
+        {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> }
             <div className="kreatorNowejSzafki">
                 <FormularzNowejSzafki
                     changeType = {(event) => this.props.onChangeCabinetType(event)}
@@ -43,8 +46,15 @@ class KreatorSzafki extends Component {
                     </div>
                 </div>
             </div>
-            <WizualizacjaKuchni />
-            <SaveAndContinueButton href='/projekt/lista-zakupow' onClick={this.props.calculateForms}/>
+            {this.props.cabinets.length > 0 ? <WizualizacjaKuchni /> : null}
+            <SaveAndContinueButton
+                href='/projekt/lista-zakupow'
+                resetErrors={this.props.calculateForms}
+                active={this.props.kitchenCabinetsValid}
+                showErrors={()=>this.props.onClickShowErrors(true)}
+            />
+            {this.props.showErrors ? <div className="szafkaNieprawidlowa">
+            Suma szerokości szafek jest za mała - dodaj lub edytuj szafki</div> : null}
         </div>
     );
   }
@@ -66,6 +76,9 @@ const mapStateToProps = state => {
         canAddCabinet: state.cabinetValid,
         cabinetWidth: state.cabinetWidth,
         cabinetType: state.cabinetType,
+        kitchenParamsValid: state.validForm,
+        kitchenCabinetsValid: state.kitchenCabinetsValid,
+        showErrors: state.showErrors,
     };
 };
 
@@ -76,6 +89,7 @@ const mapDispatchToProps = dispatch => {
         onChangeCabinetWidth: (event) => dispatch({type: actionTypes.CHANGE_CABINET_WIDTH, event: event}),
         onAddCabinet: () => dispatch({type: actionTypes.ADD_CABINET}),
         calculateForms: () => dispatch({type: actionTypes.CALCULATE_FORMS}),
+        onClickShowErrors: (ifShow)=> dispatch({type: actionTypes.SHOW_ERRORS, ifShow: ifShow}),
     };
 };
 
