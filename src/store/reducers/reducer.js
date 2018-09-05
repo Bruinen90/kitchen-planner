@@ -35,6 +35,8 @@ const initialState = {
     },
     showForms: false,
     focusedParamInput: "",
+    validParams: false,
+    showErrors: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -538,6 +540,12 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 focusedParamInput: action.paramName,
+            }
+
+        case(actionTypes.SHOW_ERRORS):
+            return {
+                ...state,
+                showErrors: true,
             }
     }
 

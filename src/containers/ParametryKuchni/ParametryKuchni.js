@@ -21,6 +21,9 @@ class ParametryKuchni extends Component {
           {
               description: "Szerokość kuchni",
               type: "kitchenWidth",
+              error: "Szerokość kuchni powinna wynosić od 400 do 10 000mm",
+              minValue: 400,
+              maxValue: 10000,
           },
           // {
           //     description: "Wysokość kuchni",
@@ -29,35 +32,60 @@ class ParametryKuchni extends Component {
           {
               description: "Głębokość szafek",
               type: "cabinetDepth",
+              error: "Głębokość szafek powinna wynosić od 200 do 600mm",
+              minValue: 200,
+              maxValue: 600,
           },
           {
               description: "Wysokość szafek",
               type: "cabinetHeight",
+              error: "Wysokość szafek powinna wynosić od 500 do 900mm",
+              minValue: 500,
+              maxValue: 900,
           },
           {
               description: "Szczelina pomiędzy blatem, a górnym frontem: ",
               type: "spaceDrawersToTop",
+              error: "Szczelina powinna mieć od 1 do 50mm",
+              minValue: 1,
+              maxValue: 50,
           },
           {
               description: "Szczelina pomiędzy frontami szuflad: ",
-              type: "spaceBetweenDrawers"
+              type: "spaceBetweenDrawers",
+              error: "Szczelina powinna mieć od 1 do 50mm",
+              minValue: 1,
+              maxValue: 50,
           },
           {
               description: "Szczelina pomiędzy szafkami: ",
-              type: "spaceBetweenCabinets"
+              type: "spaceBetweenCabinets",
+              error: "Szczelina powinna mieć od 1 do 50mm",
+              minValue: 1,
+              maxValue: 50,
           },
       ];
 
+
+
+
       const formInputs = formInputsArray.map(input => {
           return (
-              <ParamsInput
-                  paramDescription={input.description}
-                  changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, input.type)}
-                  focusParamInput={()=>this.props.onFocusParamInput(input.type)}
-                  value={this.props[input.type]}
-                  key={input.type}
-                  autofocus={input.type==="kitchenWidth"}
-              />
+              <div className="wrapper">
+                  <ParamsInput
+                      paramDescription={input.description}
+                      changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, input.type)}
+                      focusParamInput={()=>this.props.onFocusParamInput(input.type)}
+                      value={this.props[input.type]}
+                      typedValue={this.props[input.type]}
+                      minValue={input.minValue}
+                      maxValue={input.maxValue}
+                      error={input.error}
+                      key={input.type}
+                      autofocus={input.type==="kitchenWidth"}
+                      showErrors={this.props.showErrors}
+                  />
+            </div>
           )
       });
 
@@ -106,7 +134,11 @@ class ParametryKuchni extends Component {
                 <img src={visualizationImage} className="visualizationImage" />
             </div>
         </div>
-        <SaveAndContinueButton href='/projekt/kreator-szafki' />
+        <SaveAndContinueButton
+            href='/projekt/kreator-szafki'
+            active={this.props.validParams}
+            showErrors={this.props.onClickShowErrors}
+        />
       </div>
     );
   }
@@ -123,6 +155,7 @@ const mapStateToProps = state => {
         spaceBetweenCabinets: state.spaceBetweenCabinets,
         focusedParamInput: state.focusedParamInput,
         validParams: state.validParams,
+        showErrors: state.showErrors,
     };
 };
 
@@ -132,7 +165,7 @@ const mapDispatchToProps = dispatch => {
             dispatch({type: actionTypes.CHANGE_KITCHEN_PARAM, paramValue: paramValue, paramName: paramName}),
         onClickSaveAndContinue: ()=> dispatch({type: actionTypes.SAVE_PARAMS}),
         onFocusParamInput: (paramName)=> dispatch({type: actionTypes.FOCUS_INPUT, paramName: paramName}),
-
+        onClickShowErrors: ()=> dispatch({type: actionTypes.SHOW_ERRORS})
     };
 };
 
