@@ -147,6 +147,7 @@ const reducer = (state = initialState, action) => {
                 activeDrawer: null,
                 errorTypes: [],
                 editInProgress: true,
+                editedCabinetWidth: cabinetToBeEdited.cabinetWidth,
                 blockedDrawers: createBlockedDrawersArray(),
             }
 
@@ -174,18 +175,6 @@ const reducer = (state = initialState, action) => {
                     cabinets: afterCabinetsArray,
                     editInProgress: false,
                 }
-
-        case(actionTypes.CHANGE_ROOM_SIZE):
-            if (action.event.charCode === 13) {
-                const scale = action.event.target.value*1.2/window.innerWidth;
-                return {
-                    ...state,
-                    kitchenWidth: action.event.target.value,
-                    kitchenHeight: 1000,
-                    blat: action.event.target.value-3,
-                    scale: scale,
-                }
-        }
 
         case(actionTypes.CHANGE_CABINET_TYPE):
             let updateDrawersCount = 0;
@@ -355,7 +344,12 @@ const reducer = (state = initialState, action) => {
                 if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() < state.cabinetHeight)  cabinetError = "tooLow"
             }
 
-            if(!checkCabinetWidthValid(parseInt(state.cabinetWidth))) {
+            let editedCabinetOldWidth = 0;
+            if(state.editInProgress) {
+                editedCabinetOldWidth = state.editedCabinetWidth
+            }
+
+            if(!checkCabinetWidthValid(parseInt(state.cabinetWidth)-editedCabinetOldWidth)) {
                 cabinetValid = false;
                 cabinetError = "tooWideCabinet";
             }

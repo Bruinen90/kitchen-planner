@@ -43,7 +43,7 @@ class FormularzNowejSzafki extends Component {
         }
 
         return (
-            <form className="nowaSzafkaFormularz">
+            <div className="nowaSzafkaFormularz">
             <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki:</b><br/>
                 <input
                     type="radio"
@@ -113,7 +113,7 @@ class FormularzNowejSzafki extends Component {
                 <b>Błąd</b><br/>
                     {errorsArray}
                 </div>
-            </form>
+            </div>
         )
     }
 
