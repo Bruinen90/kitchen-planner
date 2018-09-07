@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 
 class WizualizacjaWnetrze extends Component {
     render() {
+        let editInProgress = {};
+
+        if(this.props.editInProgress) {
+            editInProgress = "editInProgress"
+        }
+
         const wysokoscPrzeliczeniowa = (wysokosc) => {
             if(this.props.rozmiar==="small") {
                 return (wysokosc+this.props.szczelina)/this.props.skala
@@ -33,7 +39,7 @@ class WizualizacjaWnetrze extends Component {
                         </div>
                         :
                         <div
-                            className={"szuflada" + " " + aktywnaSzuflada + " small" }
+                            className={"szuflada" + " " + aktywnaSzuflada + " small" + " " + editInProgress}
                             key={id}
                             style={{"height": wysokoscPrzeliczeniowa(wysokosc)+"px"}}
                         >
@@ -47,22 +53,22 @@ class WizualizacjaWnetrze extends Component {
         if (this.props.rodzaj === "szufladaDrzwi") {
             let aktywnaSzuflada = "";
             if (this.props.activeDrawer !== null) {
-                aktywnaSzuflada = "aktywnaSzuflada"
+                aktywnaSzuflada = "aktywnaSzuflada";
             }
             let wysokoscSzuflady = this.props.drawersHeights[0];
             if (this.props.rozmiar==="small") {
                 wysokoscSzuflady = this.props.drawersHeights[0];
             }
                 drowersArray.push(<div
-                                    className={"szuflada malaSzuflada" + " " + aktywnaSzuflada + " " + this.props.rozmiar}
+                                    className={"szuflada malaSzuflada" + " " + aktywnaSzuflada + " " + this.props.rozmiar + " " + editInProgress}
                                     style={{"height": wysokoscPrzeliczeniowa(wysokoscSzuflady) +"px"}}
                                     key="szuflada"
                                     >Szuflada</div>);
-                drowersArray.push(<div className={"szuflada"} key="drzwi">Drzwi</div>);
+                drowersArray.push(<div className={"szuflada" + " " + aktywnaSzuflada + " " + editInProgress} key="drzwi">Drzwi</div>);
         }
 
         if (this.props.rodzaj === "jedneDrzwi") {
-                drowersArray.push(<div className="szuflada" key="drzwiPojedyncze"></div>);
+                drowersArray.push(<div className={"szuflada" + " " + editInProgress} key="drzwiPojedyncze"></div>);
         }
             return(
                 drowersArray

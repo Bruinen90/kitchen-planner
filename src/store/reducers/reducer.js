@@ -359,6 +359,10 @@ const reducer = (state = initialState, action) => {
                 kitchenCabinetsValid = false;
             }
 
+            if(state.cabinetType==="") {
+                cabinetError = "noCabinetType"
+            }
+
             return {
                 ...state,
                 cabinetValid: cabinetValid,
@@ -580,6 +584,7 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.SET_DEFAULTS_PARAMS):
+            const currentKitchenWidthValidity = state.validParams.kitchenWidth;
             return {
                 ...state,
                 cabinetDepth: 550,
@@ -594,7 +599,8 @@ const reducer = (state = initialState, action) => {
                     spaceDrawersToTop: true,
                     spaceBetweenDrawers: true,
                     spaceBetweenCabinets: true,
-                }
+                },
+                validForm: currentKitchenWidthValidity,
             }
 
     }

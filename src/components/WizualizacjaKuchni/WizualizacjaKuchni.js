@@ -71,6 +71,9 @@ class WizualizacjaKuchni extends Component {
                                 activeDrawer={null}
                                 rozmiar="small"
                                 skala={this.props.scale}
+                                editInProgress={
+                                    this.props.currentlyEditedCabinetId===cabinet.cabinetId
+                                    &&this.props.editInProgress}
                             />
                             <div className="cabinetOverlay" style={overlayOpacity}></div>
                         </div>
@@ -98,6 +101,8 @@ class WizualizacjaKuchni extends Component {
 }
 const mapStateToProps = state => {
     return {
+        currentlyEditedCabinetId: state.cabinetId,
+        editInProgress: state.editInProgress,
         kitchenWidth: state.kitchenWidth,
         kitchenHeight: state.kitchenHeight,
         cabinets: state.cabinets,

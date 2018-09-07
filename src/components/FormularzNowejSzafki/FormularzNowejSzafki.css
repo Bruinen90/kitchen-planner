@@ -81,3 +81,8 @@
     border-right: 0px;
     cursor: auto;
 }
+
+.cabinetWidthInput {
+    margin: 10px;
+    text-align: center;
+}

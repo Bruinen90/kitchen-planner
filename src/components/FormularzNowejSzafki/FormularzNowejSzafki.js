@@ -83,6 +83,7 @@ class FormularzNowejSzafki extends Component {
             </div>
             Szerokość szafki (mm):
                 <input
+                    className="cabinetWidthInput"
                     type="number"
                     min="300"
                     max="900"
@@ -110,7 +111,6 @@ class FormularzNowejSzafki extends Component {
                     onClick={this.props.onClickSaveCabinet}
                 />}
                 <div className={this.props.canAddCabinet ? "szafkaPrawidlowa" : "szafkaNieprawidlowa" }>
-                <b>Błąd</b><br/>
                     {errorsArray}
                 </div>
             </div>

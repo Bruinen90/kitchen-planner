@@ -1,3 +1,11 @@
+:root {
+    --green-color: #5b9e72;
+    --light-green-color: #c0e2cc;
+    --blue-color: #64a6d6;
+    --red-color: #e26b56;
+}
+
+
 body {
     font-family: 'Montserrat', sans-serif;
     padding-bottom: 5%;
@@ -134,15 +142,15 @@ input:focus {
 
 .green {
     color: white;
-    background-color: #5b9e72;
+    background-color: var(--green-color);
 }
 
 .red {
     color: white;
-    background-color: #e26b56;
+    background-color: var(--red-color);
 }
 
 .blue {
     color: white;
-    background-color: #64a6d6;
+    background-color: var(--blue-color);
 }
