@@ -579,6 +579,24 @@ const reducer = (state = initialState, action) => {
                 showErrors: action.ifShow,
             }
 
+        case(actionTypes.SET_DEFAULTS_PARAMS):
+            return {
+                ...state,
+                cabinetDepth: 550,
+                cabinetHeight: 750,
+                spaceDrawersToTop: 3,
+                spaceBetweenDrawers: 3,
+                spaceBetweenCabinets: 2,
+                validParams: {
+                    kitchenWidth: state.validParams.kitchenWidth,
+                    cabinetDepth: true,
+                    cabinetHeight: true,
+                    spaceDrawersToTop: true,
+                    spaceBetweenDrawers: true,
+                    spaceBetweenCabinets: true,
+                }
+            }
+
     }
 
     return state;

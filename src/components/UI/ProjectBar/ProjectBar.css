@@ -29,7 +29,7 @@
     border-bottom: 5px solid #64a6d6 !important;
 }
 
-.saveAndContinueLink {
+.saveAndContinueLink, .setDefaultValuesButton {
     font-size: 20px;
     margin: 10px;
     margin-left: auto;
@@ -42,6 +42,13 @@
     width: 250px;
     height: 50px;
     box-shadow: 5px 5px 8px #ccc;
+}
+
+.setDefaultValuesButton {
+    font-size: 17px;
+    background-color: #5b9e72;
+    border: 0px;
+    cursor: pointer;
 }
 
 .blocked {

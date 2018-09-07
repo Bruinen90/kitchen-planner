@@ -21,7 +21,7 @@ class ParametryKuchni extends Component {
           {
               description: "Szerokość kuchni",
               type: "kitchenWidth",
-              error: "Szerokość kuchni powinna wynosić od 400 do 10 000mm",
+              error: "Szerokość kuchni powinna wynosić od 400 do 9000mm",
               minValue: 400,
               maxValue: 9000,
           },
@@ -141,6 +141,12 @@ class ParametryKuchni extends Component {
             showErrors={()=>this.props.onClickShowErrors(true)}
             resetErrors={()=>this.props.onClickShowErrors(false)}
         />
+        <input
+            type="button"
+            className="setDefaultValuesButton"
+            value="Ustaw sugerowane wartości"
+            onClick={this.props.onClickSetDefaults}
+        />
       </div>
     );
   }
@@ -177,6 +183,7 @@ const mapDispatchToProps = dispatch => {
         onClickSaveAndContinue: ()=> dispatch({type: actionTypes.SAVE_PARAMS}),
         onFocusParamInput: (paramName)=> dispatch({type: actionTypes.FOCUS_INPUT, paramName: paramName}),
         onClickShowErrors: (ifShow)=> dispatch({type: actionTypes.SHOW_ERRORS, ifShow: ifShow}),
+        onClickSetDefaults: ()=> dispatch({type: actionTypes.SET_DEFAULTS_PARAMS})
     };
 };
 
