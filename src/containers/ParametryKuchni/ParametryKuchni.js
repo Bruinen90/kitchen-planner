@@ -14,6 +14,7 @@ import cabinetHeight from '../../img/schematy/cabinetHeight.gif';
 import spaceDrawersToTop from '../../img/schematy/spaceDrawersToTop.gif';
 import spaceBetweenDrawers from '../../img/schematy/spaceBetweenDrawers.gif';
 import spaceBetweenCabinets from '../../img/schematy/spaceBetweenCabinets.gif';
+import legsHeight from '../../img/schematy/legsHeight.png';
 
 class ParametryKuchni extends Component {
   render() {
@@ -63,6 +64,13 @@ class ParametryKuchni extends Component {
               error: "Szczelina powinna mieć od 1 do 50mm",
               minValue: 1,
               maxValue: 50,
+          },
+          {
+              description: "Wysokość nóżek (blendy) pod szafkami: ",
+              type: "legsHeight",
+              error: "Wysokość nóżek powinna wynosić od 50 do 200mm",
+              minValue: 50,
+              maxValue: 200,
           },
       ];
 
@@ -117,10 +125,9 @@ class ParametryKuchni extends Component {
         case "spaceBetweenCabinets":
             visualizationImage = spaceBetweenCabinets;
             break;
-
-
-
-
+        case "legsHeight":
+            visualizationImage = legsHeight;
+            break;
       }
 
     return (
@@ -158,6 +165,7 @@ const mapStateToProps = state => {
         kitchenHeight: state.kitchenHeight,
         cabinetDepth: state.cabinetDepth,
         cabinetHeight: state.cabinetHeight,
+        legsHeight: state.legsHeight,
         spaceDrawersToTop: state.spaceDrawersToTop,
         spaceBetweenDrawers: state.spaceBetweenDrawers,
         spaceBetweenCabinets: state.spaceBetweenCabinets,

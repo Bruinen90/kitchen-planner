@@ -17,8 +17,8 @@
     font-weight: bold;
     margin: auto;
     margin-top: 20px;
-    color: #e26b56;
-    border-bottom: 2px solid #e26b56;
+    color: var(--red-color);
+    border-bottom: 2px solid var(--red-color);
     width: 345px;
     padding: 10px;
 }
@@ -42,38 +42,38 @@
 }
 
 .full {
-    border: 2px solid green;
+    border: 3px solid var(--green-color);
 }
 
 .d1 {
-    border-top: 2px solid green;
+    border-top: 3px solid var(--green-color);
 }
 
 .k1 {
-    border-left: 2px solid green;
+    border-left: 3px solid var(--green-color);
 }
 
 .dk1 {
-    border-left: 2px solid green;
-    border-top: 2px solid green;
+    border-left: 3px solid var(--green-color);
+    border-top: 3px solid var(--green-color);
 }
 
 .d2 {
-    border-top: 2px solid green;
-    border-bottom: 2px solid green;
+    border-top: 3px solid var(--green-color);
+    border-bottom: 3px solid var(--green-color);
 }
 
 .k2 {
-    border-left: 2px solid green;
-    border-right: 2px solid green;
+    border-left: 3px solid var(--green-color);
+    border-right: 3px solid var(--green-color);
 }
 
 .k32 {
-    border: 2px solid green;
+    border: 3px solid var(--green-color);
     border-bottom: 1px solid #ccc;
 }
 
 .d32 {
-    border: 2px solid green;
+    border: 3px solid var(--green-color);
     border-right: 1px solid #ccc;
 }

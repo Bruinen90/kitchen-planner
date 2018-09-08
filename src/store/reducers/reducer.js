@@ -8,6 +8,7 @@ const initialState = {
     cabinets: [],
     cabinetsCount: 0,
     kitchenWidth: "",
+    leftSpace: "",
     kitchenHeight: 1200,
     scale: 3,
     spaceBetweenDrawers: "",
@@ -15,6 +16,7 @@ const initialState = {
     spaceBetweenCabinets: "",
     cabinetDepth: "",
     cabinetHeight: "",
+    legsHeight: "",
     cabinetId: 1,
     cabinetType: "",
     cabinetWidth: 600,
@@ -46,6 +48,7 @@ const initialState = {
     },
     validForm: false,
     kitchenCabinetsValid: false,
+    editedCabinetWidth: "",
 }
 
 const reducer = (state = initialState, action) => {
@@ -131,6 +134,16 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.FILL_CABINET_WIDTH):
+            let fillingWidth = state.leftSpace
+            if(state.editInProgress) {
+                fillingWidth = state.leftSpace + state.editedCabinetWidth;
+            }
+            return {
+                ...state,
+                cabinetWidth: fillingWidth,
+            }
+
         case(actionTypes.EDIT_CABINET):
             const editIndex = state.cabinets.findIndex(findCabinetId);
             const cabinetToBeEdited = {...state.cabinets[editIndex]};
@@ -363,8 +376,11 @@ const reducer = (state = initialState, action) => {
                 cabinetError = "noCabinetType"
             }
 
+            const leftSpace = state.kitchenWidth - calculateCabinestWidthSum();
+
             return {
                 ...state,
+                leftSpace: leftSpace,
                 cabinetValid: cabinetValid,
                 cabinetError: cabinetError,
                 kitchenCabinetsValid: kitchenCabinetsValid,
@@ -540,10 +556,15 @@ const reducer = (state = initialState, action) => {
                 if(newValidParams[a] === false) {
                     validForm = false;
                 }
+            };
+            let defaultLeftSpace = null;
+            if (action.paramName === "kitchenWidth") {
+                defaultLeftSpace = parseInt(action.paramValue) - 5;
             }
             return {
                 ...state,
                 [action.paramName]: parseInt(action.paramValue),
+                leftSpace: defaultLeftSpace,
                 validParams: newValidParams,
                 validForm: validForm,
             }
@@ -592,6 +613,7 @@ const reducer = (state = initialState, action) => {
                 spaceDrawersToTop: 3,
                 spaceBetweenDrawers: 3,
                 spaceBetweenCabinets: 2,
+                legsHeight: 100,
                 validParams: {
                     kitchenWidth: state.validParams.kitchenWidth,
                     cabinetDepth: true,
@@ -599,6 +621,7 @@ const reducer = (state = initialState, action) => {
                     spaceDrawersToTop: true,
                     spaceBetweenDrawers: true,
                     spaceBetweenCabinets: true,
+                    legsHeight: true,
                 },
                 validForm: currentKitchenWidthValidity,
             }

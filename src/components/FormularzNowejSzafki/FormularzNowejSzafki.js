@@ -89,7 +89,13 @@ class FormularzNowejSzafki extends Component {
                     max="900"
                     onChange={this.props.changeWidth}
                     value={this.props.szerokoscSzafki}
-
+                />
+                <input
+                    type="button"
+                    value="Dopasuj"
+                    onClick={this.props.onClickFillWidth}
+                    className="fillWidthButton"
+                    disabled={!this.props.canFillCabinetWidth}
                 />
                 <br />
                 {!this.props.editInProgress ?
@@ -126,6 +132,11 @@ const mapStateToProps = state => {
         errorType: state.cabinetError,
         cabinetType: state.cabinetType,
         editInProgress: state.editInProgress,
+        canFillCabinetWidth:
+            (!state.editInProgress && state.leftSpace < 901 && state.leftSpace > 299)
+            ||
+            (state.editInProgress && state.leftSpace + state.editedCabinetWidth < 901)
+        ,
     }
 }
 
@@ -134,6 +145,7 @@ const mapDispatchToProps = dispatch => {
             onCabinetFormUpdate: () => dispatch({type: actionTypes.CHECK_CABINET}),
             onHoverAddCabinet: () => dispatch({type: actionTypes.HOVER_ADD_CABINET}),
             onClickSaveCabinet: () => dispatch({type: actionTypes.SAVE_CABINET}),
+            onClickFillWidth: ()=> dispatch({type: actionTypes.FILL_CABINET_WIDTH})
     }
 }
 

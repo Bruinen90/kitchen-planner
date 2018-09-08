@@ -4,6 +4,7 @@ import WizualizacjaWnetrza from '../../components/WizualizacjaWnetrza/Wizualizac
 import FormularzNowejSzafki from '../../components/FormularzNowejSzafki/FormularzNowejSzafki';
 import WizualizacjaKuchni from '../../components/WizualizacjaKuchni/WizualizacjaKuchni';
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
+import KitchenState from '../../components/KitchenState/KitchenState';
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -28,6 +29,7 @@ class KreatorSzafki extends Component {
                     clickDodaj = {this.props.onAddCabinet}
                     canAddCabinet = {this.props.canAddCabinet}
                 />
+
                 <div className="wizualizacjaSzafki">
                     <div className="ramySzafki" style={wizualizacjaWymiary}>
                         <WizualizacjaWnetrza
@@ -45,6 +47,7 @@ class KreatorSzafki extends Component {
                         <div></div>
                     </div>
                 </div>
+                <KitchenState />
             </div>
             {this.props.cabinets.length > 0 ? <WizualizacjaKuchni /> : null}
             <SaveAndContinueButton

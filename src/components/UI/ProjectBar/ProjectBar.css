@@ -1,7 +1,7 @@
 .projectBar {
     width: 100%;
     height: 50px;
-    background-color: #e26b56;
+    background-color: var(--red-color);
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -26,7 +26,7 @@
 }
 
 .activeProjectStage {
-    border-bottom: 5px solid #64a6d6 !important;
+    border-bottom: 5px solid var(--blue-color) !important;
 }
 
 .saveAndContinueLink, .setDefaultValuesButton {
@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    background-color: #e26b56;
+    background-color: var(--green-color);
     width: 250px;
     height: 50px;
     box-shadow: 5px 5px 8px #ccc;
@@ -46,9 +46,10 @@
 
 .setDefaultValuesButton {
     font-size: 17px;
-    background-color: #5b9e72;
+    background-color: var(--blue-color);
     border: 0px;
     cursor: pointer;
+    animation: none;
 }
 
 .blocked {

@@ -5,6 +5,6 @@
 
 .invalidValue {
     font-size: 12px;
-    color: #e26b56;
+    color: var(--red-color);
     text-align: right;
 }

@@ -1,6 +1,6 @@
 :root {
     --green-color: #5b9e72;
-    --light-green-color: #c0e2cc;
+    --light-green-color: #d1e2d5;
     --blue-color: #64a6d6;
     --red-color: #e26b56;
 }
@@ -26,12 +26,29 @@ input:focus {
     outline: none;
 }
 
+.animation-pulse {
+    animation:
+        pulse
+        0.7s
+        ease-out
+        0s
+        alternate
+        infinite
+}
+
+
+@keyframes pulse {
+    100% {
+        transform: scale(1.05);
+    }
+}
+
 .wrapper {
     display: inline-block;
 }
 
 .contentWrapper {
-    padding: 5%;
+    padding: 10px;
     transition: all 1s;
 }
 
@@ -45,7 +62,7 @@ input:focus {
 }
 
 .redDot {
-    color: #e26b56;
+    color: var(--red-color);
 }
 
 .sizeInput {
@@ -126,9 +143,9 @@ input:focus {
 }
 
 .aktywnaSzuflada {
-    color: green;
-    border: 1px solid green;
-    background-color: #e7ffbf;
+    color: var(--green-color);
+    border: 1px solid var(--green-color);
+    background-color: var(--light-green-color);
 }
 
 .aktualnaWysokosc {
