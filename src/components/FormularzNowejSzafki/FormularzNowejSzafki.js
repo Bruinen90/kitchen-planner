@@ -6,8 +6,6 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import {connect} from 'react-redux';
 
-import {Link} from 'react-router-dom';
-
 class FormularzNowejSzafki extends Component {
     componentDidUpdate () {
         this.props.onCabinetFormUpdate();
@@ -38,8 +36,13 @@ class FormularzNowejSzafki extends Component {
                 errorsArray = "Wysokość frontu szuflady nie może być mniejsza niż 100mm";
                 break;
             case("tooWideCabinet"):
-                errorsArray = "Suma szerokości szafek będzie większa od szerokości kuchni pomniejszonej o minimalny zalecany luz 5mm. Zmniejsz szerokość szafek.";
+                if(this.props.kitchenCabinetsValid) {
+                    errorsArray = "Kuchnia została prawidłowo wypełniona szafkami. Przejdź dalej, aby zobaczyć wyniki planowania";
+                } else {
+                    errorsArray = "Suma szerokości szafek będzie większa od szerokości kuchni pomniejszonej o minimalny zalecany luz 5mm. Zmniejsz szerokość szafek.";
+                }
                 break;
+            default:
         }
 
         return (
@@ -59,7 +62,7 @@ class FormularzNowejSzafki extends Component {
                 type="radio"
                     name="typySzafek"
                     value="szufladaDrzwi"
-                    onClick={this.props.changeType}
+                    onChange={this.props.changeType}
                     required
                     checked={this.props.cabinetType === "szufladaDrzwi"}
                 />
@@ -116,7 +119,7 @@ class FormularzNowejSzafki extends Component {
                     value="Zapisz zmiany"
                     onClick={this.props.onClickSaveCabinet}
                 />}
-                <div className={this.props.canAddCabinet ? "szafkaPrawidlowa" : "szafkaNieprawidlowa" }>
+                <div className={this.props.kitchenCabinetsValid ? "kitchenDone" : "szafkaNieprawidlowa"} style={this.props.canAddCabinet ? {opacity: "0"} : null}>
                     {errorsArray}
                 </div>
             </div>
@@ -127,7 +130,7 @@ class FormularzNowejSzafki extends Component {
 
 const mapStateToProps = state => {
     return {
-        canAddCabinet: state.cabinetValid,
+        canAddCabinet: !state.cabinetError,
         szerokoscSzafki: state.cabinetWidth,
         errorType: state.cabinetError,
         cabinetType: state.cabinetType,
@@ -137,6 +140,7 @@ const mapStateToProps = state => {
             ||
             (state.editInProgress && state.leftSpace + state.editedCabinetWidth < 901)
         ,
+        kitchenCabinetsValid: state.kitchenCabinetsValid,
     }
 }
 

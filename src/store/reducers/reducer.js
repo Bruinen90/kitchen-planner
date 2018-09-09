@@ -1,22 +1,20 @@
 import * as actionTypes from '../actions/actionTypes';
 
-import axios from '../../axios-db';
-
-import {Route} from 'react-router-dom';
-
 const initialState = {
     cabinets: [],
     cabinetsCount: 0,
     kitchenWidth: "",
     leftSpace: "",
     kitchenHeight: 1200,
-    scale: 3,
     spaceBetweenDrawers: "",
     spaceDrawersToTop: "",
     spaceBetweenCabinets: "",
     cabinetDepth: "",
     cabinetHeight: "",
     legsHeight: "",
+    scale: 3,
+    uniqueId: 1,
+
     cabinetId: 1,
     cabinetType: "",
     cabinetWidth: 600,
@@ -27,15 +25,15 @@ const initialState = {
     errorTypes: [],
     cabinetValid: false,
     cabinetError: "noCabinetType",
+
     formatki: [],
-    hoveredCabinet: false,
-    uniqueId: 1,
     editInProgress: false,
+    editedCabinetWidth: "",
+    hoveredCabinet: false,
     canMove: {
         left: true,
         right: true,
     },
-    showForms: false,
     focusedParamInput: "",
     showErrors: false,
     validParams: {
@@ -48,7 +46,6 @@ const initialState = {
     },
     validForm: false,
     kitchenCabinetsValid: false,
-    editedCabinetWidth: "",
 }
 
 const reducer = (state = initialState, action) => {
@@ -206,7 +203,7 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):
-            const newBlockedDrawers = Array(parseInt(action.event.target.value)).fill(false);
+            const newBlockedDrawers = Array(parseInt(action.event.target.value, 10)).fill(false);
             return {
                 ...state,
                 drawersCounterState: action.event.target.value,
@@ -217,7 +214,7 @@ const reducer = (state = initialState, action) => {
         case(actionTypes.CHANGE_CABINET_WIDTH):
             return {
                 ...state,
-                cabinetWidth: parseInt(action.event.target.value),
+                cabinetWidth: parseInt(action.event.target.value, 10),
             }
 
         case(actionTypes.ADD_CABINET):
@@ -242,14 +239,13 @@ const reducer = (state = initialState, action) => {
 
         case(actionTypes.CHANGE_DRAWER_HEIGHT):
             const newDrawersHeights = [...state.drawersHeights];
-            newDrawersHeights[action.id] = parseInt(action.event.target.value);
+            newDrawersHeights[action.id] = parseInt(action.event.target.value, 10);
             return {
                 ...state,
                 drawersHeights: newDrawersHeights
             }
 
         case(actionTypes.DRAWERS_AUTO_FILL):
-            const currentDrawers = [...state.drawersHeights];
             const otherDrawers = state.drawersHeights.map((szuflada, index) => {
                 if(index !== action.id) return szuflada
                 else return 0
@@ -279,7 +275,8 @@ const reducer = (state = initialState, action) => {
             });
             const blockedDrawersSum = blockedDrawers.reduce((a, b) => a+b, 0);
 
-            const adjustedHeight = (state.cabinetHeight-calculateSpacing()-blockedDrawersSum)/unBlockedDrawersCount;
+            const adjustedHeight =
+                Math.round(((state.cabinetHeight-calculateSpacing()-blockedDrawersSum)/unBlockedDrawersCount)*2)/2;
 
             const newDrawers = curDrawers.map((height, id) => {
                 if(state.blockedDrawers[id]) {
@@ -318,10 +315,10 @@ const reducer = (state = initialState, action) => {
             })
             for (let index in state.drawersHeights) {
                 if (curDrawerHeight[index] > 400) {
-                    badDrawersIds.splice(parseInt(index), 1, "tooHeight");
+                    badDrawersIds.splice(parseInt(index, 10), 1, "tooHeight");
                 }
                 if (curDrawerHeight[index] < 120) {
-                    badDrawersIds.splice(parseInt(index), 1, "tooLow");
+                    badDrawersIds.splice(parseInt(index, 10), 1, "tooLow");
                 }
 
             }
@@ -332,38 +329,36 @@ const reducer = (state = initialState, action) => {
                 }
 
         case(actionTypes.CHECK_CABINET):
-            let cabinetValid = false;
             let cabinetError = false;
             const sumOfDrawersHeights = state.drawersHeights.reduce((a,b) => a+b, 0);
-            if ((
-                    state.cabinetType === "jedneDrzwi" ||
-                (
-                    state.cabinetType === "szufladaDrzwi" &&
-                    sumOfDrawersHeights + calculateSpacing() + 100 <= state.cabinetHeight &&
-                    sumOfDrawersHeights >= 100
-                ) ||
-                (
-                    sumOfDrawersHeights + calculateSpacing() === state.cabinetHeight
-                )) && state.cabinetWidth > 299 && state.cabinetWidth <901
-            ) {
-                cabinetValid = true
-            } else {
-                if(state.cabinetWidth > 900) cabinetError = "tooWide";
-                if(state.cabinetWidth < 300) cabinetError = "tooNarrow";
-                if (state.cabinetType === "szufladaDrzwi" &&
-                sumOfDrawersHeights + calculateSpacing() + 100 > state.cabinetHeight) cabinetError = "tooHeightOneDrawer";
-                if (state.cabinetType === "szufladaDrzwi" && sumOfDrawersHeights < 100) cabinetError = "tooLowOneDrawer";
-                if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() > state.cabinetHeight) cabinetError = "tooHeight";
-                if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() < state.cabinetHeight)  cabinetError = "tooLow"
-            }
+            // if ((
+            //         state.cabinetType === "jedneDrzwi" ||
+            //     (
+            //         state.cabinetType === "szufladaDrzwi" &&
+            //         sumOfDrawersHeights + calculateSpacing() + 100 <= state.cabinetHeight &&
+            //         sumOfDrawersHeights >= 100
+            //     ) ||
+            //     (
+            //         sumOfDrawersHeights + calculateSpacing() === state.cabinetHeight
+            //     )) && state.cabinetWidth > 299 && state.cabinetWidth <901
+            // ) {
+            //     cabinetValid = true
+            // }
+            if(state.cabinetWidth > 900) cabinetError = "tooWide";
+            if(state.cabinetWidth < 300) cabinetError = "tooNarrow";
+            if (state.cabinetType === "szufladaDrzwi" &&
+            sumOfDrawersHeights + calculateSpacing() + 100 > state.cabinetHeight) cabinetError = "tooHeightOneDrawer";
+            if (state.cabinetType === "szufladaDrzwi" && sumOfDrawersHeights < 100) cabinetError = "tooLowOneDrawer";
+            if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() > state.cabinetHeight + 0.5) cabinetError = "tooHeight";
+            if (state.cabinetType === "szuflady" && sumOfDrawersHeights + calculateSpacing() < state.cabinetHeight - 0.5)  cabinetError = "tooLow"
+
 
             let editedCabinetOldWidth = 0;
             if(state.editInProgress) {
                 editedCabinetOldWidth = state.editedCabinetWidth
             }
 
-            if(!checkCabinetWidthValid(parseInt(state.cabinetWidth)-editedCabinetOldWidth)) {
-                cabinetValid = false;
+            if(!checkCabinetWidthValid(parseInt(state.cabinetWidth, 10)-editedCabinetOldWidth)) {
                 cabinetError = "tooWideCabinet";
             }
             //check whole kitchen validation
@@ -381,7 +376,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 leftSpace: leftSpace,
-                cabinetValid: cabinetValid,
                 cabinetError: cabinetError,
                 kitchenCabinetsValid: kitchenCabinetsValid,
             }
@@ -452,7 +446,6 @@ const reducer = (state = initialState, action) => {
                     ilosc: 2,
                 });
 
-                let szufladyPlecy= [];
                 let wymiaryPlecow = "";
                 if (cabinet.cabinetType === 'jedneDrzwi') {
                     primaryAllFormsArray.fronty.push({
@@ -500,7 +493,7 @@ const reducer = (state = initialState, action) => {
                             });
                     });
                     primaryAllFormsArray.plyta16mm.push({
-                        wymiary: (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
+                        wymiary: (cabinet.cabinetWidth-111).toString()+"x476mm",
                         okleina: null,
                         ilosc: cabinet.drawersHeights.length,
                     });
@@ -531,6 +524,21 @@ const reducer = (state = initialState, action) => {
                 }
             });
 
+            let blenda = {
+                wymiary: calculateCabinestWidthSum()+"x"+state.legsHeight+"mm",
+                okleina: null,
+                ilosc: 1,
+            };
+            if(calculateCabinestWidthSum()>2700) {
+                const iloscBlend = Math.ceil(calculateCabinestWidthSum()/2700);
+                blenda = {
+                    wymiary: calculateCabinestWidthSum()/iloscBlend+"x"+state.legsHeight+"mm",
+                    okleina: null,
+                    ilosc: iloscBlend,
+                }
+            }
+            primaryAllFormsArray.plyta18mm.push(blenda);
+
 
             primaryAllFormsArray.plyta18mm = summarizeForms(primaryAllFormsArray.plyta18mm);
             primaryAllFormsArray.fronty = summarizeForms(primaryAllFormsArray.fronty);
@@ -538,7 +546,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 formatki: primaryAllFormsArray,
-                showForms: !state.showForms,
             }
 
         case(actionTypes.CHANGE_KITCHEN_PARAM):
@@ -559,38 +566,38 @@ const reducer = (state = initialState, action) => {
             };
             let defaultLeftSpace = null;
             if (action.paramName === "kitchenWidth") {
-                defaultLeftSpace = parseInt(action.paramValue) - 5;
+                defaultLeftSpace = parseInt(action.paramValue, 10) - 5;
             }
             return {
                 ...state,
-                [action.paramName]: parseInt(action.paramValue),
+                [action.paramName]: parseInt(action.paramValue, 10),
                 leftSpace: defaultLeftSpace,
                 validParams: newValidParams,
                 validForm: validForm,
             }
 
-        case(actionTypes.SAVE_PARAMS):
-            // const curProjects = [];
-            // axios.get('/projekty.json')
-            //     .then(res => {
-            //         for(let key in res.data) {
-            //             curProjects.push(res.data[key])
-            //         }
-            //
-            //     });
-            // console.log(curProjects.length)
-            // const kitchenParams = {
-            //     kitchenWidth: state.kitchenWidth,
-            //     kitchenHeight: state.kitchenHeight,
-            //     spaceBetweenDrawers: state.spaceBetweenDrawers,
-            //     spaceDrawersToTop: state.spaceDrawersToTop,
-            //     spaceBetweenCabinets: state.spaceBetweenCabinets,
-            //     cabinetDepth: state.cabinetDepth,
-            //     cabinetHeight: state.cabinetHeight,
-            // }
-            // axios.post('/projekty.json', {projectKey: curProjects.length, kitchenParams: kitchenParams,})
-            //     .then(response => console.log(response))
-            //     .catch(error => console.log(error));
+        // case(actionTypes.SAVE_PARAMS):
+        //     const curProjects = [];
+        //     axios.get('/projekty.json')
+        //         .then(res => {
+        //             for(let key in res.data) {
+        //                 curProjects.push(res.data[key])
+        //             }
+        //
+        //         });
+        //     console.log(curProjects.length)
+        //     const kitchenParams = {
+        //         kitchenWidth: state.kitchenWidth,
+        //         kitchenHeight: state.kitchenHeight,
+        //         spaceBetweenDrawers: state.spaceBetweenDrawers,
+        //         spaceDrawersToTop: state.spaceDrawersToTop,
+        //         spaceBetweenCabinets: state.spaceBetweenCabinets,
+        //         cabinetDepth: state.cabinetDepth,
+        //         cabinetHeight: state.cabinetHeight,
+        //     }
+        //     axios.post('/projekty.json', {projectKey: curProjects.length, kitchenParams: kitchenParams,})
+        //         .then(response => console.log(response))
+        //         .catch(error => console.log(error));
 
         case(actionTypes.FOCUS_INPUT):
             return{
@@ -626,6 +633,7 @@ const reducer = (state = initialState, action) => {
                 validForm: currentKitchenWidthValidity,
             }
 
+        default:
     }
 
     return state;

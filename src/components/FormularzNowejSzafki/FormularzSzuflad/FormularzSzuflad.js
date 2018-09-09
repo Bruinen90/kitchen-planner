@@ -17,7 +17,7 @@ class FormularzSzuflad extends Component {
         return(
             this.props.drawersHeights.length > 0 ?
                 <div className="formularzSzuflad">
-                {this. props.drawersHeights.length >1 ?
+                {this.props.drawersHeights.length >1 ?
                 <div>
                 Liczba szuflad:
                 <input
@@ -32,9 +32,9 @@ class FormularzSzuflad extends Component {
                     {this.props.drawersHeights.map((wysokosc, id) => {
                         let blockButtonClasses = "poleFormularzaSzuflad";
                         if (this.props.blockedDrawers[id]) {
-                            blockButtonClasses = blockButtonClasses+ " " + "blue";
+                            blockButtonClasses = blockButtonClasses+" blue";
                         } else {
-                            blockButtonClasses = blockButtonClasses+ " " + "red";
+                            blockButtonClasses = blockButtonClasses+" red";
                         }
                         return (
                             <div key={id}>

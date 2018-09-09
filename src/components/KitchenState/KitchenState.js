@@ -13,7 +13,7 @@ class KitchenState extends Component {
         }
         return (
         <div className="kitchenStateWrapper">
-            <div className={"kitchenPropLine " + " " + cabinetWarning}>
+            <div className={"kitchenPropLine " + cabinetWarning}>
             <span className="kitchenPropDescription">Pozostała szerokość kuchni:</span>
                 <span className="kitchenPropValue"> {this.props.leftSpace}</span>
             </div>

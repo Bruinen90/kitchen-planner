@@ -16,9 +16,9 @@
     font-weight: bold;
     border-bottom: 2px solid var(--red-color);
     animation-name: pulse-warning;
-    animation-duration: 1s;
+    animation-duration: .7s;
     animation-direction: alternate;
-    animation-iteration-count: 3;
+    animation-iteration-count: 5;
 }
 
 @keyframes pulse-warning {

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 import MenuBar from '../components/UI/MenuBar/MenuBar';
-import SizeInput from '../components/SizeInput';
 import Instrukcja from '../components/Porady/JakKorzystac';
 import WykazFormatek from '../components/WykazFormatek';
 import KreatorSzafki from './KreatorSzafki/KreatorSzafki';
@@ -25,6 +24,7 @@ class App extends Component {
         <Route path="/projekt/" component={ProjectBar} />
         <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/instrukcja/" component={Instrukcja}/>
             <Route path="/projekt/kreator-szafki" component={KreatorSzafki} />
             <Route path="/projekt/parametry-kuchni" component={ParametryKuchni} />
             <Route path="/projekt/lista-zakupow" component={WykazFormatek} />

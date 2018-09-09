@@ -29,9 +29,6 @@
     border: 1px solid var(--red-color);
 }
 
-.szafkaPrawidlowa {
-    display: none;
-}
 
 .confirmCabinetButton {
     font-size: 20px;
@@ -99,4 +96,10 @@
 .fillWidthButton:disabled {
     opacity: .5;
     cursor: not-allowed;
+}
+
+.kitchenDone {
+    color: white;
+    background-color: var(--green-color);
+    border: 0px;
 }
