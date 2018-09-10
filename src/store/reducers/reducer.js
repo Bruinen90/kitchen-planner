@@ -173,6 +173,8 @@ const reducer = (state = initialState, action) => {
                 editInProgress: true,
                 editedCabinetWidth: cabinetToBeEdited.cabinetWidth,
                 blockedDrawers: createBlockedDrawersArray(),
+                doubleDoors: cabinetToBeEdited.doubleDoors,
+                shelfsCount: cabinetToBeEdited.shelfsCount,
             }
 
         case(actionTypes.SAVE_CABINET):
@@ -182,6 +184,8 @@ const reducer = (state = initialState, action) => {
                 cabinetWidth: state.cabinetWidth,
                 drawersHeights: [...state.drawersHeights],
                 blockedDrawers: createBlockedDrawersArray(),
+                doubleDoors: state.doubleDoors,
+                shelfsCount: state.shelfsCount,
             }
 
             const beforeCabinetsArray = [...state.cabinets];
@@ -214,6 +218,8 @@ const reducer = (state = initialState, action) => {
                 drawersHeights: updateDrawersArray(updateDrawersCount),
                 errorTypes: [],
                 blockedDrawers: drawersBlocked,
+                doubleDoors: false,
+                shelfsCount: 0,
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):

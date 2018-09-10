@@ -11,12 +11,13 @@ class FormularzDrzwi extends Component {
               <input
                 type="checkbox"
                 onChange={(event)=>this.props.onChangeDoorsCount(event)}
+                checked={this.props.doubleDoors}
                 />
                 Drzwi podwójne (dwuskrzydłowe)
             </label>
             <div>
             Ilość półek:
-            <select onChange={(event)=>this.props.onChangeShelfsCount(event)}>
+            <select onChange={(event)=>this.props.onChangeShelfsCount(event)} value={this.props.shelfsCount}>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -32,7 +33,8 @@ class FormularzDrzwi extends Component {
 const mapStateToProps = state => {
     return {
         shouldBeVisible: state.cabinetType === "jedneDrzwi" || state.cabinetType === "szufladaDrzwi",
-
+        doubleDoors: state.doubleDoors,
+        shelfsCount: state.shelfsCount,
     }
 }
 

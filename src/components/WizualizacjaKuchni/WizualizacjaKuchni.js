@@ -70,6 +70,7 @@ class WizualizacjaKuchni extends Component {
                                 szczelina={this.props.szczelina}
                                 activeDrawer={null}
                                 ifDoubleDoors={cabinet.doubleDoors}
+                                shelfsCount={cabinet.shelfsCount}
                                 rozmiar="small"
                                 skala={this.props.scale}
                                 editInProgress={
