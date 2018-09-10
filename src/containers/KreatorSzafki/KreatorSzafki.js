@@ -38,6 +38,7 @@ class KreatorSzafki extends Component {
                             drawersHeights={this.props.drawersHeights}
                             activeDrawer={this.props.activeDrawer}
                             szczelina={this.props.szczelina}
+                            ifDoubleDoors={this.props.doubleDoors}
                         />
                     </div>
                     <div className="nogaSzafki">
@@ -82,6 +83,7 @@ const mapStateToProps = state => {
         kitchenParamsValid: state.validForm,
         kitchenCabinetsValid: state.kitchenCabinetsValid,
         showErrors: state.showErrors,
+        doubleDoors: state.doubleDoors,
     };
 };
 

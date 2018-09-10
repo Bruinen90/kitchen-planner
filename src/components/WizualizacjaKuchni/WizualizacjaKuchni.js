@@ -69,6 +69,7 @@ class WizualizacjaKuchni extends Component {
                                 drawersHeights={cabinet.drawersHeights}
                                 szczelina={this.props.szczelina}
                                 activeDrawer={null}
+                                ifDoubleDoors={cabinet.doubleDoors}
                                 rozmiar="small"
                                 skala={this.props.scale}
                                 editInProgress={

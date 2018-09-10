@@ -1,0 +1,15 @@
+.drzwi {
+    width: 100%;
+    height: 100%;
+    margin: 3px 0px;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+.doubleDoorsWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 6px;
+}

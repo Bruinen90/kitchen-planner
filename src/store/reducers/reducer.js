@@ -18,6 +18,8 @@ const initialState = {
     cabinetId: 1,
     cabinetType: "",
     cabinetWidth: 600,
+    doubleDoors: false,
+    shelfsCount: 0,
     drawersHeights: [],
     drawersCounterState: 3,
     blockedDrawers: [],
@@ -131,6 +133,18 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.CHANGE_DOORS_COUNT):
+            return {
+                ...state,
+                doubleDoors: action.count,
+            }
+
+        case(actionTypes.CHANGE_SHELFS_COUNT):
+            return {
+                ...state,
+                shelfsCount: parseInt(action.count, 10),
+            }
+
         case(actionTypes.FILL_CABINET_WIDTH):
             let fillingWidth = state.leftSpace
             if(state.editInProgress) {
@@ -225,6 +239,8 @@ const reducer = (state = initialState, action) => {
                 cabinetType: state.cabinetType,
                 cabinetWidth: state.cabinetWidth,
                 drawersHeights: [...state.drawersHeights],
+                doubleDoors: state.doubleDoors,
+                shelfsCount: state.shelfsCount,
             }
             const updateCabinets = [...state.cabinets];
             updateCabinets.push(newCabinetParams)
@@ -331,19 +347,6 @@ const reducer = (state = initialState, action) => {
         case(actionTypes.CHECK_CABINET):
             let cabinetError = false;
             const sumOfDrawersHeights = state.drawersHeights.reduce((a,b) => a+b, 0);
-            // if ((
-            //         state.cabinetType === "jedneDrzwi" ||
-            //     (
-            //         state.cabinetType === "szufladaDrzwi" &&
-            //         sumOfDrawersHeights + calculateSpacing() + 100 <= state.cabinetHeight &&
-            //         sumOfDrawersHeights >= 100
-            //     ) ||
-            //     (
-            //         sumOfDrawersHeights + calculateSpacing() === state.cabinetHeight
-            //     )) && state.cabinetWidth > 299 && state.cabinetWidth <901
-            // ) {
-            //     cabinetValid = true
-            // }
             if(state.cabinetWidth > 900) cabinetError = "tooWide";
             if(state.cabinetWidth < 300) cabinetError = "tooNarrow";
             if (state.cabinetType === "szufladaDrzwi" &&
@@ -446,24 +449,63 @@ const reducer = (state = initialState, action) => {
                     ilosc: 2,
                 });
 
+                if(cabinet.shelfsCount>0) {
+                    primaryAllFormsArray.plyta16mm.push({
+                        wymiary: (state.cabinetDepth-5).toString()+"x"+(cabinet.cabinetWidth-37).toString()+"mm",
+                        okleina: state.cabinetDepth > cabinet.cabinetWidth-37? 'k1' : 'd1',
+                        ilosc: cabinet.shelfsCount,
+                    });
+                }
+
                 let wymiaryPlecow = "";
                 if (cabinet.cabinetType === 'jedneDrzwi') {
-                    primaryAllFormsArray.fronty.push({
-                        wymiary: (state.cabinetHeight-state.spaceDrawersToTop).toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
-                        okleina: "full",
-                        ilosc: 1,
-                    })
+                    if(cabinet.doubleDoors) {
+                        primaryAllFormsArray.fronty.push({
+                            wymiary:
+                                (state.cabinetHeight-state.spaceDrawersToTop).toString()
+                                +"x"+
+                                ((cabinet.cabinetWidth-state.spaceBetweenDrawers-state.spaceBetweenCabinets/2)/2).toString()+"mm",
+                            okleina: "full",
+                            ilosc: 2,
+                        })
+                    } else {
+                        primaryAllFormsArray.fronty.push({
+                            wymiary:
+                                (state.cabinetHeight-state.spaceDrawersToTop).toString()
+                                +"x"+
+                                (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
+                            okleina: "full",
+                            ilosc: 1,
+                        })
+                    }
                 } else if (cabinet.cabinetType === 'szufladaDrzwi') {
                     primaryAllFormsArray.fronty.push({
-                        wymiary: cabinet.drawersHeights[0].toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
-                        okleina: "full",
-                        ilosc: 1,
-                    })
-                    primaryAllFormsArray.fronty.push({
-                        wymiary: (state.cabinetHeight-cabinet.drawersHeights[0]-2*state.spaceBetweenDrawers).toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
+                        wymiary:
+                            cabinet.drawersHeights[0].toString()
+                            +"x"+
+                            (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                         okleina: "full",
                         ilosc: 1,
                     });
+                    if(cabinet.doubleDoors) {
+                        primaryAllFormsArray.fronty.push({
+                            wymiary:
+                                (state.cabinetHeight-cabinet.drawersHeights[0]-2*state.spaceBetweenDrawers).toString()
+                                +"x"+
+                                ((cabinet.cabinetWidth-state.spaceBetweenDrawers-state.spaceBetweenCabinets/2)/2).toString()+"mm",
+                            okleina: "full",
+                            ilosc: 2,
+                        });
+                    } else {
+                        primaryAllFormsArray.fronty.push({
+                            wymiary:
+                                (state.cabinetHeight-cabinet.drawersHeights[0]-2*state.spaceBetweenDrawers).toString()
+                                +"x"+
+                                (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
+                            okleina: "full",
+                            ilosc: 1,
+                        });
+                    }
                     if (cabinet.drawersHeights[0] < 224) {wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";}
                     else {wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";}
                     primaryAllFormsArray.plyta16mm.push({
@@ -480,7 +522,10 @@ const reducer = (state = initialState, action) => {
                     const allDrawers = cabinet.drawersHeights;
                     allDrawers.map(wysokoscFrontu => {
                         primaryAllFormsArray.fronty.push({
-                            wymiary: wysokoscFrontu.toString()+"x"+(cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
+                            wymiary:
+                                wysokoscFrontu.toString()
+                                +"x"+
+                                (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                             okleina: "full",
                             ilosc: 1,
                         })

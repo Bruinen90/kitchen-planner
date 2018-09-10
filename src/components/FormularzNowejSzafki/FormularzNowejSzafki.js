@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import FormularzSzuflad from './FormularzSzuflad/FormularzSzuflad';
+import FormularzDrzwi from './FormularzDrzwi/FormularzDrzwi';
 import './FormularzNowejSzafki.css';
 
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -81,6 +82,8 @@ class FormularzNowejSzafki extends Component {
                     wysokoscSzuflady={this.props.wysokoscSzuflady}
                     changeDrawerCount = {this.props.changeDrawerCount}
                     ilosc={this.props.ilosc}
+                />
+                <FormularzDrzwi
                 />
                 <br />
             </div>
