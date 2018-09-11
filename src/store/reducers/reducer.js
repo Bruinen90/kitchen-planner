@@ -442,6 +442,16 @@ const reducer = (state = initialState, action) => {
                 fronty: [],
                 plyta16mm: [],
             };
+            const allAccessories = {
+                hinges: [],
+                drawers: [],
+                shelfHolders: 0,
+                legs: 0,
+                handles: 0,
+            }
+            const addAcc = (accessorieName, count) => {
+                allAccessories[accessorieName] = allAccessories[accessorieName] + count
+            }
             state.cabinets.map(cabinet => {
                 let trawers = {
                     wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
@@ -461,6 +471,7 @@ const reducer = (state = initialState, action) => {
                         okleina: state.cabinetDepth > cabinet.cabinetWidth-37? 'k1' : 'd1',
                         ilosc: cabinet.shelfsCount,
                     });
+                    addAcc("shelfHolders", cabinet.shelfsCount*4);
                 }
 
                 let wymiaryPlecow = "";
@@ -473,7 +484,9 @@ const reducer = (state = initialState, action) => {
                                 ((cabinet.cabinetWidth-state.spaceBetweenDrawers-state.spaceBetweenCabinets/2)/2).toString()+"mm",
                             okleina: "full",
                             ilosc: 2,
-                        })
+                        });
+                        addAcc("handles", 2)
+                        addAcc("hinges", 4);
                     } else {
                         primaryAllFormsArray.fronty.push({
                             wymiary:
@@ -482,7 +495,9 @@ const reducer = (state = initialState, action) => {
                                 (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                             okleina: "full",
                             ilosc: 1,
-                        })
+                        });
+                        addAcc("handles", 1);
+                        addAcc("hinges", 2);
                     }
                 } else if (cabinet.cabinetType === 'szufladaDrzwi') {
                     primaryAllFormsArray.fronty.push({
@@ -493,6 +508,7 @@ const reducer = (state = initialState, action) => {
                         okleina: "full",
                         ilosc: 1,
                     });
+
                     if(cabinet.doubleDoors) {
                         primaryAllFormsArray.fronty.push({
                             wymiary:
@@ -548,30 +564,6 @@ const reducer = (state = initialState, action) => {
                         okleina: null,
                         ilosc: cabinet.drawersHeights.length,
                     });
-                    // const uniqueDrawers = Array.from(new Set(allDrawers));
-                    // const countDrawers = (wysokosc) => {
-                    //     return allDrawers.filter(height => {
-                    //         return height === wysokosc
-                    //     }).length
-                    // };
-                    // fronty =
-                    //     uniqueDrawers.map((wysokosc, id) => {
-                    //         return {
-                    //             ilosc: countDrawers(wysokosc),
-                    //             wymiary: wysokosc.toString()+"x"+(cabinet.cabinetWidth-3).toString()+"mm",
-                    //         }
-                    //     });
-                    // szufladyPlecy =
-                    //     uniqueDrawers.map((wysokosc, id) => {
-                    //         if (wysokosc < 224) wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
-                    //         else wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
-                    //         return {
-                    //             ilosc: countDrawers(wysokosc),
-                    //             wymiary: wymiaryPlecow,
-                    //             okleina: 'd1',
-                    //             typPlyty: '16mm'
-                    //         }
-                    //     })
                 }
             });
 
@@ -597,6 +589,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 formatki: primaryAllFormsArray,
+                okucia: allAccessories,
             }
 
         case(actionTypes.CHANGE_KITCHEN_PARAM):

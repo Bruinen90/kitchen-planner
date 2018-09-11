@@ -49,6 +49,7 @@ class FormularzNowejSzafki extends Component {
         return (
             <div className="nowaSzafkaFormularz">
             <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki:</b><br/>
+                <label>
                 <input
                     type="radio"
                     name="typySzafek"
@@ -58,7 +59,9 @@ class FormularzNowejSzafki extends Component {
                     checked={this.props.cabinetType === "jedneDrzwi"}
                 />
                 Szafka z pojedynczymi drzwiczkami
+                </label>
                 <br />
+                <label>
                 <input
                 type="radio"
                     name="typySzafek"
@@ -68,7 +71,9 @@ class FormularzNowejSzafki extends Component {
                     checked={this.props.cabinetType === "szufladaDrzwi"}
                 />
                 Szafka z niską szufladą i drzwiczkami
+                </label>
                 <br />
+                <label>
                 <input
                     type="radio"
                     name="typySzafek"
@@ -78,6 +83,7 @@ class FormularzNowejSzafki extends Component {
                     checked={this.props.cabinetType === "szuflady"}
                 />
                 Szafka z szufladami
+                </label>
                 <FormularzSzuflad
                     wysokoscSzuflady={this.props.wysokoscSzuflady}
                     changeDrawerCount = {this.props.changeDrawerCount}
