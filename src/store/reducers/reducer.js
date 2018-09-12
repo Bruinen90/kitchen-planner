@@ -442,16 +442,70 @@ const reducer = (state = initialState, action) => {
                 fronty: [],
                 plyta16mm: [],
             };
-            const allAccessories = {
-                hinges: [],
-                drawers: [],
-                shelfHolders: 0,
-                legs: 0,
-                handles: 0,
-            }
+            let allAccessories = [
+                {
+                    name: "hinges",
+                    fullname: "Zawiasy",
+                    count: 0,
+                    productCode: "71B3550 + 173L6100",
+                    price: 11.25,
+                    type: "acc",
+                },
+                {
+                    name: "lowDrawers",
+                    fullname: "Niskie szuflady",
+                    count: 0,
+                    productCode: "Niska szuflada blum",
+                    price: 150,
+                    type: "drawer"
+                },
+                {
+                    name: "highDrawers",
+                    fullname: "Wysokie szuflady",
+                    count: 0,
+                    productCode: "Wysoka szuflada blum",
+                    price: 150,
+                    type: "drawer"
+                },
+                {
+                    name: "shelfHolders",
+                    fullname: "Wsporniki półek",
+                    count: 0,
+                    productCode: "-",
+                    price: 0.06,
+                    type: "acc",
+                },
+                {
+                    name: "legs",
+                    fullname: "Nóżki meblowe",
+                    count: 0,
+                    productCode: "Nóżka Wurth",
+                    price: 3,
+                    type: "acc",
+                },
+                {
+                    name: "handles",
+                    fullname: "Uchwyty meblowe",
+                    count: 0,
+                    productCode: "-",
+                    price: 20,
+                    type: "acc",
+                },
+            ]
             const addAcc = (accessorieName, count) => {
-                allAccessories[accessorieName] = allAccessories[accessorieName] + count
-            }
+                allAccessories = allAccessories.map(acc => {
+                    if(acc.name=== accessorieName) {
+                        return {
+                            ...acc,
+                            count: acc.count + count,
+                        }
+                    } else {
+                            return {
+                                ...acc,
+                            }
+                        }
+                    })}
+                    
             state.cabinets.map(cabinet => {
                 let trawers = {
                     wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
@@ -485,7 +539,6 @@ const reducer = (state = initialState, action) => {
                             okleina: "full",
                             ilosc: 2,
                         });
-                        addAcc("handles", 2)
                         addAcc("hinges", 4);
                     } else {
                         primaryAllFormsArray.fronty.push({
@@ -496,7 +549,6 @@ const reducer = (state = initialState, action) => {
                             okleina: "full",
                             ilosc: 1,
                         });
-                        addAcc("handles", 1);
                         addAcc("hinges", 2);
                     }
                 } else if (cabinet.cabinetType === 'szufladaDrzwi') {
@@ -518,6 +570,7 @@ const reducer = (state = initialState, action) => {
                             okleina: "full",
                             ilosc: 2,
                         });
+                        addAcc("hinges", 4)
                     } else {
                         primaryAllFormsArray.fronty.push({
                             wymiary:
@@ -527,9 +580,16 @@ const reducer = (state = initialState, action) => {
                             okleina: "full",
                             ilosc: 1,
                         });
+                        addAcc("hinges", 2)
                     }
-                    if (cabinet.drawersHeights[0] < 224) {wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";}
-                    else {wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";}
+                    if (cabinet.drawersHeights[0] < 224) {
+                        wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
+                        addAcc("lowDrawers", 1);
+                    }
+                    else {
+                        wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
+                        addAcc("highDrawers", 1);
+                    }
                     primaryAllFormsArray.plyta16mm.push({
                         wymiary: wymiaryPlecow,
                         okleina: 'd1',
@@ -551,8 +611,14 @@ const reducer = (state = initialState, action) => {
                             okleina: "full",
                             ilosc: 1,
                         })
-                        if (wysokoscFrontu < 224) wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
-                            else wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
+                        if (wysokoscFrontu < 224) {
+                            wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
+                            addAcc("lowDrawers", 1);
+                        }
+                            else {
+                                wymiaryPlecow = cabinet.cabinetWidth-123+"x199mm";
+                                addAcc("highDrawers", 1);
+                            }
                             primaryAllFormsArray.plyta16mm.push({
                                 wymiary: wymiaryPlecow,
                                 okleina: 'd1',
@@ -565,6 +631,8 @@ const reducer = (state = initialState, action) => {
                         ilosc: cabinet.drawersHeights.length,
                     });
                 }
+
+                addAcc("legs", 4);
             });
 
             let blenda = {
@@ -582,6 +650,11 @@ const reducer = (state = initialState, action) => {
             }
             primaryAllFormsArray.plyta18mm.push(blenda);
 
+            let iloscFrontow = 0;
+            primaryAllFormsArray.fronty.map(front => {
+                iloscFrontow = iloscFrontow + front.ilosc;
+            });
+            addAcc("handles", iloscFrontow);
 
             primaryAllFormsArray.plyta18mm = summarizeForms(primaryAllFormsArray.plyta18mm);
             primaryAllFormsArray.fronty = summarizeForms(primaryAllFormsArray.fronty);

@@ -1,0 +1,4 @@
+.ListaZakupowWrapper {
+    display: flex;
+    flex-direction: row;
+}

@@ -1,6 +1,11 @@
+.output {
+    width: 670px;
+    margin: 0px 30px;
+}
+
 .parent {
     margin: auto;
-    width: 600px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,24 +20,26 @@
 .typeHeader {
     font-size: 16px;
     font-weight: bold;
-    margin: auto;
     margin-top: 20px;
     color: var(--red-color);
     border-bottom: 2px solid var(--red-color);
-    width: 345px;
+    width: 100%;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 
 .row {
     display: flex;
     border-bottom: 1px solid #ccc;
+    width: 100%;
+    justify-content: center;
 }
 
 .col {
     padding: 15px;
     text-align: center;
-    width: 90px;
+    width: 150px;
 }
 
 .okleina {
