@@ -48,6 +48,9 @@ const initialState = {
     },
     validForm: false,
     kitchenCabinetsValid: false,
+
+    showLowDrawersDetails: false,
+    showHighDrawersDetails: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -452,26 +455,10 @@ const reducer = (state = initialState, action) => {
                     type: "acc",
                 },
                 {
-                    name: "lowDrawers",
-                    fullname: "Niskie szuflady",
-                    count: 0,
-                    productCode: "Niska szuflada blum",
-                    price: 150,
-                    type: "drawer"
-                },
-                {
-                    name: "highDrawers",
-                    fullname: "Wysokie szuflady",
-                    count: 0,
-                    productCode: "Wysoka szuflada blum",
-                    price: 150,
-                    type: "drawer"
-                },
-                {
                     name: "shelfHolders",
                     fullname: "Wsporniki półek",
                     count: 0,
-                    productCode: "-",
+                    productCode: "wspornik półki fi 5",
                     price: 0.06,
                     type: "acc",
                 },
@@ -487,9 +474,25 @@ const reducer = (state = initialState, action) => {
                     name: "handles",
                     fullname: "Uchwyty meblowe",
                     count: 0,
-                    productCode: "-",
+                    productCode: "uchwyty meblowe",
                     price: 20,
                     type: "acc",
+                },
+                {
+                    name: "lowDrawers",
+                    fullname: "Niskie szuflady",
+                    count: 0,
+                    productCode: "Niska szuflada blum",
+                    price: 150,
+                    type: "drawer"
+                },
+                {
+                    name: "highDrawers",
+                    fullname: "Wysokie szuflady",
+                    count: 0,
+                    productCode: "Wysoka szuflada blum",
+                    price: 150,
+                    type: "drawer"
                 },
             ]
             const addAcc = (accessorieName, count) => {
@@ -505,7 +508,7 @@ const reducer = (state = initialState, action) => {
                             }
                         }
                     })}
-                    
+
             state.cabinets.map(cabinet => {
                 let trawers = {
                     wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
@@ -748,6 +751,20 @@ const reducer = (state = initialState, action) => {
                     legsHeight: true,
                 },
                 validForm: currentKitchenWidthValidity,
+            }
+
+        case(actionTypes.TOGGLE_DRAWERS_DETAILS):
+            console.log(action.drawerSize)
+            if(action.drawerSize === "highDrawers") {
+                return {
+                    ...state,
+                    showHighDrawersDetails: !state.showHighDrawersDetails,
+                }
+            } else {
+                return {
+                    ...state,
+                    showLowDrawersDetails: !state.showLowDrawersDetails,
+                }
             }
 
         default:

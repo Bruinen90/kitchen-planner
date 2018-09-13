@@ -10,14 +10,14 @@ class Wykaz extends Component {
                 return(
                     <div className="row" key={formatka.wymiary+formatka.okleina}>
                         <div className="col">{formatka.wymiary}</div>
-                        <div className="col">{formatka.ilosc}szt</div>
+                        <div className="col narrow">{formatka.ilosc}szt</div>
                         <div className="col"><div className={formatka.okleina + ' okleina'}></div></div>
                     </div>
                 )
             }))
         }
         return(
-            <div className="output">
+            <div className="outputFormatki">
                 <h1 className="innerHeaders">Wymiary formatek do zamówienia</h1>
                 <div className="formatki">
                     <div className="parent">
