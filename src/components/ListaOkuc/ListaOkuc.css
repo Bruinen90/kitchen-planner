@@ -55,3 +55,12 @@
     padding: 0px 5px;
     box-sizing: border-box;
 }
+
+.sumaOkuc {
+    background-color: var(--red-color);
+    color: white;
+    font-size: 18px;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}

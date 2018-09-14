@@ -5,6 +5,7 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 class ListaOkuc extends Component {
     render() {
+        let totalAccessoriesPrice = 0;
         const elementyNiskiejSzuflady = [
             {
                 name: "bokL",
@@ -122,7 +123,7 @@ class ListaOkuc extends Component {
                     <div className="col narrow">{okucie.count}szt</div>
                     <div className="col narrow">{drawerPrice.toFixed(2)}zł</div>
                 </div>
-            )
+            );
         }
 
         const drawerDetails = (elementsArray, drawersCount) => {
@@ -149,6 +150,7 @@ class ListaOkuc extends Component {
 
         const listaOkuc = this.props.okucia.map(okucie => {
             if(okucie.type !== "drawer") {
+                totalAccessoriesPrice = totalAccessoriesPrice + (okucie.price * okucie.count);
                 return(
                     <div className="row" key={okucie.name}>
                         <div className="col toggleButton"></div>
@@ -166,6 +168,8 @@ class ListaOkuc extends Component {
             } else if(okucie.name === "lowDrawers") {
                 drawerPrice = 0;
                 const lowDrawersDetails = drawerDetails(elementyNiskiejSzuflady, okucie.count);
+                totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
+                console.log(totalAccessoriesPrice);
                 return (
                     [   drawerHeader(okucie, drawerPrice),
                         <div
@@ -179,6 +183,8 @@ class ListaOkuc extends Component {
             } else if(okucie.name === "highDrawers") {
                 drawerPrice = 0;
                 const highDrawersDetails = drawerDetails(elementyWysokiejSzuflady, okucie.count);
+                totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
+                console.log(totalAccessoriesPrice);
                 return (
                     [
                         drawerHeader(okucie, drawerPrice),
@@ -200,6 +206,9 @@ class ListaOkuc extends Component {
                     <div className="parent">
                         <div className="typeHeader">Okucia meblowe</div>
                             {listaOkuc}
+                        <div className="row sumaOkuc">
+                        Suma: {totalAccessoriesPrice}zł
+                        </div>
                         </div>
                 </div>
             </div>
