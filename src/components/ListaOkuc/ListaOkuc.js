@@ -111,7 +111,7 @@ class ListaOkuc extends Component {
                     key={okucie.name}
                 >
                     <div className="col toggleButton" onClick={() => this.props.onClickToggleDetails(okucie.name)}>
-                        {this.props[okucie.name] ? <div className="minus"></div> : <div className="plus">&#10010;</div>}
+                        {this.props[okucie.name] ? <div className="minus">-</div> : <div className="plus">+</div>}
                     </div>
                     <div className="col">
                         <a
@@ -120,8 +120,8 @@ class ListaOkuc extends Component {
                                 {okucie.fullname}
                         </a>
                     </div>
-                    <div className="col narrow">{okucie.count}szt</div>
-                    <div className="col narrow">{drawerPrice.toFixed(2)}zł</div>
+                    <div className="col narrow">{okucie.count} szt</div>
+                    <div className="col narrow">{drawerPrice.toFixed(2)} zł</div>
                 </div>
             );
         }
@@ -140,8 +140,8 @@ class ListaOkuc extends Component {
                                         {element.fullname}
                                 </a>
                             </div>
-                            <div className="col narrow">{element.count * drawersCount}szt</div>
-                            <div className="col narrow">{(element.price * element.count * drawersCount).toFixed(2)}zł</div>
+                            <div className="col narrow">{element.count * drawersCount} szt</div>
+                            <div className="col narrow">{(element.price * element.count * drawersCount).toFixed(2)} zł</div>
                         </div>
                     )
                 })
@@ -149,23 +149,27 @@ class ListaOkuc extends Component {
         };
 
         const listaOkuc = this.props.okucia.map(okucie => {
-            if(okucie.type !== "drawer") {
+            if(okucie.type !== "drawer" && okucie.count > 0) {
                 totalAccessoriesPrice = totalAccessoriesPrice + (okucie.price * okucie.count);
+                let legsHeight = "";
+                if(okucie.name==="legs") {
+                    legsHeight = this.props.legsHeight+" mm";
+                }
                 return(
                     <div className="row" key={okucie.name}>
                         <div className="col toggleButton"></div>
                         <div className="col">
                             <a
                                 target="_blank" title="Wyszukaj okucia w Google"
-                                href={"http://www.google.com/search?q="+okucie.productCode}>
-                                    {okucie.fullname}
+                                href={"http://www.google.com/search?q="+okucie.productCode+" "+legsHeight}>
+                                    {okucie.fullname+ " " + legsHeight}
                             </a>
                         </div>
-                        <div className="col narrow">{okucie.count}szt</div>
-                        <div className="col narrow">{(okucie.price * okucie.count).toFixed(2)}zł</div>
+                        <div className="col narrow">{okucie.count} szt</div>
+                        <div className="col narrow">{(okucie.price * okucie.count).toFixed(2)} zł</div>
                     </div>
                 )
-            } else if(okucie.name === "lowDrawers") {
+            } else if(okucie.name === "lowDrawers" && okucie.count > 0) {
                 drawerPrice = 0;
                 const lowDrawersDetails = drawerDetails(elementyNiskiejSzuflady, okucie.count);
                 totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
@@ -180,7 +184,7 @@ class ListaOkuc extends Component {
                         </div>,
                     ]
                 );
-            } else if(okucie.name === "highDrawers") {
+            } else if(okucie.name === "highDrawers" && okucie.count > 0) {
                 drawerPrice = 0;
                 const highDrawersDetails = drawerDetails(elementyWysokiejSzuflady, okucie.count);
                 totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
@@ -207,7 +211,7 @@ class ListaOkuc extends Component {
                         <div className="typeHeader">Okucia meblowe</div>
                             {listaOkuc}
                         <div className="row sumaOkuc">
-                        Suma: {totalAccessoriesPrice}zł
+                        Suma: {totalAccessoriesPrice.toFixed(2)}zł
                         </div>
                         </div>
                 </div>
@@ -221,6 +225,7 @@ const mapStateToProps = state => {
         okucia: state.okucia,
         lowDrawers: state.showLowDrawersDetails,
         highDrawers: state.showHighDrawersDetails,
+        legsHeight: state.legsHeight,
     }
 }
 

@@ -450,9 +450,19 @@ const reducer = (state = initialState, action) => {
                     name: "hinges",
                     fullname: "Zawiasy",
                     count: 0,
-                    productCode: "71B3550 + 173L6100",
-                    price: 11.25,
+                    productCode: "71B3550",
+                    price: 10.6,
                     type: "acc",
+                    screwsToHold: 2,
+                },
+                {
+                    name: "hingesHolders",
+                    fullname: "Prowadniki zawiasów",
+                    count: 0,
+                    productCode: "173L6100",
+                    price: 0.65,
+                    type: "acc",
+                    screwsToHold: 2,
                 },
                 {
                     name: "shelfHolders",
@@ -464,11 +474,12 @@ const reducer = (state = initialState, action) => {
                 },
                 {
                     name: "legs",
-                    fullname: "Nóżki meblowe",
+                    fullname: "Nóżki",
                     count: 0,
                     productCode: "Nóżka Wurth",
                     price: 3,
                     type: "acc",
+
                 },
                 {
                     name: "handles",
@@ -484,7 +495,8 @@ const reducer = (state = initialState, action) => {
                     count: 0,
                     productCode: "Niska szuflada blum",
                     price: 150,
-                    type: "drawer"
+                    type: "drawer",
+                    screwsToHold: 24,
                 },
                 {
                     name: "highDrawers",
@@ -492,8 +504,26 @@ const reducer = (state = initialState, action) => {
                     count: 0,
                     productCode: "Wysoka szuflada blum",
                     price: 150,
-                    type: "drawer"
+                    type: "drawer",
+                    screwsToHold: 32,
                 },
+                {
+                    name: "confirmats",
+                    fullname: "Konfirmaty 6.4x50",
+                    count: 0,
+                    productCode: "Konfirmaty 6.4x50",
+                    price: 0.3,
+                    type: "screw",
+                },
+                {
+                    name: "3.5x16",
+                    fullname: "Wkręty 3,5x16mm",
+                    count: 0,
+                    productCode: "Wkręty SPAX 3,5x16mm",
+                    price: 0.13,
+                    type: "screw",
+                },
+
             ]
             const addAcc = (accessorieName, count) => {
                 allAccessories = allAccessories.map(acc => {
@@ -636,7 +666,14 @@ const reducer = (state = initialState, action) => {
                 }
 
                 addAcc("legs", 4);
+                addAcc("confirmats", 8);
             });
+
+            allAccessories.map(acc => {
+                if(acc.screwsToHold) {
+                    addAcc("3.5x16", acc.count*acc.screwsToHold)
+                }
+            })
 
             let blenda = {
                 wymiary: calculateCabinestWidthSum()+"x"+state.legsHeight+"mm",

@@ -8,7 +8,8 @@ import {connect} from 'react-redux';
 class ListaZakupow extends Component {
     componentWillMount() {
         if(!this.props.validKitchen) {
-            this.props.history.replace('/projekt/kreator-szafki')
+            this.props.history.replace('/projekt/parametry-kuchni');
+            window.location.reload();
         }
     }
   render() {

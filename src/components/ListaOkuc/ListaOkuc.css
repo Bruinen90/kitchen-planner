@@ -18,7 +18,7 @@
 }
 
 .narrow {
-    width: 60px;
+    width: 75px;
 }
 
 .drawersDetailsWrapper {
@@ -34,26 +34,26 @@
 }
 
 .plus, .minus {
-    width: 20px;
-    height: 20px;
+    margin-left: auto;
+    width: 15px;
+    height: 15px;
     font-size: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid;
+    box-sizing: border-box;
 }
 
 .plus {
-    color: white;
-    background-color: var(--green-color);
+    border-color: var(--green-color);
+    color: var(--green-color);
 }
 
 .minus {
-    border: 4px solid var(--red-color);
-    border-top-width: 8.5px;
-    border-bottom-width: 8.5px;
-    background-color: white;
-    padding: 0px 5px;
-    box-sizing: border-box;
+    padding-bottom: 2px;
+    border-color: var(--red-color);
+    color: var(--red-color);
 }
 
 .sumaOkuc {
