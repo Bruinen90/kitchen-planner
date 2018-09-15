@@ -109,10 +109,15 @@ class FormularzNowejSzafki extends Component {
                 <FormularzSprzetu
                     visible={this.props.cabinetType === "jedneDrzwi"}
                     pelnaNazwaSzafki="Szafka ze zlewozmywakiem"
+                    clicked={()=>this.props.toggleDevice("kitchenSink")}
+                    checked={this.props.kitchenSink}
+                    ifDisabled={this.props.hob}
                 />
                 <FormularzSprzetu
                     visible={this.props.cabinetType !== "zmywarka" && this.props.cabinetType !== ""}
                     pelnaNazwaSzafki="Szafka z płytą grzewczą"
+                    clicked={()=>this.props.toggleDevice("hob")}
+                    ifDisabled={this.props.kitchenSink}
                 />
                 <br />
             </div>
@@ -173,6 +178,8 @@ const mapStateToProps = state => {
             (state.editInProgress && state.leftSpace + state.editedCabinetWidth < 901)
         ,
         kitchenCabinetsValid: state.kitchenCabinetsValid,
+        kitchenSink: state.kitchenSink,
+        hob: state.hob,
     }
 }
 
@@ -181,7 +188,8 @@ const mapDispatchToProps = dispatch => {
             onCabinetFormUpdate: () => dispatch({type: actionTypes.CHECK_CABINET}),
             onHoverAddCabinet: () => dispatch({type: actionTypes.HOVER_ADD_CABINET}),
             onClickSaveCabinet: () => dispatch({type: actionTypes.SAVE_CABINET}),
-            onClickFillWidth: ()=> dispatch({type: actionTypes.FILL_CABINET_WIDTH})
+            onClickFillWidth: ()=> dispatch({type: actionTypes.FILL_CABINET_WIDTH}),
+            toggleDevice: (deviceName) => dispatch({type: actionTypes.TOGGLE_DEVICE, deviceName: deviceName}),
     }
 }
 

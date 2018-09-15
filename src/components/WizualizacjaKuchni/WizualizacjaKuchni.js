@@ -4,6 +4,9 @@ import WizualizacjaWnetrza from '../WizualizacjaWnetrza/WizualizacjaWnetrza';
 import * as actionTypes from '../../store/actions/actionTypes';
 import './WizualizacjaKuchni.css';
 
+import kitchenSinkIcon from '../../img/sprzety/kitchen_sink_icon.png';
+import hobIcon from '../../img/sprzety/hob_icon.png';
+
 class WizualizacjaKuchni extends Component {
     render() {
         let roomSize = {
@@ -29,6 +32,8 @@ class WizualizacjaKuchni extends Component {
                         onMouseOver={()=>this.props.onHoverCabinet(cabinet.cabinetId)}
                         onMouseOut={()=>this.props.onHoverCabinet(false)}
                     >
+                    {cabinet.hob ? <img src={hobIcon} className="smallHobIcon"/> : null}
+                    {cabinet.kitchenSink ? <img src={kitchenSinkIcon} className="smallKitchenSinkIcon" /> : null}
                         <div className="ramySzafki maleRamy" style={szafkaWymiary}>
                             <div className="buttons" style={showIfHovered}>
                                 <button
@@ -113,6 +118,8 @@ const mapStateToProps = state => {
         hoveredCabinet: state.hoveredCabinet,
         szczelina: state.spaceBetweenDrawers,
         canMove: state.canMove,
+        hob: state.hob,
+        kitchenSink: state.kitchenSink,
     }
 }
 

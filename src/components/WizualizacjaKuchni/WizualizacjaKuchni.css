@@ -103,3 +103,11 @@
     border-color: var(--green-color);
     color: var(--green-color);
 }
+
+.smallHobIcon {
+    width: 185px;
+}
+
+.smallKitchenSinkIcon {
+    width: 70px;
+}

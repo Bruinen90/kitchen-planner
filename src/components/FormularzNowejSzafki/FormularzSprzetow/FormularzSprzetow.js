@@ -8,9 +8,12 @@ const FormularzSprzetu = (props) => {
     }
     return(
         <div className={hide}>
-            <label>
+            <label className={props.ifDisabled ? "nieaktywny" : null}>
                 <input
                     type="checkbox"
+                    checked={props.checked}
+                    onChange={props.clicked}
+                    disabled={props.ifDisabled}
                 />
                 {props.pelnaNazwaSzafki}
             </label>

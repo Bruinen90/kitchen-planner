@@ -14,6 +14,8 @@ const initialState = {
     legsHeight: "",
     scale: 3,
     uniqueId: 1,
+    kitchenSink: false,
+    hob: false,
 
     cabinetId: 1,
     cabinetType: "",
@@ -136,6 +138,12 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.TOGGLE_DEVICE):
+            return {
+                ...state,
+                [action.deviceName]: !state[action.deviceName],
+            }
+
         case(actionTypes.CHANGE_DOORS_COUNT):
             return {
                 ...state,
@@ -224,6 +232,8 @@ const reducer = (state = initialState, action) => {
                 blockedDrawers: drawersBlocked,
                 doubleDoors: false,
                 shelfsCount: 0,
+                kitchenSink: false,
+                hob: false,
             }
 
         case(actionTypes.CHANGE_DRAWER_COUNT):
@@ -251,6 +261,8 @@ const reducer = (state = initialState, action) => {
                 drawersHeights: [...state.drawersHeights],
                 doubleDoors: state.doubleDoors,
                 shelfsCount: state.shelfsCount,
+                hob: state.hob,
+                kitchenSink: state.kitchenSink,
             }
             const updateCabinets = [...state.cabinets];
             updateCabinets.push(newCabinetParams)
@@ -546,6 +558,19 @@ const reducer = (state = initialState, action) => {
                         wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
                         okleina: state.cabinetDepth > cabinet.cabinetWidth-36? 'k1' : 'd1',
                         ilosc: 2,
+                    }
+                    if(cabinet.kitchenSink) {
+                        trawers = {
+                            wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
+                            okleina: state.cabinetDepth > cabinet.cabinetWidth-36? 'k1' : 'd1',
+                            ilosc: 1,
+                        };
+                        primaryAllFormsArray.plyta18mm.push({
+                            wymiary: "80x"+(cabinet.cabinetWidth-36).toString()+"mm",
+                            okleina: 'd2',
+                            ilosc: 2,
+                        });
+                        addAcc("confirmats", 4)
                     }
                     primaryAllFormsArray.plyta18mm.push(trawers);
                     primaryAllFormsArray.plyta18mm.push({

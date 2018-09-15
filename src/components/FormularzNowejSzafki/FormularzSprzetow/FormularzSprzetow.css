@@ -1,3 +1,8 @@
 .hideInput {
     display: none;
 }
+
+.nieaktywny {
+    color: #ccc;
+    cursor: not-allowed;
+}

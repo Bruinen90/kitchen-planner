@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import './KreatorSzafki.css';
 
 import WizualizacjaWnetrza from '../../components/WizualizacjaWnetrza/WizualizacjaWnetrza';
 import FormularzNowejSzafki from '../../components/FormularzNowejSzafki/FormularzNowejSzafki';
 import WizualizacjaKuchni from '../../components/WizualizacjaKuchni/WizualizacjaKuchni';
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 import KitchenState from '../../components/KitchenState/KitchenState';
+
+import kitchenSinkIcon from '../../img/sprzety/kitchen_sink_icon.png';
+import hobIcon from '../../img/sprzety/hob_icon.png';
 
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -31,6 +35,8 @@ class KreatorSzafki extends Component {
                 />
 
                 <div className="wizualizacjaSzafki">
+                {this.props.hob ? <img src={hobIcon} className="hobIcon"/> : null}
+                {this.props.kitchenSink ? <img src={kitchenSinkIcon} className="kitchenSinkIcon" /> : null}
                     <div className="ramySzafki" style={wizualizacjaWymiary}>
                         <WizualizacjaWnetrza
                             rodzaj={this.props.cabinetType}
@@ -86,6 +92,8 @@ const mapStateToProps = state => {
         showErrors: state.showErrors,
         doubleDoors: state.doubleDoors,
         shelfsCount: state.shelfsCount,
+        hob: state.hob,
+        kitchenSink: state.kitchenSink,
     };
 };
 
