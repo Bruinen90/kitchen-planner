@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-
 import './WizualizacjaWnetrza.css';
-
 import {connect} from 'react-redux';
+import dishwasherIcon from '../../img/sprzety/dishwasher_icon.png';
 
 class WizualizacjaWnetrze extends Component {
     render() {
@@ -101,8 +100,15 @@ class WizualizacjaWnetrze extends Component {
             if(this.props.ifDoubleDoors) {
                 doorsArray.push(<div className={"drzwi " + editInProgress} key="drzwi2"></div>);
             }
-
         }
+
+        if (this.props.rodzaj === "zmywarka") {
+            doorsArray.push(
+                <div className={"drzwi " + editInProgress} key="drzwi1">
+                    <img src={dishwasherIcon} className="dishwasherIcon"/>
+                </div>);
+        }
+
         const shelfsEmptyArray = Array(this.props.shelfsCount).fill(null);
         let shelfsArray = [];
         if(this.props.shelfsCount > 0) {

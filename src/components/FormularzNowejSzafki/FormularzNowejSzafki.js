@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import FormularzSzuflad from './FormularzSzuflad/FormularzSzuflad';
 import FormularzDrzwi from './FormularzDrzwi/FormularzDrzwi';
+import FormularzSprzetu from './FormularzSprzetow/FormularzSprzetow';
 import './FormularzNowejSzafki.css';
 
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -58,7 +59,7 @@ class FormularzNowejSzafki extends Component {
                     required
                     checked={this.props.cabinetType === "jedneDrzwi"}
                 />
-                Szafka z pojedynczymi drzwiczkami
+                Szafka z drzwiczkami
                 </label>
                 <br />
                 <label>
@@ -84,12 +85,34 @@ class FormularzNowejSzafki extends Component {
                 />
                 Szafka z szufladami
                 </label>
+                <br />
+                <label>
+                <input
+                    type="radio"
+                    name="typySzafek"
+                    value="zmywarka"
+                    onChange={this.props.changeType}
+                    required
+                    checked={this.props.cabinetType === "zmywarka"}
+                />
+                Zmywarka
+                </label>
+                <br />
+
                 <FormularzSzuflad
                     wysokoscSzuflady={this.props.wysokoscSzuflady}
                     changeDrawerCount = {this.props.changeDrawerCount}
                     ilosc={this.props.ilosc}
                 />
                 <FormularzDrzwi
+                />
+                <FormularzSprzetu
+                    visible={this.props.cabinetType === "jedneDrzwi"}
+                    pelnaNazwaSzafki="Szafka ze zlewozmywakiem"
+                />
+                <FormularzSprzetu
+                    visible={this.props.cabinetType !== "zmywarka" && this.props.cabinetType !== ""}
+                    pelnaNazwaSzafki="Szafka z płytą grzewczą"
                 />
                 <br />
             </div>
