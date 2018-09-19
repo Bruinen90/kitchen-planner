@@ -133,6 +133,26 @@ class ParametryKuchni extends Component {
     return (
       <div>
         <h2 className="header">Podstawowe parametry kuchni<span className="redDot">.</span></h2>
+        <h3>Wybierz rodzaj kuchni</h3>
+        <label>
+        <input
+            type="radio"
+            onChange={(event)=>this.props.onChangeKitchenType(event)}
+            checked={this.props.kitchenType === "prostaJedenRzad"}
+            value="prostaJedenRzad"
+            />
+            Kuchnia prosta, tylko szafki dolne
+        </label>
+        <br/>
+        <label>
+        <input
+            type="radio"
+            onChange={(event)=>this.props.onChangeKitchenType(event)}
+            checked={this.props.kitchenType === "prostaGoraDol"}
+            value="prostaGoraDol"
+            />
+            Kuchnia prosta, szafki dolne i górne
+        </label>
         <div className="paramsContainer">
             <div className="paramsForm">
                 <h3>Podaj wymiary w milimetrach</h3>
@@ -174,7 +194,7 @@ const mapStateToProps = state => {
         showErrors: state.showErrors,
         validForm: state.validForm,
         validParams: state.validParams,
-
+        kitchenType: state.kitchenType,
     };
 };
 
@@ -191,7 +211,8 @@ const mapDispatchToProps = dispatch => {
         onClickSaveAndContinue: ()=> dispatch({type: actionTypes.SAVE_PARAMS}),
         onFocusParamInput: (paramName)=> dispatch({type: actionTypes.FOCUS_INPUT, paramName: paramName}),
         onClickShowErrors: (ifShow)=> dispatch({type: actionTypes.SHOW_ERRORS, ifShow: ifShow}),
-        onClickSetDefaults: ()=> dispatch({type: actionTypes.SET_DEFAULTS_PARAMS})
+        onClickSetDefaults: ()=> dispatch({type: actionTypes.SET_DEFAULTS_PARAMS}),
+        onChangeKitchenType: (event)=> dispatch({type: actionTypes.CHANGE_KITCHEN_TYPE, event: event}),
     };
 };
 

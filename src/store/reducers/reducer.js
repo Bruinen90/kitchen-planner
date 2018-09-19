@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     cabinets: [],
     cabinetsCount: 0,
+    kitchenType: "prostaJedenRzad",
     kitchenWidth: "",
     leftSpace: "",
     kitchenHeight: 1200,
@@ -138,6 +139,11 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.CHANGE_KITCHEN_TYPE):
+            return {
+                ...state,
+                kitchenType: action.event.target.value,
+            }
         case(actionTypes.TOGGLE_DEVICE):
             return {
                 ...state,
@@ -197,6 +203,8 @@ const reducer = (state = initialState, action) => {
                 blockedDrawers: createBlockedDrawersArray(),
                 doubleDoors: state.doubleDoors,
                 shelfsCount: state.shelfsCount,
+                kitchenSink: state.kitchenSink,
+                hob: state.hob,
             }
 
             const beforeCabinetsArray = [...state.cabinets];
