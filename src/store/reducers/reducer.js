@@ -12,6 +12,7 @@ const initialState = {
     spaceBetweenCabinets: "",
     cabinetDepth: "",
     cabinetHeight: "",
+    upperCabinetHeight: "",
     legsHeight: "",
     scale: 3,
     uniqueId: 1,
@@ -45,6 +46,7 @@ const initialState = {
         kitchenWidth: false,
         cabinetDepth: false,
         cabinetHeight: false,
+        upperCabinetHeight: false,
         spaceDrawersToTop: false,
         spaceBetweenDrawers: false,
         spaceBetweenCabinets: false,
@@ -140,9 +142,14 @@ const reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case(actionTypes.CHANGE_KITCHEN_TYPE):
+        let formValidation = state.validForm;
+        if(!action.event.target.value.includes("edenRzad") && !state.validParams.upperCabinetHeight) {
+            formValidation = false;
+        }
             return {
                 ...state,
                 kitchenType: action.event.target.value,
+                validForm: formValidation,
             }
         case(actionTypes.TOGGLE_DEVICE):
             return {
@@ -761,8 +768,11 @@ const reducer = (state = initialState, action) => {
             const newValidParams = {...state.validParams};
             newValidParams[action.paramName] = valueValid;
             let validForm = true;
-            for (const a in newValidParams) {
-                if(newValidParams[a] === false) {
+            for (const paramName in newValidParams) {
+                if(
+                    newValidParams[paramName] === false &&
+                    !(paramName === "upperCabinetHeight" && state.kitchenType.includes("edenRzad"))
+                ) {
                     validForm = false;
                 }
             };
@@ -814,11 +824,16 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.SET_DEFAULTS_PARAMS):
+            let defaultTopDrawersHeight = "";
+            if(!state.kitchenType.includes("edenRzad")) {
+                defaultTopDrawersHeight = 900;
+            }
             const currentKitchenWidthValidity = state.validParams.kitchenWidth;
             return {
                 ...state,
                 cabinetDepth: 550,
                 cabinetHeight: 750,
+                upperCabinetHeight: defaultTopDrawersHeight,
                 spaceDrawersToTop: 3,
                 spaceBetweenDrawers: 3,
                 spaceBetweenCabinets: 2,
@@ -827,6 +842,7 @@ const reducer = (state = initialState, action) => {
                     kitchenWidth: state.validParams.kitchenWidth,
                     cabinetDepth: true,
                     cabinetHeight: true,
+                    upperCabinetHeight: state.kitchenType.includes("edenRzad") ? false : true,
                     spaceDrawersToTop: true,
                     spaceBetweenDrawers: true,
                     spaceBetweenCabinets: true,

@@ -38,7 +38,7 @@ class ParametryKuchni extends Component {
               maxValue: 600,
           },
           {
-              description: "Wysokość szafek",
+              description: "Wysokość szafek dolnych",
               type: "cabinetHeight",
               error: "Wysokość szafek powinna wynosić od 500 do 900mm",
               minValue: 500,
@@ -74,6 +74,18 @@ class ParametryKuchni extends Component {
           },
       ];
 
+      if(!this.props.kitchenType.includes("edenRzad")) {
+          formInputsArray.splice(3, 0,
+              {
+                  description: "Wysokość szafek górnych",
+                  type: "upperCabinetHeight",
+                  error: "Wysokość szafek powinna wynosić od 300 do 900mm",
+                  minValue: 300,
+                  maxValue: 900,
+              },
+          )
+      }
+
 
 
 
@@ -82,7 +94,13 @@ class ParametryKuchni extends Component {
               <div className="wrapper" key={input.type}>
                   <ParamsInput
                       paramDescription={input.description}
-                      changeInputValue={(event) => this.props.onChangeKitchenParam(event.target.value, input.type, input.minValue, input.maxValue)}
+                      changeInputValue={
+                          (event) => this.props.onChangeKitchenParam(
+                              event.target.value,
+                              input.type,
+                              input.minValue,
+                              input.maxValue
+                          )}
                       focusParamInput={()=>this.props.onFocusParamInput(input.type)}
                       value={this.props[input.type]}
                       typedValue={this.props[input.type]}
@@ -114,6 +132,9 @@ class ParametryKuchni extends Component {
         //     visualizationImage = kitchenHeight;
         //     break;
         case "cabinetHeight":
+            visualizationImage = cabinetHeight;
+            break;
+        case "upperCabinetHeight":
             visualizationImage = cabinetHeight;
             break;
         case "spaceDrawersToTop":
@@ -185,6 +206,7 @@ const mapStateToProps = state => {
         kitchenHeight: state.kitchenHeight,
         cabinetDepth: state.cabinetDepth,
         cabinetHeight: state.cabinetHeight,
+        upperCabinetHeight: state.upperCabinetHeight,
         legsHeight: state.legsHeight,
         spaceDrawersToTop: state.spaceDrawersToTop,
         spaceBetweenDrawers: state.spaceBetweenDrawers,
