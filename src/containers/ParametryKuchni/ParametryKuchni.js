@@ -31,18 +31,18 @@ class ParametryKuchni extends Component {
           //     type: "kitchenHeight",
           // },
           {
-              description: "Głębokość szafek",
-              type: "cabinetDepth",
-              error: "Głębokość szafek powinna wynosić od 200 do 600mm",
-              minValue: 200,
-              maxValue: 600,
-          },
-          {
               description: "Wysokość szafek dolnych",
               type: "cabinetHeight",
               error: "Wysokość szafek powinna wynosić od 500 do 900mm",
               minValue: 500,
               maxValue: 900,
+          },
+          {
+              description: "Głębokość szafek dolnych",
+              type: "cabinetDepth",
+              error: "Głębokość szafek powinna wynosić od 200 do 600mm",
+              minValue: 200,
+              maxValue: 600,
           },
           {
               description: "Szczelina pomiędzy blatem, a górnym frontem: ",
@@ -83,6 +83,13 @@ class ParametryKuchni extends Component {
                   minValue: 300,
                   maxValue: 900,
               },
+              {
+                  description: "Głębokość szafek górnych",
+                  type: "upperCabinetDepth",
+                  error: "Głębokość szafek powinna wynosić od 200 do 600mm",
+                  minValue: 200,
+                  maxValue: 600,
+              }
           )
       }
 
@@ -136,6 +143,9 @@ class ParametryKuchni extends Component {
             break;
         case "upperCabinetHeight":
             visualizationImage = cabinetHeight;
+            break;
+        case "upperCabinetDepth":
+            visualizationImage = cabinetDepth;
             break;
         case "spaceDrawersToTop":
             visualizationImage = spaceDrawersToTop;
@@ -207,6 +217,7 @@ const mapStateToProps = state => {
         cabinetDepth: state.cabinetDepth,
         cabinetHeight: state.cabinetHeight,
         upperCabinetHeight: state.upperCabinetHeight,
+        upperCabinetDepth: state.upperCabinetDepth,
         legsHeight: state.legsHeight,
         spaceDrawersToTop: state.spaceDrawersToTop,
         spaceBetweenDrawers: state.spaceBetweenDrawers,

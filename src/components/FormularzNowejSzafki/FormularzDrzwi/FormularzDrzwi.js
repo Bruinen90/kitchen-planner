@@ -10,14 +10,16 @@ class FormularzDrzwi extends Component {
           <label>
               <input
                 type="checkbox"
-                onChange={(event)=>this.props.onChangeDoorsCount(event)}
-                checked={this.props.doubleDoors}
+                onChange={(event, upperCabinets)=>this.props.onChangeDoorsCount(event, this.props.upperCabinets)}
+                checked={this.props.upperCabinets ? this.props.upperDoubleDoors : this.props.doubleDoors}
                 />
                 Drzwi podwójne (dwuskrzydłowe)
             </label>
             <div>
             Ilość półek:
-            <select onChange={(event)=>this.props.onChangeShelfsCount(event)} value={this.props.shelfsCount}>
+            <select
+                onChange={(event, upperCabinets)=>this.props.onChangeShelfsCount(event, this.props.upperCabinets)}
+                value={this.props.upperCabinets ? this.props.upperShelfsCount : this.props.shelfsCount}>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -35,18 +37,22 @@ const mapStateToProps = state => {
         shouldBeVisible: state.cabinetType === "jedneDrzwi" || state.cabinetType === "szufladaDrzwi",
         doubleDoors: state.doubleDoors,
         shelfsCount: state.shelfsCount,
+        upperShelfsCount: state.upperShelfsCount,
+        upperDoubleDoors: state.upperDoubleDoors,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onChangeDoorsCount: (event) => dispatch({
+        onChangeDoorsCount: (event, upperCabinets) => dispatch({
             type: actionTypes.CHANGE_DOORS_COUNT,
             count: event.target.checked,
+            upperCabinets: upperCabinets
         }),
-        onChangeShelfsCount: (event) => dispatch({
+        onChangeShelfsCount: (event, upperCabinets) => dispatch({
             type: actionTypes.CHANGE_SHELFS_COUNT,
             count: event.target.value,
+            upperCabinets: upperCabinets,
         })
     }
 }

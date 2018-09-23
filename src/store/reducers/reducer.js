@@ -13,6 +13,7 @@ const initialState = {
     cabinetDepth: "",
     cabinetHeight: "",
     upperCabinetHeight: "",
+    upperCabinetDepth: "",
     legsHeight: "",
     scale: 3,
     uniqueId: 1,
@@ -24,6 +25,8 @@ const initialState = {
     cabinetWidth: 600,
     doubleDoors: false,
     shelfsCount: 0,
+    upperDoubleDoors: false,
+    upperShelfsCount: 0,
     drawersHeights: [],
     drawersCounterState: 3,
     blockedDrawers: [],
@@ -47,6 +50,7 @@ const initialState = {
         cabinetDepth: false,
         cabinetHeight: false,
         upperCabinetHeight: false,
+        upperCabinetDepth: false,
         spaceDrawersToTop: false,
         spaceBetweenDrawers: false,
         spaceBetweenCabinets: false,
@@ -142,15 +146,16 @@ const reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case(actionTypes.CHANGE_KITCHEN_TYPE):
-        let formValidation = state.validForm;
-        if(!action.event.target.value.includes("edenRzad") && !state.validParams.upperCabinetHeight) {
-            formValidation = false;
-        }
-            return {
-                ...state,
-                kitchenType: action.event.target.value,
-                validForm: formValidation,
+            let formValidation = state.validForm;
+            if(!action.event.target.value.includes("edenRzad") && !state.validParams.upperCabinetHeight) {
+                formValidation = false;
             }
+                return {
+                    ...state,
+                    kitchenType: action.event.target.value,
+                    validForm: formValidation,
+                }
+
         case(actionTypes.TOGGLE_DEVICE):
             return {
                 ...state,
@@ -158,15 +163,29 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.CHANGE_DOORS_COUNT):
-            return {
-                ...state,
-                doubleDoors: action.count,
+            if(action.upperCabinets) {
+                return {
+                    ...state,
+                    upperDoubleDoors: action.count,
+                }
+            } else {
+                return {
+                    ...state,
+                    doubleDoors: action.count,
+                }
             }
 
         case(actionTypes.CHANGE_SHELFS_COUNT):
-            return {
-                ...state,
-                shelfsCount: parseInt(action.count, 10),
+            if(action.upperCabinets) {
+                return {
+                    ...state,
+                    upperShelfsCount: parseInt(action.count, 10),
+                }
+            } else {
+                return {
+                    ...state,
+                    shelfsCount: parseInt(action.count, 10),
+                }
             }
 
         case(actionTypes.FILL_CABINET_WIDTH):
@@ -199,6 +218,8 @@ const reducer = (state = initialState, action) => {
                 blockedDrawers: createBlockedDrawersArray(),
                 doubleDoors: cabinetToBeEdited.doubleDoors,
                 shelfsCount: cabinetToBeEdited.shelfsCount,
+                upperDoubleDoors: cabinetToBeEdited.upperDoubleDoors,
+                upperShelfsCount: cabinetToBeEdited.upperShelfsCount,
             }
 
         case(actionTypes.SAVE_CABINET):
@@ -210,6 +231,8 @@ const reducer = (state = initialState, action) => {
                 blockedDrawers: createBlockedDrawersArray(),
                 doubleDoors: state.doubleDoors,
                 shelfsCount: state.shelfsCount,
+                upperDoubleDoors: state.upperDoubleDoors,
+                upperShelfsCount: state.upperShelfsCount,
                 kitchenSink: state.kitchenSink,
                 hob: state.hob,
             }
@@ -278,6 +301,8 @@ const reducer = (state = initialState, action) => {
                 shelfsCount: state.shelfsCount,
                 hob: state.hob,
                 kitchenSink: state.kitchenSink,
+                upperDoubleDoors: state.upperDoubleDoors,
+                upperShelfsCount: state.upperShelfsCount,
             }
             const updateCabinets = [...state.cabinets];
             updateCabinets.push(newCabinetParams)
@@ -771,7 +796,7 @@ const reducer = (state = initialState, action) => {
             for (const paramName in newValidParams) {
                 if(
                     newValidParams[paramName] === false &&
-                    !(paramName === "upperCabinetHeight" && state.kitchenType.includes("edenRzad"))
+                    !(paramName.includes("upperCabinet") && state.kitchenType.includes("edenRzad"))
                 ) {
                     validForm = false;
                 }
@@ -825,8 +850,10 @@ const reducer = (state = initialState, action) => {
 
         case(actionTypes.SET_DEFAULTS_PARAMS):
             let defaultTopDrawersHeight = "";
+            let defaultTopDrawersDepth = "";
             if(!state.kitchenType.includes("edenRzad")) {
                 defaultTopDrawersHeight = 900;
+                defaultTopDrawersDepth = 300;
             }
             const currentKitchenWidthValidity = state.validParams.kitchenWidth;
             return {
@@ -834,6 +861,7 @@ const reducer = (state = initialState, action) => {
                 cabinetDepth: 550,
                 cabinetHeight: 750,
                 upperCabinetHeight: defaultTopDrawersHeight,
+                upperCabinetDepth: defaultTopDrawersDepth,
                 spaceDrawersToTop: 3,
                 spaceBetweenDrawers: 3,
                 spaceBetweenCabinets: 2,
@@ -843,6 +871,7 @@ const reducer = (state = initialState, action) => {
                     cabinetDepth: true,
                     cabinetHeight: true,
                     upperCabinetHeight: state.kitchenType.includes("edenRzad") ? false : true,
+                    upperCabinetDepth: state.kitchenType.includes("edenRzad") ? false : true,
                     spaceDrawersToTop: true,
                     spaceBetweenDrawers: true,
                     spaceBetweenCabinets: true,

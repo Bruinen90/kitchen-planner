@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import FormularzSzuflad from './FormularzSzuflad/FormularzSzuflad';
 import FormularzDrzwi from './FormularzDrzwi/FormularzDrzwi';
 import FormularzSprzetu from './FormularzSprzetow/FormularzSprzetow';
+import FormularzGornejSzafki from './FormularzGornejSzafki/FormularzGornejSzafki';
 import './FormularzNowejSzafki.css';
-
 import * as actionTypes from '../../store/actions/actionTypes';
 
 import {connect} from 'react-redux';
@@ -49,7 +49,7 @@ class FormularzNowejSzafki extends Component {
 
         return (
             <div className="nowaSzafkaFormularz">
-            <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki:</b><br/>
+            <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki dolnej:</b><br/>
                 <label>
                 <input
                     type="radio"
@@ -119,9 +119,14 @@ class FormularzNowejSzafki extends Component {
                     clicked={()=>this.props.toggleDevice("hob")}
                     ifDisabled={this.props.kitchenSink}
                 />
+                {this.props.cabinetType !== "" && !this.props.kitchenType.includes("edenRzad") ?
+                    <FormularzGornejSzafki
+                    /> : null
+                }
+
                 <br />
             </div>
-            Szerokość szafki (mm):
+            Szerokość szafek (mm):
                 <input
                     className="cabinetWidthInput"
                     type="number"
@@ -180,6 +185,7 @@ const mapStateToProps = state => {
         kitchenCabinetsValid: state.kitchenCabinetsValid,
         kitchenSink: state.kitchenSink,
         hob: state.hob,
+        kitchenType: state.kitchenType,
     }
 }
 
