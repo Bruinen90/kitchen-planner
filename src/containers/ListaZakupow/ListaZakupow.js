@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import WykazFormatek from '../../components/WykazFormatek/WykazFormatek';
 import ListaOkuc from '../../components/ListaOkuc/ListaOkuc';
 import './ListaZakupow.css';
-import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class ListaZakupow extends Component {

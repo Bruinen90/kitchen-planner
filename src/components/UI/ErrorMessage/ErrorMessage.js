@@ -12,6 +12,8 @@ class ErrorMessage extends Component {
         case "tooLow":
             message = "Wysokość frontu szuflady jest mniejsza niż zalecana minimalna wysokość 120mm"
             break;
+        default:
+            message = "";
     }
     return (
         <div className="errorMessage">

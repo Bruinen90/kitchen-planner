@@ -23,8 +23,12 @@ class Wykaz extends Component {
                     <div className="parent">
                         <div className="typeHeader">Płyta meblowa 18mm:</div>
                                 {wykazFormatek(this.props.plyta18mm)}
-                            <div className="typeHeader">Fronty</div>
+                            <div className="typeHeader">Fronty szafek dolnych</div>
                                 {wykazFormatek(this.props.fronty)}
+                            {this.props.frontyGorne.length > 0 ?
+                                <div className="typeHeader">Fronty szafek górnych</div> : null
+                            }
+                                {wykazFormatek(this.props.frontyGorne)}
 
                             {this.props.plyta16mm.length > 0 ? <div className="typeHeader">Płyta meblowa 16mm</div> : null}
                                 {wykazFormatek(this.props.plyta16mm)}
@@ -40,6 +44,7 @@ const mapStateToProps = state => {
     return {
         plyta18mm: state.formatki.plyta18mm,
         fronty: state.formatki.fronty,
+        frontyGorne: state.formatki.frontyGorne,
         plyta16mm: state.formatki.plyta16mm,
     }
 }

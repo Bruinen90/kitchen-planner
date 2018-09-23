@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 class FormularzDrzwi extends Component {
   render() {
     return (
-        this.props.shouldBeVisible ?
+        this.props.shouldBeVisible || this.props.upperCabinets ?
       <div>
           <label>
               <input

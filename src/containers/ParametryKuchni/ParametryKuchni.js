@@ -150,14 +150,14 @@ class ParametryKuchni extends Component {
         case "spaceDrawersToTop":
             visualizationImage = spaceDrawersToTop;
             break;
-        case "spaceBetweenDrawers":
-            visualizationImage = spaceBetweenDrawers;
-            break;
         case "spaceBetweenCabinets":
             visualizationImage = spaceBetweenCabinets;
             break;
         case "legsHeight":
             visualizationImage = legsHeight;
+            break;
+        default:
+            visualizationImage = kitchenWidth;
             break;
       }
 
@@ -190,7 +190,7 @@ class ParametryKuchni extends Component {
                 {formInputs}
             </div>
             <div className="paramVisualization">
-                <img src={visualizationImage} className="visualizationImage" />
+                <img src={visualizationImage} className="visualizationImage" alt="Podaj wymiar zaznaczony strzałką"/>
             </div>
         </div>
         <SaveAndContinueButton
@@ -226,7 +226,6 @@ const mapStateToProps = state => {
         validParams: state.validParams,
         showErrors: state.showErrors,
         validForm: state.validForm,
-        validParams: state.validParams,
         kitchenType: state.kitchenType,
     };
 };

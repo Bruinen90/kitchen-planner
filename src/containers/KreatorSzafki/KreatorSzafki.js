@@ -35,8 +35,8 @@ class KreatorSzafki extends Component {
                 />
 
                 <div className="wizualizacjaSzafki">
-                {this.props.hob ? <img src={hobIcon} className="hobIcon"/> : null}
-                {this.props.kitchenSink ? <img src={kitchenSinkIcon} className="kitchenSinkIcon" /> : null}
+                {this.props.hob ? <img src={hobIcon} className="hobIcon" alt="Płyta grzewcza"/> : null}
+                {this.props.kitchenSink ? <img src={kitchenSinkIcon} className="kitchenSinkIcon" alt="Zlewozmywak"/> : null}
                     <div className="ramySzafki" style={wizualizacjaWymiary}>
                         <WizualizacjaWnetrza
                             rodzaj={this.props.cabinetType}

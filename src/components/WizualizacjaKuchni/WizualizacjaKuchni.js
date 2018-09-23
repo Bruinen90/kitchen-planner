@@ -32,8 +32,8 @@ class WizualizacjaKuchni extends Component {
                         onMouseOver={()=>this.props.onHoverCabinet(cabinet.cabinetId)}
                         onMouseOut={()=>this.props.onHoverCabinet(false)}
                     >
-                    {cabinet.hob ? <img src={hobIcon} className="smallHobIcon"/> : null}
-                    {cabinet.kitchenSink ? <img src={kitchenSinkIcon} className="smallKitchenSinkIcon" /> : null}
+                    {cabinet.hob ? <img src={hobIcon} className="smallHobIcon" alt="Płyta grzewcza"/> : null}
+                    {cabinet.kitchenSink ? <img src={kitchenSinkIcon} className="smallKitchenSinkIcon" alt="Zlewozmywak"/> : null}
                         <div className="ramySzafki maleRamy" style={szafkaWymiary}>
                             <div className="buttons" style={showIfHovered}>
                                 <button

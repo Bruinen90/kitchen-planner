@@ -496,6 +496,7 @@ const reducer = (state = initialState, action) => {
             const primaryAllFormsArray = {
                 plyta18mm: [],
                 fronty: [],
+                frontyGorne: [],
                 plyta16mm: [],
             };
             let allAccessories = [
@@ -593,6 +594,49 @@ const reducer = (state = initialState, action) => {
                     })}
 
             state.cabinets.map(cabinet => {
+                //płyty i akcesoria na górne szafki
+                if(!state.kitchenType.includes("edenRzad")){
+                    primaryAllFormsArray.plyta18mm.push({
+                        wymiary: state.upperCabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
+                        okleina: state.upperCabinetDepth < state.upperCabinetHeight ? 'd1' : 'k1',
+                        ilosc: 2,
+                    });
+                    primaryAllFormsArray.plyta18mm.push({
+                        wymiary: state.upperCabinetDepth.toString()+"x"+state.upperCabinetHeight.toString()+"mm",
+                        okleina: state.upperCabinetDepth > cabinet.cabinetWidth-36? 'k1' : 'd1',
+                        ilosc: 2,
+                    });
+                    if(cabinet.upperShelfsCount>0) {
+                        primaryAllFormsArray.plyta16mm.push({
+                            wymiary: (state.upperCabinetDepth-5).toString()+"x"+(cabinet.cabinetWidth-37).toString()+"mm",
+                            okleina: state.upperCabinetDepth > cabinet.cabinetWidth-37? 'k1' : 'd1',
+                            ilosc: cabinet.upperShelfsCount,
+                        });
+                        addAcc("shelfHolders", cabinet.shelfsCount*4);
+                    }
+                    if(cabinet.upperDoubleDoors) {
+                        primaryAllFormsArray.frontyGorne.push({
+                            wymiary:
+                                state.upperCabinetHeight.toString()
+                                +"x"+
+                                ((cabinet.cabinetWidth-state.spaceBetweenDrawers-state.spaceBetweenCabinets/2)/2).toString()+"mm",
+                            okleina: "full",
+                            ilosc: 2,
+                        });
+                        addAcc("hinges", Math.ceil(state.upperCabinetHeight/399)*2);
+                    } else {
+                        primaryAllFormsArray.frontyGorne.push({
+                            wymiary:
+                                state.upperCabinetHeight.toString()
+                                +"x"+
+                                (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
+                            okleina: "full",
+                            ilosc: 1,
+                        });
+                        addAcc("hinges", Math.ceil(state.upperCabinetHeight/399));
+                    }
+                }
+                //płyty na dolne szafki i resztę
                 if(cabinet.cabinetType !== "zmywarka") {
                     let trawers = {
                         wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
@@ -696,7 +740,7 @@ const reducer = (state = initialState, action) => {
                             ilosc: 1,
                         });
                         primaryAllFormsArray.plyta16mm.push({
-                            wymiary: (cabinet.cabinetWidth-111).toString()+"x"+"476mm",
+                            wymiary: (cabinet.cabinetWidth-111).toString()+"x476mm",
                             okleina: null,
                             ilosc: cabinet.drawersHeights.length,
                         });
@@ -775,6 +819,7 @@ const reducer = (state = initialState, action) => {
 
             primaryAllFormsArray.plyta18mm = summarizeForms(primaryAllFormsArray.plyta18mm);
             primaryAllFormsArray.fronty = summarizeForms(primaryAllFormsArray.fronty);
+            primaryAllFormsArray.frontyGorne = summarizeForms(primaryAllFormsArray.frontyGorne);
             primaryAllFormsArray.plyta16mm = summarizeForms(primaryAllFormsArray.plyta16mm);
             return {
                 ...state,

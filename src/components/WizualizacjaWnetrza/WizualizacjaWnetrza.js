@@ -5,11 +5,6 @@ import dishwasherIcon from '../../img/sprzety/dishwasher_icon.png';
 
 class WizualizacjaWnetrze extends Component {
     render() {
-        let wizualizacjaWymiary = {
-            width: this.props.cabinetWidth/2 + "px",
-            height: this.props.cabinetHeight/2 + "px",
-        }
-
         let editInProgress = "";
 
         if(this.props.editInProgress) {
@@ -105,7 +100,7 @@ class WizualizacjaWnetrze extends Component {
         if (this.props.rodzaj === "zmywarka") {
             doorsArray.push(
                 <div className={"drzwi " + editInProgress} key="drzwi1">
-                    <img src={dishwasherIcon} className="dishwasherIcon"/>
+                    <img src={dishwasherIcon} className="dishwasherIcon" alt="Zmywarka"/>
                 </div>);
         }
 
