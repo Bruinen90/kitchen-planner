@@ -50,54 +50,62 @@ class FormularzNowejSzafki extends Component {
         return (
             <div className="nowaSzafkaFormularz">
             <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki dolnej:</b><br/>
-                <label>
-                <input
-                    type="radio"
-                    name="typySzafek"
-                    value="jedneDrzwi"
-                    onChange={this.props.changeType}
-                    required
-                    checked={this.props.cabinetType === "jedneDrzwi"}
-                />
+                <label className="radioContainer">
+                <div className="radioSwitch">
+                    <input
+                        type="radio"
+                        name="typySzafek"
+                        value="jedneDrzwi"
+                        onChange={this.props.changeType}
+                        required
+                        checked={this.props.cabinetType === "jedneDrzwi"}
+                    />
+                    <span class="slider radio"></span>
+                </div>
                 Szafka z drzwiczkami
                 </label>
-                <br />
-                <label>
-                <input
-                type="radio"
-                    name="typySzafek"
-                    value="szufladaDrzwi"
-                    onChange={this.props.changeType}
-                    required
-                    checked={this.props.cabinetType === "szufladaDrzwi"}
-                />
+                <label className="radioContainer">
+                <div className="radioSwitch">
+                    <input
+                    type="radio"
+                        name="typySzafek"
+                        value="szufladaDrzwi"
+                        onChange={this.props.changeType}
+                        required
+                        checked={this.props.cabinetType === "szufladaDrzwi"}
+                    />
+                    <span class="slider radio"></span>
+                </div>
                 Szafka z niską szufladą i drzwiczkami
                 </label>
-                <br />
-                <label>
-                <input
-                    type="radio"
-                    name="typySzafek"
-                    value="szuflady"
-                    onChange={this.props.changeType}
-                    required
-                    checked={this.props.cabinetType === "szuflady"}
-                />
+                <label className="radioContainer">
+                <div className="radioSwitch">
+                    <input
+                        type="radio"
+                        name="typySzafek"
+                        value="szuflady"
+                        onChange={this.props.changeType}
+                        required
+                        checked={this.props.cabinetType === "szuflady"}
+                    />
+                    <span class="slider radio"></span>
+                </div>
                 Szafka z szufladami
                 </label>
-                <br />
-                <label>
-                <input
-                    type="radio"
-                    name="typySzafek"
-                    value="zmywarka"
-                    onChange={this.props.changeType}
-                    required
-                    checked={this.props.cabinetType === "zmywarka"}
-                />
+                <label className="radioContainer">
+                <div className="radioSwitch">
+                    <input
+                        type="radio"
+                        name="typySzafek"
+                        value="zmywarka"
+                        onChange={this.props.changeType}
+                        required
+                        checked={this.props.cabinetType === "zmywarka"}
+                    />
+                    <span class="slider radio"></span>
+                </div>
                 Zmywarka
                 </label>
-                <br />
 
                 <FormularzSzuflad
                     wysokoscSzuflady={this.props.wysokoscSzuflady}
@@ -118,6 +126,7 @@ class FormularzNowejSzafki extends Component {
                     pelnaNazwaSzafki="Szafka z płytą grzewczą"
                     clicked={()=>this.props.toggleDevice("hob")}
                     ifDisabled={this.props.kitchenSink}
+                    checked={this.props.hob}
                 />
                 {this.props.cabinetType !== "" && !this.props.kitchenType.includes("edenRzad") ?
                     <FormularzGornejSzafki

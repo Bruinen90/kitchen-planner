@@ -165,25 +165,33 @@ class ParametryKuchni extends Component {
       <div>
         <h2 className="header">Podstawowe parametry kuchni<span className="redDot">.</span></h2>
         <h3>Wybierz rodzaj kuchni</h3>
-        <label>
-        <input
-            type="radio"
-            onChange={(event)=>this.props.onChangeKitchenType(event)}
-            checked={this.props.kitchenType === "prostaJedenRzad"}
-            value="prostaJedenRzad"
-            />
-            Kuchnia prosta, tylko szafki dolne
-        </label>
-        <br/>
-        <label>
-        <input
-            type="radio"
-            onChange={(event)=>this.props.onChangeKitchenType(event)}
-            checked={this.props.kitchenType === "prostaGoraDol"}
-            value="prostaGoraDol"
-            />
+        <div className="chooseKitchenType">
+            <label className="checkboxLabel">
+                <div className="radioSwitch">
+                    <input
+                        type="radio"
+                        onChange={(event)=>this.props.onChangeKitchenType(event)}
+                        checked={this.props.kitchenType === "prostaJedenRzad"}
+                        value="prostaJedenRzad"
+                    />
+                    <span class="slider radio"></span>
+                </div>
+                Kuchnia prosta, tylko szafki dolne
+            </label>
+            <br/>
+            <label className="checkboxLabel">
+            <div className="radioSwitch">
+                <input
+                    type="radio"
+                    onChange={(event)=>this.props.onChangeKitchenType(event)}
+                    checked={this.props.kitchenType === "prostaGoraDol"}
+                    value="prostaGoraDol"
+                />
+                <span class="slider radio"></span>
+            </div>
             Kuchnia prosta, szafki dolne i górne
-        </label>
+            </label>
+        </div>
         <div className="paramsContainer">
             <div className="paramsForm">
                 <h3>Podaj wymiary w milimetrach</h3>

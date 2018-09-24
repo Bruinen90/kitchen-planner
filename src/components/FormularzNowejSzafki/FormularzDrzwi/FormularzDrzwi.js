@@ -7,13 +7,15 @@ class FormularzDrzwi extends Component {
     return (
         this.props.shouldBeVisible || this.props.upperCabinets ?
       <div>
-          <label>
-              <input
-                type="checkbox"
-                onChange={(event, upperCabinets)=>this.props.onChangeDoorsCount(event, this.props.upperCabinets)}
-                checked={this.props.upperCabinets ? this.props.upperDoubleDoors : this.props.doubleDoors}
+          <label className="checkboxLabel">
+            <div className="checkboxSwitch">
+                <input
+                    type="checkbox"
+                    onChange={(event, upperCabinets)=>this.props.onChangeDoorsCount(event, this.props.upperCabinets)}
+                    checked={this.props.upperCabinets ? this.props.upperDoubleDoors : this.props.doubleDoors}
                 />
-                Drzwi podwójne (dwuskrzydłowe)
+            <span class="slider"></span></div>
+                    Drzwi podwójne (dwuskrzydłowe)
             </label>
             <div>
             Ilość półek:

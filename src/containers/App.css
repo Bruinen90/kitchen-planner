@@ -3,6 +3,7 @@
     --light-green-color: #d1e2d5;
     --blue-color: #64a6d6;
     --red-color: #e26b56;
+    --red-color-transparent: rgba(226,107,86, .3);
 }
 
 
@@ -171,4 +172,82 @@ input:focus {
 .blue {
     color: white;
     background-color: var(--blue-color);
+}
+
+.radioContainer {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkboxSwitch {
+    display: inline-block;
+    margin: 0px 10px;
+    position: relative;
+    width: 36px;
+    height: 24px;
+}
+
+.radioSwitch {
+    display: block;
+    margin: 0px 10px;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.checkboxLabel {
+    display: flex;
+    margin: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkboxLabel input, .radioContainer input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    transition: .4s;
+    border-radius: 14px;
+    border: 1px solid var(--red-color);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  top: 2px;
+  background-color: var(--red-color);
+  transition: .5s;
+  border-radius: 50%;
+}
+
+.radio:before {
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    top: 4px;
+    background-color: transparent;
+}
+
+input:checked + .slider {
+  border-color: var(--green-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(12px);
+  background-color: var(--green-color);
+}
+
+input:checked + .radio:before {
+    transform: none;
 }
