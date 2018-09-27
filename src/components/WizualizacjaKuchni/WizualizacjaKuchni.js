@@ -18,6 +18,10 @@ class WizualizacjaKuchni extends Component {
                 width: cabinet.cabinetWidth/this.props.scale + "px",
                 height: this.props.wysokoscSzafek/this.props.scale + "px",
             }
+            let szafkaGornaWymiary = {
+                width: cabinet.cabinetWidth/this.props.scale + "px",
+                height: this.props.wysokoscGornychSzafek/this.props.scale + "px",
+            }
             let showIfHovered = {};
             let overlayOpacity = {};
             if(cabinet.cabinetId === this.props.hoveredCabinet) {
@@ -32,42 +36,82 @@ class WizualizacjaKuchni extends Component {
                         onMouseOver={()=>this.props.onHoverCabinet(cabinet.cabinetId)}
                         onMouseOut={()=>this.props.onHoverCabinet(false)}
                     >
-                    {cabinet.hob ? <img src={hobIcon} className="smallHobIcon" alt="Płyta grzewcza"/> : null}
-                    {cabinet.kitchenSink ? <img src={kitchenSinkIcon} className="smallKitchenSinkIcon" alt="Zlewozmywak"/> : null}
-                        <div className="ramySzafki maleRamy" style={szafkaWymiary}>
-                            <div className="buttons" style={showIfHovered}>
-                                <button
-                                    className="green"
-                                    onClick={()=>this.props.onClickEditCabinet(cabinet.cabinetId)}
-                                >
-                                    Edytuj
-                                </button>
-                                <button
-                                    className="red"
-                                    onClick={()=>this.props.onClickDeleteCabinet(cabinet.cabinetId)}
-                                >
-                                    Usuń
-                                </button>
-                                <div className="moveCabinetButtons">
-                                <button
-                                    className={this.props.canMove.left? "blue" : "disabledButton"}
-                                    onClick={
-                                        this.props.canMove.left ?
-                                        ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, -1)
-                                        : null}
-                                >
-                                    &#11207;
-                                </button>
-                                <button
-                                    className={this.props.canMove.right ? "blue" : "disabledButton"}
-                                    onClick={this.props.canMove.right ?
-                                        ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, +1)
-                                        : null}
-                                >
-                                    &#11208;
-                                </button>
-                                </div>
+                        <div className="buttons" style={showIfHovered}>
+                            <button
+                                className="green"
+                                onClick={()=>this.props.onClickEditCabinet(cabinet.cabinetId)}
+                            >
+                                Edytuj
+                            </button>
+                            <button
+                                className="red"
+                                onClick={()=>this.props.onClickDeleteCabinet(cabinet.cabinetId)}
+                            >
+                                Usuń
+                            </button>
+                            <div className="moveCabinetButtons">
+                            <button
+                                className={this.props.canMove.left? "blue" : "disabledButton"}
+                                onClick={
+                                    this.props.canMove.left ?
+                                    ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, -1)
+                                    : null}
+                            >
+                                &#11207;
+                            </button>
+                            <button
+                                className={this.props.canMove.right ? "blue" : "disabledButton"}
+                                onClick={this.props.canMove.right ?
+                                    ()=>this.props.onClickMoveCabinet(cabinet.cabinetId, +1)
+                                    : null}
+                            >
+                                &#11208;
+                            </button>
                             </div>
+                        </div>
+
+                        {!this.props.kitchenType.includes("edenRzad") ?
+                        <div
+                            className="ramySzafki gorneRamy"
+                            style={szafkaGornaWymiary}
+                        >
+                            <WizualizacjaWnetrza
+                                rodzaj="jedneDrzwi"
+                                ilosc="1"
+                                drawersHeights={[]}
+                                szczelina={this.props.szczelina}
+                                ifDoubleDoors={cabinet.upperDoubleDoors}
+                                shelfsCount={cabinet.upperShelfsCount}
+                                rozmiar="small"
+                                skala={this.props.scale}
+                                editInProgress={
+                                    this.props.currentlyEditedCabinetId===cabinet.cabinetId
+                                    &&this.props.editInProgress}
+                            />
+                        </div>
+                        :null}
+
+                        <div className="devicesContainer" style={{height: 130*4/this.props.scale+"px"}}>
+                            {cabinet.hob ?
+                                <img
+                                    src={hobIcon}
+                                    className="hobIcon"
+                                    alt="Płyta grzewcza"
+                                    style={{width: 600/this.props.scale+"px"}}
+                                />
+                            : null}
+                            {cabinet.kitchenSink ?
+                                <img
+                                    src={kitchenSinkIcon}
+                                    className="kitchenSinkIcon"
+                                    alt="Zlewozmywak"
+                                    style={{width: 260/this.props.scale+"px"}}
+                                />
+                            : null}
+                        </div>
+
+                        <div className="ramySzafki maleRamy" style={szafkaWymiary}>
+
                             <WizualizacjaWnetrza
                                 rodzaj={cabinet.cabinetType}
                                 ilosc={cabinet.drawersHeights.length}
@@ -82,7 +126,7 @@ class WizualizacjaKuchni extends Component {
                                     this.props.currentlyEditedCabinetId===cabinet.cabinetId
                                     &&this.props.editInProgress}
                             />
-                            <div className="cabinetOverlay" style={overlayOpacity}></div>
+
                         </div>
                         <div className="nogaSzafki malaNoga">
                           <div></div>
@@ -90,7 +134,7 @@ class WizualizacjaKuchni extends Component {
                         <div className="nogaSzafki malaNoga" style={{float: "right"}}>
                             <div></div>
                         </div>
-
+                        <div className="cabinetOverlay" style={overlayOpacity}></div>
                     </div>
             )
         })
@@ -120,6 +164,8 @@ const mapStateToProps = state => {
         canMove: state.canMove,
         hob: state.hob,
         kitchenSink: state.kitchenSink,
+        kitchenType: state.kitchenType,
+        wysokoscGornychSzafek: state.upperCabinetHeight,
     }
 }
 

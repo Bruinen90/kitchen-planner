@@ -6,7 +6,7 @@ const initialState = {
     kitchenType: "prostaJedenRzad",
     kitchenWidth: "",
     leftSpace: "",
-    kitchenHeight: 1200,
+    kitchenHeight: 2400,
     spaceBetweenDrawers: "",
     spaceDrawersToTop: "",
     spaceBetweenCabinets: "",
@@ -15,7 +15,7 @@ const initialState = {
     upperCabinetHeight: "",
     upperCabinetDepth: "",
     legsHeight: "",
-    scale: 3,
+    scale: 6,
     uniqueId: 1,
     kitchenSink: false,
     hob: false,
@@ -154,6 +154,7 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     kitchenType: action.event.target.value,
                     validForm: formValidation,
+                    kitchenHeight: action.event.target.value.includes("edenRzad") ? 1400 : 2400
                 }
 
         case(actionTypes.TOGGLE_DEVICE):

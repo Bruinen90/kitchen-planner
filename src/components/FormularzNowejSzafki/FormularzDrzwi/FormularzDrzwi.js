@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as actionTypes from '../../../store/actions/actionTypes';
 import {connect} from 'react-redux';
+import './FormularzDrzwi.css';
 
 class FormularzDrzwi extends Component {
   render() {
@@ -17,16 +18,17 @@ class FormularzDrzwi extends Component {
             <span class="slider"></span></div>
                     Drzwi podwójne (dwuskrzydłowe)
             </label>
-            <div>
-            Ilość półek:
-            <select
-                onChange={(event, upperCabinets)=>this.props.onChangeShelfsCount(event, this.props.upperCabinets)}
-                value={this.props.upperCabinets ? this.props.upperShelfsCount : this.props.shelfsCount}>
+            <div className="iloscPolekContainer">
+                <select
+                    onChange={(event, upperCabinets)=>this.props.onChangeShelfsCount(event, this.props.upperCabinets)}
+                    value={this.props.upperCabinets ? this.props.upperShelfsCount : this.props.shelfsCount}
+                    className="iloscPolek"
+                >
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
-            </select>
-
+                </select>
+                Ilość półek
             </div>
       </div>
       : null

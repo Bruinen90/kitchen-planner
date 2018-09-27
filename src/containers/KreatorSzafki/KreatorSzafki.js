@@ -18,8 +18,13 @@ class KreatorSzafki extends Component {
   render() {
 
       let wizualizacjaWymiary = {
-          width: this.props.cabinetWidth/2 + "px",
-          height: this.props.wysokoscSzafek/2 + "px",
+          width: this.props.cabinetWidth/4 + "px",
+          height: this.props.wysokoscSzafek/4 + "px",
+      }
+
+      let wizualizacjaWymiaryGorne = {
+          width: this.props.cabinetWidth/4 + "px",
+          height: this.props.wysokoscGornychSzafek/4 + "px",
       }
     return (
         <div className="contentWrapper">
@@ -35,8 +40,25 @@ class KreatorSzafki extends Component {
                 />
 
                 <div className="wizualizacjaSzafki">
+                {!this.props.kitchenType.includes("edenRzad") ?
+                <div
+                    className="ramySzafki gorneRamy"
+                    style={wizualizacjaWymiaryGorne}
+                >
+                    <WizualizacjaWnetrza
+                        rodzaj="jedneDrzwi"
+                        ilosc="1"
+                        drawersHeights={this.props.drawersHeights}
+                        szczelina={this.props.szczelina}
+                        ifDoubleDoors={this.props.upperDoubleDoors}
+                        shelfsCount={this.props.upperShelfsCount}
+                    />
+                </div>
+                :null}
+                <div className="devicesContainer">
                 {this.props.hob ? <img src={hobIcon} className="hobIcon" alt="Płyta grzewcza"/> : null}
                 {this.props.kitchenSink ? <img src={kitchenSinkIcon} className="kitchenSinkIcon" alt="Zlewozmywak"/> : null}
+                </div>
                     <div className="ramySzafki" style={wizualizacjaWymiary}>
                         <WizualizacjaWnetrza
                             rodzaj={this.props.cabinetType}
@@ -79,6 +101,7 @@ const mapStateToProps = state => {
         scale: state.scale,
         szczelina: state.spaceBetweenDrawers,
         wysokoscSzafek: state.cabinetHeight,
+        wysokoscGornychSzafek: state.upperCabinetHeight,
         iloscSzafek: state.cabinetsCount,
         formatki: state.formatki,
         drawersHeights: state.drawersHeights,
@@ -92,8 +115,11 @@ const mapStateToProps = state => {
         showErrors: state.showErrors,
         doubleDoors: state.doubleDoors,
         shelfsCount: state.shelfsCount,
+        upperDoubleDoors: state.upperDoubleDoors,
+        upperShelfsCount: state.upperShelfsCount,
         hob: state.hob,
         kitchenSink: state.kitchenSink,
+        kitchenType: state.kitchenType,
     };
 };
 
