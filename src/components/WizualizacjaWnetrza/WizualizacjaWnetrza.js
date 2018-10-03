@@ -15,9 +15,7 @@ class WizualizacjaWnetrze extends Component {
             if(this.props.rozmiar==="small") {
                 return (wysokosc+this.props.szczelina)/this.props.skala
                 }
-            else {
-                return (wysokosc+this.props.szczelina)
-            };
+            return (wysokosc+this.props.szczelina);
         }
         let drowersArray = [];
         let doorsArray=[];
@@ -116,12 +114,10 @@ class WizualizacjaWnetrze extends Component {
                 }
                 if(this.props.rodzaj === "szufladaDrzwi") {
                     let shelfHeight =
-                        ((this.props.cabinetHeight-
+                        (this.props.cabinetHeight-
                         this.props.drawersHeights[0]-
-                        this.props.spaceDrawersToTop)/(this.props.shelfsCount+1))/2;
-                    if(this.props.skala) {
-                        shelfHeight = shelfHeight*2/this.props.skala;
-                    }
+                        this.props.spaceDrawersToTop)/(this.props.shelfsCount+1);
+                    shelfHeight = shelfHeight/this.props.scale;
                     return(
                         <div className="shelf" style={{height: shelfHeight*(id+1)+"px"}}></div>
                     )

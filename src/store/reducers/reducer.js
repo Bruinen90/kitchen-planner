@@ -203,7 +203,7 @@ const reducer = (state = initialState, action) => {
             const editIndex = state.cabinets.findIndex(findCabinetId);
             const cabinetToBeEdited = {...state.cabinets[editIndex]};
             let editedDrawersHeights = [];
-            cabinetToBeEdited.type !== "drzwi" ? editedDrawersHeights = [...cabinetToBeEdited.drawersHeights] : null;
+            if (cabinetToBeEdited.type !== "drzwi") editedDrawersHeights = [...cabinetToBeEdited.drawersHeights];
             return {
                 ...state,
                 cabinetId: cabinetToBeEdited.cabinetId,
