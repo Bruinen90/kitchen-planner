@@ -29,6 +29,7 @@ class WizualizacjaSzafki extends Component {
 
       let devicesContainer = {
           height: 500/this.props.scale + "px",
+          backgroundColor: this.props.kitchenType.includes('edenRzad') ? 'transparent' : null,
       }
 
     return (
@@ -45,6 +46,7 @@ class WizualizacjaSzafki extends Component {
                       szczelina={this.props.space}
                       ifDoubleDoors={this.props.upperDoubleDoors}
                       shelfsCount={this.props.upperShelfsCount}
+                      editInProgress = {this.props.editInProgress}
                   />
               </div>
           :null}
@@ -74,6 +76,7 @@ class WizualizacjaSzafki extends Component {
                   ifDoubleDoors={this.props.ifDoubleDoors}
                   shelfsCount={this.props.shelfsCount}
                   scale = {this.props.scale}
+                  editInProgress = {this.props.editInProgress}
               />
           </div>
           <div className="nogaSzafki" style={noga}>

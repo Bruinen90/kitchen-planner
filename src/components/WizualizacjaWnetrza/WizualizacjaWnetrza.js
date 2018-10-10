@@ -5,18 +5,9 @@ import dishwasherIcon from '../../img/sprzety/dishwasher_icon.png';
 
 class WizualizacjaWnetrze extends Component {
     render() {
-        let editInProgress = "";
+        let editInProgress = this.props.editInProgress ? "editInProgress" : "";
 
-        if(this.props.editInProgress) {
-            editInProgress = "editInProgress"
-        }
-
-        const wysokoscPrzeliczeniowa = (wysokosc) => {
-            if(this.props.rozmiar==="small") {
-                return (wysokosc+this.props.szczelina)/this.props.skala
-                }
-            return (wysokosc+this.props.szczelina);
-        }
+        const wysokoscPrzeliczeniowa = (wysokosc) => (wysokosc+this.props.szczelina);
         let drowersArray = [];
         let doorsArray=[];
         if (this.props.rodzaj === "szuflady") {
@@ -26,28 +17,19 @@ class WizualizacjaWnetrze extends Component {
                     aktywnaSzuflada = "aktywnaSzuflada"
                 }
                 drowersArray.push(
-                    !this.props.rozmiar ?
                         <div
-                            className={"szuflada " + aktywnaSzuflada}
+                            className={"szuflada " + aktywnaSzuflada + editInProgress}
                             key={id}
                             style={{"height": wysokoscPrzeliczeniowa(wysokosc)+"px"}}
                         >
-                        {id+1}
+                        {this.props.scale > 4 ? null : id+1 }
                         {wysokosc ?
                             <div className="aktualnaWysokosc">
-                                    <span style={{"fontSize": "12px"}}>Wysokość frontu:</span>
-                                <br/>{wysokosc+"mm"}
+                                    {this.props.scale > 2 ? null :
+                                        <span style={{"fontSize": "12px"}}>Wysokość frontu:<br/></span>}
+                                {wysokosc+"mm"}
                             </div> : null}
                         </div>
-                        :
-                        <div
-                            className={"szuflada " + aktywnaSzuflada + " small " + editInProgress}
-                            key={id}
-                            style={{"height": wysokoscPrzeliczeniowa(wysokosc)+"px"}}
-                        >
-                        {wysokosc ? wysokosc+"mm" : null}
-                        </div>
-
                         );
             })
         }
@@ -61,14 +43,13 @@ class WizualizacjaWnetrze extends Component {
 
         if (this.props.rodzaj === "szufladaDrzwi") {
             let aktywnaSzuflada = "";
-            if (this.props.activeDrawer !== null) {
+            if (this.props.activeDrawer === 0) {
                 aktywnaSzuflada = "aktywnaSzuflada";
             }
                 drowersArray.push(<div
                                     className={
                                         "szuflada malaSzuflada " +
                                         aktywnaSzuflada + " " +
-                                        this.props.rozmiar + " " +
                                         editInProgress
                                     }
                                     style={{"height": wysokoscPrzeliczeniowa(wysokoscSzuflady) +"px"}}
@@ -125,7 +106,6 @@ class WizualizacjaWnetrze extends Component {
 
             })
         }
-
 
             return(
                 this.props.ifDoubleDoors && this.props.rodzaj !== "szuflady" ?

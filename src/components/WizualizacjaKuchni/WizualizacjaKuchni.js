@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import WizualizacjaWnetrza from '../WizualizacjaWnetrza/WizualizacjaWnetrza';
 import * as actionTypes from '../../store/actions/actionTypes';
 import './WizualizacjaKuchni.css';
+import WizualizacjaSzafki from '../WizualizacjaSzafki/WizualizacjaSzafki';
 
 import kitchenSinkIcon from '../../img/sprzety/kitchen_sink_icon.png';
 import hobIcon from '../../img/sprzety/hob_icon.png';
@@ -14,14 +15,14 @@ class WizualizacjaKuchni extends Component {
             height: this.props.kitchenHeight/this.props.scale + 'px',
         }
         const kitchenVisual = this.props.cabinets.map(cabinet => {
-            let szafkaWymiary = {
-                width: cabinet.cabinetWidth/this.props.scale + "px",
-                height: this.props.wysokoscSzafek/this.props.scale + "px",
-            }
-            let szafkaGornaWymiary = {
-                width: cabinet.cabinetWidth/this.props.scale + "px",
-                height: this.props.wysokoscGornychSzafek/this.props.scale + "px",
-            }
+            // let szafkaWymiary = {
+            //     width: cabinet.cabinetWidth/this.props.scale + "px",
+            //     height: this.props.wysokoscSzafek/this.props.scale + "px",
+            // }
+            // let szafkaGornaWymiary = {
+            //     width: cabinet.cabinetWidth/this.props.scale + "px",
+            //     height: this.props.wysokoscGornychSzafek/this.props.scale + "px",
+            // }
             let showIfHovered = {};
             let overlayOpacity = {};
             if(cabinet.cabinetId === this.props.hoveredCabinet) {
@@ -70,7 +71,29 @@ class WizualizacjaKuchni extends Component {
                             </div>
                         </div>
 
-                        {!this.props.kitchenType.includes("edenRzad") ?
+                        <WizualizacjaSzafki
+                            cabinetWidth = {cabinet.cabinetWidth}
+                            cabinetsHeight = {this.props.wysokoscSzafek}
+                            upperCabinetsHeight = {this.props.wysokoscGornychSzafek}
+                            upperCabinetsType = "jedneDrzwi"
+                            kitchenType = {this.props.kitchenType}
+                            drawersHeights = {cabinet.drawersHeights}
+                            scale = {this.props.scale}
+                            iloscGora="1"
+                            space={this.props.szczelina}
+                            upperDoubleDoors={cabinet.upperDoubleDoors}
+                            upperShelfsCount={cabinet.upperShelfsCount}
+                            hob = {cabinet.hob}
+                            kitchenSink = {cabinet.kitchenSink}
+                            cabinetType={cabinet.cabinetType}
+                            ifDoubleDoors={cabinet.doubleDoors}
+                            shelfsCount={cabinet.shelfsCount}
+                            editInProgress={
+                                this.props.currentlyEditedCabinetId===cabinet.cabinetId
+                                &&this.props.editInProgress}
+                        />
+
+                        {/* {!this.props.kitchenType.includes("edenRzad") ?
                         <div
                             className="ramySzafki gorneRamy"
                             style={szafkaGornaWymiary}
@@ -133,7 +156,7 @@ class WizualizacjaKuchni extends Component {
                         </div>
                         <div className="nogaSzafki malaNoga" style={{float: "right"}}>
                             <div></div>
-                        </div>
+                        </div> */}
                         <div className="cabinetOverlay" style={overlayOpacity}></div>
                     </div>
             )
