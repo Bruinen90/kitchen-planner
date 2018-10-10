@@ -60,6 +60,8 @@ const initialState = {
 
     showLowDrawersDetails: false,
     showHighDrawersDetails: false,
+
+    showMobileMenu: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -156,6 +158,13 @@ const reducer = (state = initialState, action) => {
                     validForm: formValidation,
                     kitchenHeight: action.event.target.value.includes("edenRzad") ? 1400 : 2400
                 }
+
+        case(actionTypes.CLICK_MENU): {
+            return {
+                ...state,
+                showMobileMenu: !state.showMobileMenu,
+            }
+        }
 
         case(actionTypes.TOGGLE_DEVICE):
             return {

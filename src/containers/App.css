@@ -9,7 +9,8 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    padding-bottom: 5%;
+    padding: 0;
+    margin: 0;
 }
 
 input {

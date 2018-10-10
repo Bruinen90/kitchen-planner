@@ -1,21 +1,36 @@
 import React from 'react';
+import MenuItems from './MenuItems/MenuItems';
+import Auxx from '../../../Auxx';
 
-import {Link, NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import './MenuBar.css';
 
 const MenuBar = (props) => {
     return(
-        <div className="menuBar">
-            <NavLink to="/" className="header menuLogo">Kitchen planner<span className="redDot">.</span></NavLink>
-            <div className="menuItem" onClick={props.jakKorzystac}>Pierwsze kroki</div>
-            <div className="menuItem">Zamawianie płyt i okuć meblowych</div>
-            <div className="menuItem">FAQ</div>
-            <div className="menuItem">Kontakt</div>
-            <Link to="/projekt/parametry-kuchni" className="newProjectButton">
-                {props.inProgress ? "Edytuj" : "Nowy"} Projekt
-            </Link>
-        </div>
+        <Auxx>
+            <div className="menuBar">
+                <Link to="/" className="header menuLogo">Kitchen planner<span className="redDot">.</span></Link>
+                <div className="desktopMenuItems">
+                <MenuItems
+                    editInProgress = {props.editInProgress}
+                />
+                </div>
+                <div class="mobileMenuToggler" onClick={props.clickMenu}>
+                    Menu
+                    <div class={props.showMobileMenu ? "change hamburgerIcon" : "hamburgerIcon"}>
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+                </div>
+            </div>
+            <div className="mobileMenuWrapper" style={{top: props.showMobileMenu ? '0px' : '-500px'}}>
+                <MenuItems
+                    editInProgress = {props.editInProgress}
+                />
+            </div>
+        </Auxx>
     )
 };
 

@@ -201,17 +201,17 @@ class ParametryKuchni extends Component {
                 <img src={visualizationImage} className="visualizationImage" alt="Podaj wymiar zaznaczony strzałką"/>
             </div>
         </div>
-        <SaveAndContinueButton
-            href='/projekt/kreator-szafki'
-            active={this.props.validForm}
-            showErrors={()=>this.props.onClickShowErrors(true)}
-            resetErrors={()=>this.props.onClickShowErrors(false)}
-        />
         <input
             type="button"
             className="setDefaultValuesButton"
             value="Ustaw sugerowane wartości"
             onClick={this.props.onClickSetDefaults}
+        />
+        <SaveAndContinueButton
+        href='/projekt/kreator-szafki'
+        active={this.props.validForm}
+        showErrors={()=>this.props.onClickShowErrors(true)}
+        resetErrors={()=>this.props.onClickShowErrors(false)}
         />
       </div>
     );

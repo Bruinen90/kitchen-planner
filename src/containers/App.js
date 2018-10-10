@@ -19,7 +19,9 @@ class App extends Component {
       <div className="App">
 
         <MenuBar
-            inProgress={this.props.cabinets.length > 0}
+            inProgress = {this.props.cabinets.length > 0}
+            clickMenu = {this.props.onClickMenu}
+            showMobileMenu = {this.props.showMobileMenu}
         />
         <Route path="/projekt/" component={ProjectBar} />
         <Switch>
@@ -59,6 +61,7 @@ const mapStateToProps = state => {
         cabinetWidth: state.cabinetWidth,
         cabinetType: state.cabinetType,
         showForms: state.showForms,
+        showMobileMenu: state.showMobileMenu,
     };
 };
 
@@ -69,6 +72,7 @@ const mapDispatchToProps = dispatch => {
         onChangeDrawerCount: (event) => dispatch({type: actionTypes.CHANGE_DRAWER_COUNT, event: event}),
         onChangeCabinetWidth: (event) => dispatch({type: actionTypes.CHANGE_CABINET_WIDTH, event: event}),
         onAddCabinet: () => dispatch({type: actionTypes.ADD_CABINET}),
+        onClickMenu: () => dispatch({type: actionTypes.CLICK_MENU}),
     };
 };
 

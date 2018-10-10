@@ -8,6 +8,8 @@
     height: 50px;
     border-bottom: 1px solid black;
     z-index: 500;
+    padding: 0px 40px;
+    box-sizing: border-box;
 }
 
 @media print {
@@ -42,7 +44,6 @@
     box-shadow: 3px 3px 5px #999;
     cursor: pointer;
     transition: all 0.5s;
-    margin-right: 5%;
 }
 
 .newProjectButton:hover {
@@ -53,11 +54,112 @@
     color: black;
     font-size: 40px;
     margin-right: auto;
-    margin-left: 5%;
     cursor: pointer;
     font-weight: bold;
 }
 
 .activeItem {
     background-color: var(--blue-color);
+}
+
+.mobileMenuToggler {
+    display: none;
+}
+
+.desktopMenuItems {
+    display: flex;
+    align-items: center;
+}
+
+.mobileMenuWrapper {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, .95);
+    width: 100%;
+    padding-top: 50px;
+    z-index: 100;
+    overflow: hidden;
+    transition: all .6s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+}
+
+@media (max-width: 950px) {
+
+    .menuBar {
+        padding: 0px 20px;
+    }
+
+    .desktopMenuItems {
+        display: none;
+    }
+
+    .mobileMenuToggler {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .hamburgerIcon {
+        display: inline-block;
+        margin-left: 1rem;
+    }
+
+    .bar1, .bar2, .bar3 {
+        width: 30px;
+        height: 4px;
+        background-color: var(--red-color);
+        margin: 5px 0;
+        transition: 0.4s;
+    }
+
+    .change .bar1 {
+        transform: rotate(-45deg) translate(-7px, 5px);
+    }
+
+    .change .bar2 {opacity: 0;}
+
+    .change .bar3 {
+        transform: rotate(45deg) translate(-7px, -6px);
+    }
+
+    .mobileMenuWrapper {
+        display: flex;
+    }
+
+    .mobileMenuWrapper div, .mobileMenuWrapper a {
+        font-size: 1.2rem;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+        text-align: left;
+        padding: 0 2rem;
+        height: 50px;
+        box-shadow: none;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .newProjectButton:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 1200px) {
+    .menuItem {
+        font-size: .9rem;
+    }
+
+    .menuLogo {
+        font-size: 32px;
+    }
+
+    .newProjectButton {
+        height: 25px;
+        width: 100px;
+        font-size: .9rem;
+    }
 }
