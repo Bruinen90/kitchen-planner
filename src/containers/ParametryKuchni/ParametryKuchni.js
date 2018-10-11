@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './ParametryKuchni.css';
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 import ParamsInput from '../../components/UI/ParamsInput/ParamsInput';
+import Auxx from '../../Auxx';
 import * as actionTypes from '../../store/actions/actionTypes';
 
 import {connect} from 'react-redux';
@@ -162,7 +163,7 @@ class ParametryKuchni extends Component {
       }
 
     return (
-      <div>
+      <Auxx>
         <h2 className="header">Podstawowe parametry kuchni<span className="redDot">.</span></h2>
         <h3>Wybierz rodzaj kuchni</h3>
         <div className="chooseKitchenType">
@@ -194,7 +195,7 @@ class ParametryKuchni extends Component {
         </div>
         <div className="paramsContainer">
             <div className="paramsForm">
-                <h3>Podaj wymiary w milimetrach</h3>
+            <h3>Podaj wymiary w milimetrach</h3>
                 {formInputs}
             </div>
             <div className="paramVisualization">
@@ -213,7 +214,7 @@ class ParametryKuchni extends Component {
         showErrors={()=>this.props.onClickShowErrors(true)}
         resetErrors={()=>this.props.onClickShowErrors(false)}
         />
-      </div>
+      </Auxx>
     );
   }
 }

@@ -166,6 +166,12 @@ const reducer = (state = initialState, action) => {
             }
         }
 
+        case(actionTypes.HIDE_MENU): {
+            return{
+                ...state,
+                showMobileMenu: false,
+            }
+        }
         case(actionTypes.TOGGLE_DEVICE):
             return {
                 ...state,

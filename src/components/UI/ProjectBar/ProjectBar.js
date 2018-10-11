@@ -29,17 +29,16 @@ class ProjectBar extends Component {
                         Kreator szafek
                     </div>
                 </NavLink>
-                {this.props.validKitchenCabinets ?
-                    <NavLink
+                <NavLink
                     to="/projekt/lista-zakupow"
                     activeClassName="activeProjectStage"
-                    onClick={this.props.calculateForms}
+                    className={this.props.validKitchenCabinets ? null : "notActiveLink"}
+                    onClick={this.props.validKitchenCabinets ? this.props.calculateForms : null}
                     >
                         <div>
                             Lista zakupów
                         </div>
-                    </NavLink> :
-                <div className="notActiveLink">Lista zakupów</div>}
+                    </NavLink>
 
             </div>
         )

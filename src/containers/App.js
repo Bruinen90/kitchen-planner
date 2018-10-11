@@ -17,10 +17,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <MenuBar
             inProgress = {this.props.cabinets.length > 0}
             clickMenu = {this.props.onClickMenu}
+            hideMenu = {this.props.onClickHideMenu}
             showMobileMenu = {this.props.showMobileMenu}
         />
         <Route path="/projekt/" component={ProjectBar} />
@@ -73,6 +73,7 @@ const mapDispatchToProps = dispatch => {
         onChangeCabinetWidth: (event) => dispatch({type: actionTypes.CHANGE_CABINET_WIDTH, event: event}),
         onAddCabinet: () => dispatch({type: actionTypes.ADD_CABINET}),
         onClickMenu: () => dispatch({type: actionTypes.CLICK_MENU}),
+        onClickHideMenu: () => dispatch({type: actionTypes.HIDE_MENU})
     };
 };
 

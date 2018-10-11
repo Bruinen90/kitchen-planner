@@ -38,3 +38,64 @@
     align-items: center;
     justify-content: center;
 }
+
+@media (max-width: 950px) {
+    h2.header {
+        font-size: 28px;
+        margin: 10px 0;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    .paramsContainer {
+        margin-top: 10px;
+        height: 100%;
+        width: 90%;
+    }
+
+    .chooseKitchenType {
+        line-height: .5rem;
+    }
+
+    .paramsForm {
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    div.paramInput {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        padding-top: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .paramVisualization {
+        display: none;
+    }
+
+    .setDefaultValuesButton, .saveAndContinueLink {
+        height: 40px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0;
+        box-shadow: none !important;
+        position: fixed;
+        bottom: 40px;
+    }
+
+    .saveAndContinueLink {
+        bottom: 0px;
+        opacity: 1 !important;
+    }
+
+    .blocked {
+        background-color: var(--green-color-transparent) !important;
+        color: #eee !important;
+    }
+}

@@ -10,7 +10,7 @@ const MenuBar = (props) => {
     return(
         <Auxx>
             <div className="menuBar">
-                <Link to="/" className="header menuLogo">Kitchen planner<span className="redDot">.</span></Link>
+                <Link to="/" className="header menuLogo" onClick={props.hideMenu}>Kitchen planner<span className="redDot">.</span></Link>
                 <div className="desktopMenuItems">
                 <MenuItems
                     editInProgress = {props.editInProgress}
@@ -28,6 +28,7 @@ const MenuBar = (props) => {
             <div className="mobileMenuWrapper" style={{top: props.showMobileMenu ? '0px' : '-500px'}}>
                 <MenuItems
                     editInProgress = {props.editInProgress}
+                    clickMenuItem = {props.hideMenu}
                 />
             </div>
         </Auxx>

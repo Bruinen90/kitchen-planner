@@ -63,3 +63,9 @@
     font-size: 20px;
     border-bottom: 5px solid transparent;
 }
+
+@media (max-width: 950px) {
+    .projectBar {
+        display: none;
+    }
+}
