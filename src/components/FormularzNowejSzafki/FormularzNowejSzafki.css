@@ -1,34 +1,12 @@
 .nowaSzafkaFormularz {
     line-height: 2rem;
     padding: 20px;
-    width: 500px;
+    max-width: 500px;
 }
-
-.kreatorNowejSzafki {
-    display: flex;
-    width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    align-items: flex-start;
-    margin-top: 2rem;
-}
-
 
 .formularzNowejSzafki {
     text-align: left;
 }
-
-.szafkaNieprawidlowa {
-    color: var(--red-color);
-    line-height: 1.2rem;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid var(--red-color);
-}
-
 
 .confirmCabinetButton {
     font-size: 20px;

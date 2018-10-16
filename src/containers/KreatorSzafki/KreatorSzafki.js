@@ -7,6 +7,7 @@ import WizualizacjaKuchni from '../../components/WizualizacjaKuchni/Wizualizacja
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 import KitchenState from '../../components/KitchenState/KitchenState';
 import WizualizacjaSzafki from '../../components/WizualizacjaSzafki/WizualizacjaSzafki';
+import Auxx from '../../Auxx';
 
 import kitchenSinkIcon from '../../img/sprzety/kitchen_sink_icon.png';
 import hobIcon from '../../img/sprzety/hob_icon.png';
@@ -28,76 +29,43 @@ class KreatorSzafki extends Component {
           height: this.props.wysokoscGornychSzafek/4 + "px",
       }
     return (
-        <div className="contentWrapper">
-        {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> }
+        <Auxx>
+        {/* {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> } */}
             <div className="kreatorNowejSzafki">
-                <FormularzNowejSzafki
-                    changeType = {(event) => this.props.onChangeCabinetType(event)}
-                    changeWidth = {(event) => this.props.onChangeCabinetWidth(event)}
-                    changeDrawerCount = {(event) => this.props.onChangeDrawerCount(event)}
-                    ilosc = {this.props.iloscSzuflad}
-                    clickDodaj = {this.props.onAddCabinet}
-                    canAddCabinet = {this.props.canAddCabinet}
-                />
-
-                {/* <div className="wizualizacjaSzafki">
-                    {!this.props.kitchenType.includes("edenRzad") ?
-                        <div
-                            className="ramySzafki gorneRamy"
-                            style={wizualizacjaWymiaryGorne}
-                        >
-                            <WizualizacjaWnetrza
-                                rodzaj="jedneDrzwi"
-                                ilosc="1"
-                                drawersHeights={this.props.drawersHeights}
-                                szczelina={this.props.szczelina}
-                                ifDoubleDoors={this.props.upperDoubleDoors}
-                                shelfsCount={this.props.upperShelfsCount}
-                            />
-                        </div>
-                    :null}
-                    <div className="devicesContainer" style={{height: 500/this.props.scale + "px"}}>
-                    {this.props.hob ? <img src={hobIcon} className="hobIcon" alt="Płyta grzewcza"/> : null}
-                    {this.props.kitchenSink ? <img src={kitchenSinkIcon} className="kitchenSinkIcon" alt="Zlewozmywak"/> : null}
-                    </div>
-                    <div className="ramySzafki" style={wizualizacjaWymiary}>
-                        <WizualizacjaWnetrza
-                            rodzaj={this.props.cabinetType}
-                            ilosc={this.props.drawersHeights.length}
-                            drawersHeights={this.props.drawersHeights}
-                            activeDrawer={this.props.activeDrawer}
-                            szczelina={this.props.szczelina}
-                            ifDoubleDoors={this.props.doubleDoors}
-                            shelfsCount={this.props.shelfsCount}
-                        />
-                    </div>
-                    <div className="nogaSzafki">
-                        <div></div>
-                    </div>
-                    <div className="nogaSzafki" style={{float: "right"}}>
-                        <div></div>
-                    </div>
-                </div> */}
-                <WizualizacjaSzafki
-                    cabinetWidth = {this.props.cabinetWidth}
-                    cabinetsHeight = {this.props.wysokoscSzafek}
-                    upperCabinetsHeight = {this.props.wysokoscGornychSzafek}
-                    upperCabinetsType = "jedneDrzwi"
-                    kitchenType = {this.props.kitchenType}
-                    drawersHeights = {this.props.drawersHeights}
-                    scale = {4}
-                    iloscGora="1"
-                    space={this.props.szczelina}
-                    upperDoubleDoors={this.props.upperDoubleDoors}
-                    upperShelfsCount={this.props.upperShelfsCount}
-                    hob = {this.props.hob}
-                    kitchenSink = {this.props.kitchenSink}
-                    cabinetType={this.props.cabinetType}
-                    activeDrawer={this.props.activeDrawer}
-                    ifDoubleDoors={this.props.doubleDoors}
-                    shelfsCount={this.props.shelfsCount}
-                />
-                <KitchenState />
+                <div className="formularzCol">
+                    <FormularzNowejSzafki
+                        changeType = {(event) => this.props.onChangeCabinetType(event)}
+                        changeWidth = {(event) => this.props.onChangeCabinetWidth(event)}
+                        changeDrawerCount = {(event) => this.props.onChangeDrawerCount(event)}
+                        ilosc = {this.props.iloscSzuflad}
+                        clickDodaj = {this.props.onAddCabinet}
+                        canAddCabinet = {this.props.canAddCabinet}
+                    />
+                </div>
+                <div className="wizualizacjaSzafkiCol">
+                    <WizualizacjaSzafki
+                        cabinetWidth = {this.props.cabinetWidth}
+                        cabinetsHeight = {this.props.wysokoscSzafek}
+                        upperCabinetsHeight = {this.props.wysokoscGornychSzafek}
+                        upperCabinetsType = "jedneDrzwi"
+                        kitchenType = {this.props.kitchenType}
+                        drawersHeights = {this.props.drawersHeights}
+                        scale = {4}
+                        iloscGora="1"
+                        space={this.props.szczelina}
+                        upperDoubleDoors={this.props.upperDoubleDoors}
+                        upperShelfsCount={this.props.upperShelfsCount}
+                        hob = {this.props.hob}
+                        kitchenSink = {this.props.kitchenSink}
+                        cabinetType={this.props.cabinetType}
+                        activeDrawer={this.props.activeDrawer}
+                        ifDoubleDoors={this.props.doubleDoors}
+                        shelfsCount={this.props.shelfsCount}
+                    />
+                </div>
+                <div className="kitchenStateCol">
+                    <KitchenState />
+                </div>
             </div>
             {this.props.cabinets.length > 0 ? <WizualizacjaKuchni /> : null}
             <SaveAndContinueButton
@@ -108,7 +76,7 @@ class KreatorSzafki extends Component {
             />
             {this.props.showErrors ? <div className="szafkaNieprawidlowa">
             Suma szerokości szafek jest za mała - dodaj lub edytuj szafki</div> : null}
-        </div>
+        </Auxx>
     );
   }
 }

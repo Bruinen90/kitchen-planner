@@ -49,130 +49,130 @@ class FormularzNowejSzafki extends Component {
 
         return (
             <div className="nowaSzafkaFormularz">
-            <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki dolnej:</b><br/>
-                <label className="radioContainer">
-                <div className="radioSwitch">
-                    <input
+                <div className="formularzNowejSzafki"><b>Wybierz rodzaj szafki dolnej:</b><br/>
+                    <label className="radioContainer">
+                    <div className="radioSwitch">
+                        <input
+                            type="radio"
+                            name="typySzafek"
+                            value="jedneDrzwi"
+                            onChange={this.props.changeType}
+                            required
+                            checked={this.props.cabinetType === "jedneDrzwi"}
+                        />
+                        <span class="slider radio"></span>
+                    </div>
+                    Szafka z drzwiczkami
+                    </label>
+                    <label className="radioContainer">
+                    <div className="radioSwitch">
+                        <input
                         type="radio"
-                        name="typySzafek"
-                        value="jedneDrzwi"
-                        onChange={this.props.changeType}
-                        required
-                        checked={this.props.cabinetType === "jedneDrzwi"}
-                    />
-                    <span class="slider radio"></span>
-                </div>
-                Szafka z drzwiczkami
-                </label>
-                <label className="radioContainer">
-                <div className="radioSwitch">
-                    <input
-                    type="radio"
-                        name="typySzafek"
-                        value="szufladaDrzwi"
-                        onChange={this.props.changeType}
-                        required
-                        checked={this.props.cabinetType === "szufladaDrzwi"}
-                    />
-                    <span class="slider radio"></span>
-                </div>
-                Szafka z niską szufladą i drzwiczkami
-                </label>
-                <label className="radioContainer">
-                <div className="radioSwitch">
-                    <input
-                        type="radio"
-                        name="typySzafek"
-                        value="szuflady"
-                        onChange={this.props.changeType}
-                        required
-                        checked={this.props.cabinetType === "szuflady"}
-                    />
-                    <span class="slider radio"></span>
-                </div>
-                Szafka z szufladami
-                </label>
-                <label className="radioContainer">
-                <div className="radioSwitch">
-                    <input
-                        type="radio"
-                        name="typySzafek"
-                        value="zmywarka"
-                        onChange={this.props.changeType}
-                        required
-                        checked={this.props.cabinetType === "zmywarka"}
-                    />
-                    <span class="slider radio"></span>
-                </div>
-                Zmywarka
-                </label>
+                            name="typySzafek"
+                            value="szufladaDrzwi"
+                            onChange={this.props.changeType}
+                            required
+                            checked={this.props.cabinetType === "szufladaDrzwi"}
+                        />
+                        <span class="slider radio"></span>
+                    </div>
+                    Szafka z niską szufladą i drzwiczkami
+                    </label>
+                    <label className="radioContainer">
+                    <div className="radioSwitch">
+                        <input
+                            type="radio"
+                            name="typySzafek"
+                            value="szuflady"
+                            onChange={this.props.changeType}
+                            required
+                            checked={this.props.cabinetType === "szuflady"}
+                        />
+                        <span class="slider radio"></span>
+                    </div>
+                    Szafka z szufladami
+                    </label>
+                    <label className="radioContainer">
+                    <div className="radioSwitch">
+                        <input
+                            type="radio"
+                            name="typySzafek"
+                            value="zmywarka"
+                            onChange={this.props.changeType}
+                            required
+                            checked={this.props.cabinetType === "zmywarka"}
+                        />
+                        <span class="slider radio"></span>
+                    </div>
+                    Zmywarka
+                    </label>
 
-                <FormularzSzuflad
-                    wysokoscSzuflady={this.props.wysokoscSzuflady}
-                    changeDrawerCount = {this.props.changeDrawerCount}
-                    ilosc={this.props.ilosc}
-                />
-                <FormularzDrzwi
-                />
-                <FormularzSprzetu
-                    visible={this.props.cabinetType === "jedneDrzwi"}
-                    pelnaNazwaSzafki="Szafka ze zlewozmywakiem"
-                    clicked={()=>this.props.toggleDevice("kitchenSink")}
-                    checked={this.props.kitchenSink}
-                    ifDisabled={this.props.hob}
-                />
-                <FormularzSprzetu
-                    visible={this.props.cabinetType !== "zmywarka" && this.props.cabinetType !== ""}
-                    pelnaNazwaSzafki="Szafka z płytą grzewczą"
-                    clicked={()=>this.props.toggleDevice("hob")}
-                    ifDisabled={this.props.kitchenSink}
-                    checked={this.props.hob}
-                />
-                {this.props.cabinetType !== "" && !this.props.kitchenType.includes("edenRzad") ?
-                    <FormularzGornejSzafki
-                    /> : null
-                }
+                    <FormularzSzuflad
+                        wysokoscSzuflady={this.props.wysokoscSzuflady}
+                        changeDrawerCount = {this.props.changeDrawerCount}
+                        ilosc={this.props.ilosc}
+                    />
+                    <FormularzDrzwi
+                    />
+                    <FormularzSprzetu
+                        visible={this.props.cabinetType === "jedneDrzwi"}
+                        pelnaNazwaSzafki="Szafka ze zlewozmywakiem"
+                        clicked={()=>this.props.toggleDevice("kitchenSink")}
+                        checked={this.props.kitchenSink}
+                        ifDisabled={this.props.hob}
+                    />
+                    <FormularzSprzetu
+                        visible={this.props.cabinetType !== "zmywarka" && this.props.cabinetType !== ""}
+                        pelnaNazwaSzafki="Szafka z płytą grzewczą"
+                        clicked={()=>this.props.toggleDevice("hob")}
+                        ifDisabled={this.props.kitchenSink}
+                        checked={this.props.hob}
+                    />
+                    {this.props.cabinetType !== "" && !this.props.kitchenType.includes("edenRzad") ?
+                        <FormularzGornejSzafki
+                        /> : null
+                    }
 
-                <br />
-            </div>
-            Szerokość szafek (mm):
-                <input
-                    className="cabinetWidthInput"
-                    type="number"
-                    min="300"
-                    max="900"
-                    onChange={this.props.changeWidth}
-                    value={this.props.szerokoscSzafki}
-                />
-                <input
-                    type="button"
-                    value="Dopasuj"
-                    onClick={this.props.onClickFillWidth}
-                    className="fillWidthButton"
-                    disabled={!this.props.canFillCabinetWidth}
-                />
-                <br />
-                {!this.props.editInProgress ?
-                <div className="wrapper">
-                <input
-                    className="confirmCabinetButton green"
-                    type="button"
-                    disabled={!this.props.canAddCabinet}
-                    value="Dodaj szafkę"
-                    onClick={this.props.canAddCabinet? this.props.clickDodaj : null}
-                />
+                    <br />
                 </div>
-                 :
-                <input
-                    className="confirmCabinetButton blue"
-                    type="button"
-                    disabled={!this.props.canAddCabinet}
-                    value="Zapisz zmiany"
-                    onClick={this.props.onClickSaveCabinet}
-                />}
-                <div className={this.props.kitchenCabinetsValid ? "kitchenDone" : "szafkaNieprawidlowa"} style={this.props.canAddCabinet ? {opacity: "0"} : null}>
-                    {errorsArray}
-                </div>
+                Szerokość szafek (mm):
+                    <input
+                        className="cabinetWidthInput"
+                        type="number"
+                        min="300"
+                        max="900"
+                        onChange={this.props.changeWidth}
+                        value={this.props.szerokoscSzafki}
+                    />
+                    <input
+                        type="button"
+                        value="Dopasuj"
+                        onClick={this.props.onClickFillWidth}
+                        className="fillWidthButton"
+                        disabled={!this.props.canFillCabinetWidth}
+                    />
+                    <br />
+                    {!this.props.editInProgress ?
+                    <div className="wrapper">
+                    <input
+                        className="confirmCabinetButton green"
+                        type="button"
+                        disabled={!this.props.canAddCabinet}
+                        value="Dodaj szafkę"
+                        onClick={this.props.canAddCabinet? this.props.clickDodaj : null}
+                    />
+                    </div>
+                     :
+                    <input
+                        className="confirmCabinetButton blue"
+                        type="button"
+                        disabled={!this.props.canAddCabinet}
+                        value="Zapisz zmiany"
+                        onClick={this.props.onClickSaveCabinet}
+                    />}
+                    <div className={this.props.kitchenCabinetsValid ? "kitchenDone" : "szafkaNieprawidlowa"} style={this.props.canAddCabinet ? {opacity: "0"} : null}>
+                        {errorsArray}
+                    </div>
             </div>
         )
     }
