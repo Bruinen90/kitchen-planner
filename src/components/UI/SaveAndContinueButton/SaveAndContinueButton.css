@@ -1,0 +1,56 @@
+.saveAndContinueLink, .setDefaultValuesButton, .goBackButton {
+    font-size: 20px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: var(--green-color);
+    width: 250px;
+    height: 50px;
+    box-shadow: 5px 5px 8px #ccc;
+}
+
+.setDefaultValuesButton {
+    font-size: 17px;
+    background-color: var(--blue-color);
+    border: 0px;
+    cursor: pointer;
+    animation: none;
+}
+
+.blocked {
+    cursor: pointer;
+    opacity: .5;
+}
+
+@media (max-width: 950px) {
+    .setDefaultValuesButton, .saveAndContinueLink, .goBackButton {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        font-size: 30px;
+    }
+
+    .saveAndContinueLink {
+        opacity: 1;
+    }
+
+    .goBackButton {
+        left: 10px;
+    }
+
+    .blocked {
+        background-color: var(--green-color-transparent);
+        color: #eee;
+    }
+}

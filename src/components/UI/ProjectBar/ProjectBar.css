@@ -29,34 +29,6 @@
     border-bottom: 5px solid var(--blue-color) !important;
 }
 
-.saveAndContinueLink, .setDefaultValuesButton {
-    font-size: 20px;
-    margin: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    background-color: var(--green-color);
-    width: 250px;
-    height: 50px;
-    box-shadow: 5px 5px 8px #ccc;
-}
-
-.setDefaultValuesButton {
-    font-size: 17px;
-    background-color: var(--blue-color);
-    border: 0px;
-    cursor: pointer;
-    animation: none;
-}
-
-.blocked {
-    cursor: pointer;
-    opacity: .5;
-}
-
 .notActiveLink {
     cursor: not-allowed;
     opacity: .5;

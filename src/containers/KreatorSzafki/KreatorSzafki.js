@@ -30,7 +30,7 @@ class KreatorSzafki extends Component {
       }
     return (
         <Auxx>
-        {/* {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> } */}
+        {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> }
             <div className="kreatorNowejSzafki">
                 <div className="formularzCol">
                     <FormularzNowejSzafki
@@ -68,11 +68,20 @@ class KreatorSzafki extends Component {
                 </div>
             </div>
             {this.props.cabinets.length > 0 ? <WizualizacjaKuchni /> : null}
+            {window.innerWidth>950 ? null :
+                <SaveAndContinueButton
+                href='/projekt/parametry-kuchni'
+                resetErrors={this.props.calculateForms}
+                active={true}
+                back={true}
+                />
+            }
             <SaveAndContinueButton
                 href='/projekt/lista-zakupow'
                 resetErrors={this.props.calculateForms}
                 active={this.props.kitchenCabinetsValid}
                 showErrors={()=>this.props.onClickShowErrors(true)}
+                back={false}
             />
             {this.props.showErrors ? <div className="szafkaNieprawidlowa">
             Suma szerokości szafek jest za mała - dodaj lub edytuj szafki</div> : null}

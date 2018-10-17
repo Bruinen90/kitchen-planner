@@ -30,3 +30,14 @@
 .kreatorNowejSzafki div {
     justify-self: center;
 }
+
+@media(max-width: 950px) {
+    .kitchenStateCol {
+        display: none;
+    }
+
+    .kreatorNowejSzafki {
+        margin-top: .7rem;
+        max-width: 100vw;
+    }
+}

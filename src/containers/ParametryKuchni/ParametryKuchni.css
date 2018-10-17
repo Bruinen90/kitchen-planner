@@ -79,23 +79,4 @@
         display: none;
     }
 
-    .setDefaultValuesButton, .saveAndContinueLink {
-        height: 40px !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0;
-        box-shadow: none !important;
-        position: fixed;
-        bottom: 40px;
-    }
-
-    .saveAndContinueLink {
-        bottom: 0px;
-        opacity: 1 !important;
-    }
-
-    .blocked {
-        background-color: var(--green-color-transparent) !important;
-        color: #eee !important;
-    }
 }

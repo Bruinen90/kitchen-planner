@@ -158,7 +158,7 @@ class FormularzNowejSzafki extends Component {
                         className="confirmCabinetButton green"
                         type="button"
                         disabled={!this.props.canAddCabinet}
-                        value="Dodaj szafkę"
+                        value={window.innerWidth>950 ? "Dodaj szafkę" : "+"}
                         onClick={this.props.canAddCabinet? this.props.clickDodaj : null}
                     />
                     </div>
@@ -167,7 +167,7 @@ class FormularzNowejSzafki extends Component {
                         className="confirmCabinetButton blue"
                         type="button"
                         disabled={!this.props.canAddCabinet}
-                        value="Zapisz zmiany"
+                        value={window.innerWidth>950 ? "Zapisz zmiany" : <ion-icon name="save"></ion-icon>}
                         onClick={this.props.onClickSaveCabinet}
                     />}
                     <div className={this.props.kitchenCabinetsValid ? "kitchenDone" : "szafkaNieprawidlowa"} style={this.props.canAddCabinet ? {opacity: "0"} : null}>
