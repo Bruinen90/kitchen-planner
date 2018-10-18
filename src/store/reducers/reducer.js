@@ -62,6 +62,7 @@ const initialState = {
     showHighDrawersDetails: false,
 
     showMobileMenu: false,
+    defaultsButtonText: "?",
 }
 
 const reducer = (state = initialState, action) => {
@@ -147,6 +148,13 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.CLICK_DEFAULTS):
+            let defaultsButtonText = action.event.target.value;
+            defaultsButtonText === "?" ?  defaultsButtonText = "Domyślne parametry?" : defaultsButtonText = "?"
+            return {
+                ...state,
+                defaultsButtonText: defaultsButtonText,
+            }
         case(actionTypes.CHANGE_KITCHEN_TYPE):
             let formValidation = state.validForm;
             if(!action.event.target.value.includes("edenRzad") && !state.validParams.upperCabinetHeight) {
@@ -939,6 +947,7 @@ const reducer = (state = initialState, action) => {
                     legsHeight: true,
                 },
                 validForm: currentKitchenWidthValidity,
+                defaultsButtonText: "?",
             }
 
         case(actionTypes.TOGGLE_DRAWERS_DETAILS):

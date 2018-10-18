@@ -16,12 +16,12 @@ const MenuBar = (props) => {
                     editInProgress = {props.editInProgress}
                 />
                 </div>
-                <div class="mobileMenuToggler" onClick={props.clickMenu}>
+                <div className="mobileMenuToggler" onClick={props.clickMenu}>
                     Menu
-                    <div class={props.showMobileMenu ? "change hamburgerIcon" : "hamburgerIcon"}>
-                        <div class="bar1"></div>
-                        <div class="bar2"></div>
-                        <div class="bar3"></div>
+                    <div className={props.showMobileMenu ? "change hamburgerIcon" : "hamburgerIcon"}>
+                        <div className="bar1"></div>
+                        <div className="bar2"></div>
+                        <div className="bar3"></div>
                     </div>
                 </div>
             </div>

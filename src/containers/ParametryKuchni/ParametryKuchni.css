@@ -39,6 +39,24 @@
     justify-content: center;
 }
 
+.setDefaultValuesButton, .setDefaultValuesMessage {
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 250px;
+    height: 50px;
+    box-shadow: 5px 5px 8px #ccc;
+    font-size: 17px;
+    background-color: var(--blue-color);
+    border: 0px;
+    cursor: pointer;
+    animation: none;
+}
+
 @media (max-width: 950px) {
     h2.header {
         font-size: 28px;
@@ -77,6 +95,57 @@
 
     .paramVisualization {
         display: none;
+    }
+
+    .setDefaultValuesButton, .setDefaultValuesMessage {
+        outline: none;
+        position: fixed;
+        bottom: 10px;
+        right: 65px;
+        border-radius: 25px;
+        height: 50px;
+        width: 50px;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        font-size: 30px;
+        transition: all .3s;
+    }
+
+    .setDefaultValuesMessage {
+        width: 200px;
+        border-radius: 25px;
+        font-size: 16px;
+        transition: all .3s;
+        right: 130px;
+    }
+
+    .confirmButton, .rejectButton {
+        border-radius: 25px;
+        color: white;
+        font-size: 30px;
+        position: fixed;
+        bottom: 10px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0;
+        outline: none;
+    }
+
+    .confirmButton {
+        background-color: var(--green-color);
+        right: 70px;
+
+    }
+
+    .rejectButton {
+        background-color: var(--red-color);
+        right: 10px;
+        z-index: 100;
     }
 
 }

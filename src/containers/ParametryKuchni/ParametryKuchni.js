@@ -94,9 +94,6 @@ class ParametryKuchni extends Component {
           )
       }
 
-
-
-
       const formInputs = formInputsArray.map(input => {
           return (
               <div className="wrapper" key={input.type}>
@@ -175,7 +172,7 @@ class ParametryKuchni extends Component {
                         checked={this.props.kitchenType === "prostaJedenRzad"}
                         value="prostaJedenRzad"
                     />
-                    <span class="slider radio"></span>
+                    <span className="slider radio"></span>
                 </div>
                 Kuchnia prosta, tylko szafki dolne
             </label>
@@ -188,7 +185,7 @@ class ParametryKuchni extends Component {
                     checked={this.props.kitchenType === "prostaGoraDol"}
                     value="prostaGoraDol"
                 />
-                <span class="slider radio"></span>
+                <span className="slider radio"></span>
             </div>
             Kuchnia prosta, szafki dolne i górne
             </label>
@@ -202,12 +199,35 @@ class ParametryKuchni extends Component {
                 <img src={visualizationImage} className="visualizationImage" alt="Podaj wymiar zaznaczony strzałką"/>
             </div>
         </div>
+        {window.innerWidth>950 ?
         <input
             type="button"
             className="setDefaultValuesButton"
             value="Ustaw sugerowane wartości"
             onClick={this.props.onClickSetDefaults}
+        /> :
+        <input
+            type="button"
+            className={this.props.defaultsButtonText==="?" ? "setDefaultValuesButton" : "setDefaultValuesMessage"}
+            value={this.props.defaultsButtonText}
+            onClick={this.props.onClickDefaults}
         />
+        }
+
+        {window.innerWidth>950 || this.props.defaultsButtonText==="?" ? null :
+        <div>
+        <button
+            className="confirmButton"
+            onClick={this.props.onClickSetDefaults}
+        ><ion-icon name="checkmark"></ion-icon>
+        </button>
+        <button
+            className="rejectButton"
+            onClick={this.props.onClickDefaults}
+        ><ion-icon name="close"></ion-icon>
+        </button>
+        </div>
+        }
         <SaveAndContinueButton
         href='/projekt/kreator-szafki'
         active={this.props.validForm}
@@ -236,6 +256,7 @@ const mapStateToProps = state => {
         showErrors: state.showErrors,
         validForm: state.validForm,
         kitchenType: state.kitchenType,
+        defaultsButtonText: state.defaultsButtonText,
     };
 };
 
@@ -254,6 +275,7 @@ const mapDispatchToProps = dispatch => {
         onClickShowErrors: (ifShow)=> dispatch({type: actionTypes.SHOW_ERRORS, ifShow: ifShow}),
         onClickSetDefaults: ()=> dispatch({type: actionTypes.SET_DEFAULTS_PARAMS}),
         onChangeKitchenType: (event)=> dispatch({type: actionTypes.CHANGE_KITCHEN_TYPE, event: event}),
+        onClickDefaults: (event)=> dispatch({type: actionTypes.CLICK_DEFAULTS, event:event})
     };
 };
 
