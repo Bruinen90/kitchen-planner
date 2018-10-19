@@ -10,7 +10,7 @@
     background-color: var(--green-color);
     width: 250px;
     height: 50px;
-    box-shadow: 5px 5px 8px #ccc;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, .4);
 }
 
 .blocked {
@@ -28,7 +28,6 @@
         width: 50px;
         margin: 0;
         padding: 0;
-        box-shadow: none;
         box-sizing: border-box;
         font-size: 30px;
     }

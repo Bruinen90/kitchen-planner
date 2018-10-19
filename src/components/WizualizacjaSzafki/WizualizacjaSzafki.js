@@ -28,7 +28,7 @@ class WizualizacjaSzafki extends Component {
       }
 
       let devicesContainer = {
-          height: 500/this.props.scale + "px",
+          height: this.props.kitchenType.includes("edenRzad") ? 150/this.props.scale + "px" : 500/this.props.scale + "px",
           backgroundColor: this.props.kitchenType.includes('edenRzad') ? 'transparent' : null,
       }
 
@@ -50,6 +50,8 @@ class WizualizacjaSzafki extends Component {
                   />
               </div>
           :null}
+          {/* Turning off device-container when no device and one-row kitchen type */}
+          {this.props.hob || this.props.kitchenSink || !this.props.kitchenType.includes("edenRzad") ?
           <div className="devicesContainer" style={devicesContainer}>
             {this.props.hob ?
                 <img
@@ -65,7 +67,7 @@ class WizualizacjaSzafki extends Component {
                     alt="Zlewozmywak"
                 />
             : null}
-          </div>
+          </div> : null}
           <div className="ramySzafki" style={wizualizacjaWymiary}>
               <WizualizacjaWnetrza
                   rodzaj={this.props.cabinetType}

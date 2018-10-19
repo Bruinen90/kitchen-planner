@@ -31,6 +31,12 @@
     justify-self: center;
 }
 
+.kitchenDone {
+    color: white;
+    background-color: var(--green-color);
+    border: 0px;
+}
+
 @media(max-width: 950px) {
     .kitchenStateCol {
         display: none;
@@ -39,5 +45,14 @@
     .kreatorNowejSzafki {
         margin-top: .7rem;
         max-width: 100vw;
+    }
+
+    .szafkaNieprawidlowa {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .kitchenDone {
+        margin-bottom: 2rem;
     }
 }

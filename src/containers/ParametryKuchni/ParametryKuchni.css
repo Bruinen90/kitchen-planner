@@ -49,7 +49,7 @@
     color: white;
     width: 250px;
     height: 50px;
-    box-shadow: 5px 5px 8px #ccc;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, .4);
     font-size: 17px;
     background-color: var(--blue-color);
     border: 0px;
@@ -107,7 +107,6 @@
         width: 50px;
         margin: 0;
         padding: 0;
-        box-shadow: none;
         box-sizing: border-box;
         font-size: 30px;
         transition: all .3s;
@@ -134,6 +133,7 @@
         align-items: center;
         border: 0;
         outline: none;
+        box-shadow: 2px 4px 6px rgba(0, 0, 0, .4);
     }
 
     .confirmButton {
@@ -146,6 +146,7 @@
         background-color: var(--red-color);
         right: 10px;
         z-index: 100;
+        box-shadow: none;
     }
 
 }

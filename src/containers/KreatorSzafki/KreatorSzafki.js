@@ -42,7 +42,7 @@ class KreatorSzafki extends Component {
                         canAddCabinet = {this.props.canAddCabinet}
                     />
                 </div>
-                <div className="wizualizacjaSzafkiCol">
+                {this.props.cabinetWidth>200 && this.props.cabinetWidth <901 ? <div className="wizualizacjaSzafkiCol">
                     <WizualizacjaSzafki
                         cabinetWidth = {this.props.cabinetWidth}
                         cabinetsHeight = {this.props.wysokoscSzafek}
@@ -62,12 +62,12 @@ class KreatorSzafki extends Component {
                         ifDoubleDoors={this.props.doubleDoors}
                         shelfsCount={this.props.shelfsCount}
                     />
-                </div>
+                </div> : null}
                 <div className="kitchenStateCol">
                     <KitchenState />
                 </div>
             </div>
-            {this.props.cabinets.length > 0 ? <WizualizacjaKuchni /> : null}
+            {this.props.cabinets.length > 0 && window.innerWidth>950 ? <WizualizacjaKuchni /> : null}
             {window.innerWidth>950 ? null :
                 <SaveAndContinueButton
                 href='/projekt/parametry-kuchni'

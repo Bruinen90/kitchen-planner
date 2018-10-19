@@ -155,6 +155,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 defaultsButtonText: defaultsButtonText,
             }
+
         case(actionTypes.CHANGE_KITCHEN_TYPE):
             let formValidation = state.validForm;
             if(!action.event.target.value.includes("edenRzad") && !state.validParams.upperCabinetHeight) {
@@ -180,6 +181,7 @@ const reducer = (state = initialState, action) => {
                 showMobileMenu: false,
             }
         }
+        
         case(actionTypes.TOGGLE_DEVICE):
             return {
                 ...state,

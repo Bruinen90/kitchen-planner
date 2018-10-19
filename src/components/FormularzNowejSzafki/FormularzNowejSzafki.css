@@ -108,9 +108,3 @@
     opacity: .5;
     cursor: not-allowed;
 }
-
-.kitchenDone {
-    color: white;
-    background-color: var(--green-color);
-    border: 0px;
-}
