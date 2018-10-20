@@ -15,7 +15,7 @@ class FormularzDrzwi extends Component {
                     onChange={(event, upperCabinets)=>this.props.onChangeDoorsCount(event, this.props.upperCabinets)}
                     checked={this.props.upperCabinets ? this.props.upperDoubleDoors : this.props.doubleDoors}
                 />
-            <span class="slider"></span></div>
+            <span className="slider"></span></div>
                     Drzwi podwójne (dwuskrzydłowe)
             </label>
             <div className="iloscPolekContainer">

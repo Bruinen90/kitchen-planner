@@ -54,6 +54,7 @@ const initialState = {
         spaceDrawersToTop: false,
         spaceBetweenDrawers: false,
         spaceBetweenCabinets: false,
+        legsHeight: false,
     },
     validForm: false,
     kitchenCabinetsValid: false,
@@ -74,11 +75,11 @@ const reducer = (state = initialState, action) => {
             let i=1;
             while(i<=newArrayCount) {
                 drawersHeights.push(
-                    (state.cabinetHeight-
+                    (Math.floor(2*(state.cabinetHeight-
                         state.spaceDrawersToTop-
                         state.spaceBetweenDrawers*
                         (newArrayCount-1))/newArrayCount
-                    );
+                    )/2));
                 i++;
             }
         }
@@ -181,7 +182,7 @@ const reducer = (state = initialState, action) => {
                 showMobileMenu: false,
             }
         }
-        
+
         case(actionTypes.TOGGLE_DEVICE):
             return {
                 ...state,
@@ -236,7 +237,6 @@ const reducer = (state = initialState, action) => {
                 cabinetWidth: cabinetToBeEdited.cabinetWidth,
                 drawersHeights: editedDrawersHeights,
                 drawersCounterState: editedDrawersHeights.length,
-                blockedDrawers: [],
                 activeDrawer: null,
                 errorTypes: [],
                 editInProgress: true,
@@ -246,6 +246,8 @@ const reducer = (state = initialState, action) => {
                 shelfsCount: cabinetToBeEdited.shelfsCount,
                 upperDoubleDoors: cabinetToBeEdited.upperDoubleDoors,
                 upperShelfsCount: cabinetToBeEdited.upperShelfsCount,
+                hob: cabinetToBeEdited.hob,
+                kitchenSink: cabinetToBeEdited.kitchenSink,
             }
 
         case(actionTypes.SAVE_CABINET):
@@ -286,6 +288,7 @@ const reducer = (state = initialState, action) => {
                 case('jedneDrzwi'): updateDrawersCount = 0; break;
                 case('szuflady'): updateDrawersCount = 3; break;
                 case('zmywarka'): updateDrawersCount = 0; break;
+                default: updateDrawersCount = 0;
             }
             const drawersBlocked = Array(updateDrawersCount).fill(false);
             return {
@@ -368,7 +371,7 @@ const reducer = (state = initialState, action) => {
 
         case(actionTypes.AUTO_ADJUST_DRAWERS):
             const curDrawers = [...state.drawersHeights];
-            const unBlockedDrawersCount = [...state.blockedDrawers].filter((a)=> a!=true).length;
+            const unBlockedDrawersCount = [...state.blockedDrawers].filter((a)=> a!==true).length;
                         console.log(unBlockedDrawersCount);
             const blockedDrawers = curDrawers.map((height, id) => {
                 if(state.blockedDrawers[id]) {
@@ -622,6 +625,7 @@ const reducer = (state = initialState, action) => {
             state.cabinets.map(cabinet => {
                 //płyty i akcesoria na górne szafki
                 if(!state.kitchenType.includes("edenRzad")){
+                    addAcc("confirmats", 8);
                     primaryAllFormsArray.plyta18mm.push({
                         wymiary: state.upperCabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
                         okleina: state.upperCabinetDepth < state.upperCabinetHeight ? 'd1' : 'k1',
@@ -638,7 +642,7 @@ const reducer = (state = initialState, action) => {
                             okleina: state.upperCabinetDepth > cabinet.cabinetWidth-37? 'k1' : 'd1',
                             ilosc: cabinet.upperShelfsCount,
                         });
-                        addAcc("shelfHolders", cabinet.shelfsCount*4);
+                        addAcc("shelfHolders", cabinet.upperShelfsCount*4);
                     }
                     if(cabinet.upperDoubleDoors) {
                         primaryAllFormsArray.frontyGorne.push({
@@ -813,6 +817,7 @@ const reducer = (state = initialState, action) => {
                         okleina: "full",
                         ilosc: 1,
                     });
+                    addAcc("legs", 4);
                 }
             });
 
@@ -838,10 +843,12 @@ const reducer = (state = initialState, action) => {
             primaryAllFormsArray.plyta18mm.push(blenda);
 
             let iloscFrontow = 0;
-            primaryAllFormsArray.fronty.map(front => {
+            const allFronts = primaryAllFormsArray.fronty.concat(primaryAllFormsArray.frontyGorne);
+            for (const front of allFronts) {
                 iloscFrontow = iloscFrontow + front.ilosc;
-            });
+            };
             addAcc("handles", iloscFrontow);
+
 
             primaryAllFormsArray.plyta18mm = summarizeForms(primaryAllFormsArray.plyta18mm);
             primaryAllFormsArray.fronty = summarizeForms(primaryAllFormsArray.fronty);

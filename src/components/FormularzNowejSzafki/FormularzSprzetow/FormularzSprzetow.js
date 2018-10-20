@@ -16,7 +16,7 @@ const FormularzSprzetu = (props) => {
                     onChange={props.clicked}
                     disabled={props.ifDisabled}
                 />
-                <span class="slider"></span></div>
+                <span className="slider"></span></div>
                 {props.pelnaNazwaSzafki}
             </label>
         </div>

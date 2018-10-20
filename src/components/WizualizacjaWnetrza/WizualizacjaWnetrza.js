@@ -57,13 +57,13 @@ class WizualizacjaWnetrze extends Component {
                                     ></div>);
                 doorsArray.push(<div
                                     className={"drzwi " + editInProgress}
-                                    key="drzwi1"
+                                    key="drzwi1_szuflada_drzwi"
                                     style={{height: wysokoscPrzeliczeniowa(wysokoscDrzwi) +"px"}}
                                     ></div>);
                 if(this.props.ifDoubleDoors) {
                     doorsArray.push(<div
                                         className={"drzwi " + editInProgress}
-                                        key="drzwi2"
+                                        key="drzwi2_szuflada_drzwi"
                                         style={{height: wysokoscPrzeliczeniowa(wysokoscDrzwi) +"px"}}
                                         ></div>);
                 }
@@ -78,7 +78,7 @@ class WizualizacjaWnetrze extends Component {
 
         if (this.props.rodzaj === "zmywarka") {
             doorsArray.push(
-                <div className={"drzwi " + editInProgress} key="drzwi1">
+                <div className={"drzwi " + editInProgress} key="drzwi1_zmywarka">
                     <img src={dishwasherIcon} className="dishwasherIcon" alt="Zmywarka"/>
                 </div>);
         }
@@ -90,7 +90,12 @@ class WizualizacjaWnetrze extends Component {
                 if(this.props.rodzaj === "jedneDrzwi") {
                     const shelfHeight = 100/(this.props.shelfsCount+1);
                     return(
-                        <div className="shelf" style={{height: shelfHeight*(id+1)+"%"}}></div>
+                        <div
+                            className="shelf"
+                            style={{height: shelfHeight*(id+1)+"%"}}
+                            key={"shelf_"+id}
+                            >
+                        </div>
                     )
                 }
                 if(this.props.rodzaj === "szufladaDrzwi") {
@@ -110,7 +115,11 @@ class WizualizacjaWnetrze extends Component {
             return(
                 this.props.ifDoubleDoors && this.props.rodzaj !== "szuflady" ?
                 [drowersArray,
-                <div className="doubleDoorsWrapper" style={{"height": wysokoscPrzeliczeniowa(wysokoscDrzwi) +"px"}}>
+                <div
+                    className="doubleDoorsWrapper"
+                    style={{"height": wysokoscPrzeliczeniowa(wysokoscDrzwi) +"px"}}
+                    key="podwojne_drzwi"
+                >
                 {doorsArray}
                 </div>,
                 shelfsArray] :

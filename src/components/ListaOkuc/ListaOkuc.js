@@ -173,12 +173,12 @@ class ListaOkuc extends Component {
                 drawerPrice = 0;
                 const lowDrawersDetails = drawerDetails(elementyNiskiejSzuflady, okucie.count);
                 totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
-                console.log(totalAccessoriesPrice);
                 return (
                     [   drawerHeader(okucie, drawerPrice),
                         <div
                             className="drawersDetailsWrapper"
                             style={this.props.lowDrawers ? {maxHeight: "600px", overflow: "1"} : null}
+                            key="drawersDetails"
                         >
                             {lowDrawersDetails}
                         </div>,
@@ -188,13 +188,13 @@ class ListaOkuc extends Component {
                 drawerPrice = 0;
                 const highDrawersDetails = drawerDetails(elementyWysokiejSzuflady, okucie.count);
                 totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
-                console.log(totalAccessoriesPrice);
                 return (
                     [
                         drawerHeader(okucie, drawerPrice),
                         <div
                             className="drawersDetailsWrapper"
                             style={this.props.highDrawers ? {maxHeight: "600px", overflow: "1"} : null}
+                            key="drawersDetails"
                         >
                             {highDrawersDetails}
                         </div>,

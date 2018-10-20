@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import WizualizacjaWnetrza from '../WizualizacjaWnetrza/WizualizacjaWnetrza';
 import * as actionTypes from '../../store/actions/actionTypes';
 import './WizualizacjaKuchni.css';
 import WizualizacjaSzafki from '../WizualizacjaSzafki/WizualizacjaSzafki';
-
-import kitchenSinkIcon from '../../img/sprzety/kitchen_sink_icon.png';
-import hobIcon from '../../img/sprzety/hob_icon.png';
 
 class WizualizacjaKuchni extends Component {
     render() {
@@ -15,14 +11,6 @@ class WizualizacjaKuchni extends Component {
             height: this.props.kitchenHeight/this.props.scale + 'px',
         }
         const kitchenVisual = this.props.cabinets.map(cabinet => {
-            // let szafkaWymiary = {
-            //     width: cabinet.cabinetWidth/this.props.scale + "px",
-            //     height: this.props.wysokoscSzafek/this.props.scale + "px",
-            // }
-            // let szafkaGornaWymiary = {
-            //     width: cabinet.cabinetWidth/this.props.scale + "px",
-            //     height: this.props.wysokoscGornychSzafek/this.props.scale + "px",
-            // }
             let showIfHovered = {};
             let overlayOpacity = {};
             if(cabinet.cabinetId === this.props.hoveredCabinet) {

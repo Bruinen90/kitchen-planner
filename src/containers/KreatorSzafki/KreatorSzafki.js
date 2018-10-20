@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './KreatorSzafki.css';
 
-import WizualizacjaWnetrza from '../../components/WizualizacjaWnetrza/WizualizacjaWnetrza';
 import FormularzNowejSzafki from '../../components/FormularzNowejSzafki/FormularzNowejSzafki';
 import WizualizacjaKuchni from '../../components/WizualizacjaKuchni/WizualizacjaKuchni';
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
@@ -9,25 +8,12 @@ import KitchenState from '../../components/KitchenState/KitchenState';
 import WizualizacjaSzafki from '../../components/WizualizacjaSzafki/WizualizacjaSzafki';
 import Auxx from '../../Auxx';
 
-import kitchenSinkIcon from '../../img/sprzety/kitchen_sink_icon.png';
-import hobIcon from '../../img/sprzety/hob_icon.png';
-
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
 import {Redirect} from 'react-router-dom';
 
 class KreatorSzafki extends Component {
   render() {
-
-      let wizualizacjaWymiary = {
-          width: this.props.cabinetWidth/4 + "px",
-          height: this.props.wysokoscSzafek/4 + "px",
-      }
-
-      let wizualizacjaWymiaryGorne = {
-          width: this.props.cabinetWidth/4 + "px",
-          height: this.props.wysokoscGornychSzafek/4 + "px",
-      }
     return (
         <Auxx>
         {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> }

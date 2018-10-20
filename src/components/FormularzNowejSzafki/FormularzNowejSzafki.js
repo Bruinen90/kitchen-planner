@@ -60,7 +60,7 @@ class FormularzNowejSzafki extends Component {
                             required
                             checked={this.props.cabinetType === "jedneDrzwi"}
                         />
-                        <span class="slider radio"></span>
+                        <span className="slider radio"></span>
                     </div>
                     Szafka z drzwiczkami
                     </label>
@@ -74,7 +74,7 @@ class FormularzNowejSzafki extends Component {
                             required
                             checked={this.props.cabinetType === "szufladaDrzwi"}
                         />
-                        <span class="slider radio"></span>
+                        <span className="slider radio"></span>
                     </div>
                     Szafka z niską szufladą i drzwiczkami
                     </label>
@@ -88,7 +88,7 @@ class FormularzNowejSzafki extends Component {
                             required
                             checked={this.props.cabinetType === "szuflady"}
                         />
-                        <span class="slider radio"></span>
+                        <span className="slider radio"></span>
                     </div>
                     Szafka z szufladami
                     </label>
@@ -102,7 +102,7 @@ class FormularzNowejSzafki extends Component {
                             required
                             checked={this.props.cabinetType === "zmywarka"}
                         />
-                        <span class="slider radio"></span>
+                        <span className="slider radio"></span>
                     </div>
                     Zmywarka
                     </label>
