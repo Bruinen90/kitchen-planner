@@ -6,6 +6,8 @@ import WizualizacjaKuchni from '../../components/WizualizacjaKuchni/Wizualizacja
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 import KitchenState from '../../components/KitchenState/KitchenState';
 import WizualizacjaSzafki from '../../components/WizualizacjaSzafki/WizualizacjaSzafki';
+import ListaSzafek from '../../components/ListaSzafek/ListaSzafek';
+import MobileButton from '../../components/UI/MobileButton/MobileButton';
 import Auxx from '../../Auxx';
 
 import {connect} from 'react-redux';
@@ -69,8 +71,18 @@ class KreatorSzafki extends Component {
                 showErrors={()=>this.props.onClickShowErrors(true)}
                 back={false}
             />
+            <MobileButton
+                color="blue"
+                ionicIconName="list"
+                hide={false}
+                whenClicked="actionWhenClicked"
+                position={-2}
+            />
             {this.props.showErrors ? <div className="szafkaNieprawidlowa">
             Suma szerokości szafek jest za mała - dodaj lub edytuj szafki</div> : null}
+            <ListaSzafek
+                cabinets = {this.props.cabinets}
+            />
         </Auxx>
     );
   }
