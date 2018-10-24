@@ -33,9 +33,9 @@
 @media (max-width: 950px) {
     .nowaSzafkaFormularz {
         max-width: 100vw;
+        width: auto;
         box-sizing: border-box;
         padding: 0;
-        margin: 0;
         font-size: 14px;
     }
 

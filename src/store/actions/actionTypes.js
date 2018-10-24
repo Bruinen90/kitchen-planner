@@ -31,3 +31,4 @@ export const CHANGE_KITCHEN_TYPE='CHANGE_KITCHEN_TYPE';
 export const CLICK_MENU='CLICK_MENU';
 export const HIDE_MENU='HIDE_MENU';
 export const CLICK_DEFAULTS='CLICK_DEFAULTS';
+export const TOGGLER='TOGGLER';

@@ -149,6 +149,11 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.TOGGLER):
+            return{
+                ...state,
+                [action.toggledParamName] : !state[action.toggledParamName]
+            }
         case(actionTypes.CLICK_DEFAULTS):
             let defaultsButtonText = action.event.target.value;
             defaultsButtonText === "?" ?  defaultsButtonText = "Domyślne parametry?" : defaultsButtonText = "?"

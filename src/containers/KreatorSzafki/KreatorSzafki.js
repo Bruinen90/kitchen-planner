@@ -18,7 +18,7 @@ class KreatorSzafki extends Component {
   render() {
     return (
         <Auxx>
-        {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> }
+        {/* {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> } */}
             <div className="kreatorNowejSzafki">
                 <div className="formularzCol">
                     <FormularzNowejSzafki
@@ -57,11 +57,11 @@ class KreatorSzafki extends Component {
             </div>
             {this.props.cabinets.length > 0 && window.innerWidth>950 ? <WizualizacjaKuchni /> : null}
             {window.innerWidth>950 ? null :
-                <SaveAndContinueButton
-                href='/projekt/parametry-kuchni'
-                resetErrors={this.props.calculateForms}
-                active={true}
-                back={true}
+                <MobileButton
+                    color="green"
+                    ionicIconName="arrow-round-back"
+                    whenClicked={()=>this.props.history.push("/projekt/parametry-kuchni")}
+                    position={0}
                 />
             }
             <SaveAndContinueButton
@@ -74,14 +74,22 @@ class KreatorSzafki extends Component {
             <MobileButton
                 color="blue"
                 ionicIconName="list"
-                hide={false}
-                whenClicked="actionWhenClicked"
-                position={-2}
+                hide={this.props.cabinets.length === 0}
+                whenClicked={()=>this.props.onClickToggler("showCabinetsList")}
+                position={1}
+                alreadyClicked={this.props.showCabinetsList}
+            />
+            <MobileButton
+                color="white"
+                customCss = {{border: "1px solid #555", color: "#777"}}
+                customText = {String(this.props.cabinets.length)}
+                position={this.props.cabinets.length === 0 ? 1 : 2}
             />
             {this.props.showErrors ? <div className="szafkaNieprawidlowa">
             Suma szerokości szafek jest za mała - dodaj lub edytuj szafki</div> : null}
             <ListaSzafek
                 cabinets = {this.props.cabinets}
+                show = {this.props.showCabinetsList}
             />
         </Auxx>
     );
@@ -115,6 +123,7 @@ const mapStateToProps = state => {
         hob: state.hob,
         kitchenSink: state.kitchenSink,
         kitchenType: state.kitchenType,
+        showCabinetsList: state.showCabinetsList,
     };
 };
 
@@ -126,6 +135,7 @@ const mapDispatchToProps = dispatch => {
         onAddCabinet: () => dispatch({type: actionTypes.ADD_CABINET}),
         calculateForms: () => dispatch({type: actionTypes.CALCULATE_FORMS}),
         onClickShowErrors: (ifShow)=> dispatch({type: actionTypes.SHOW_ERRORS, ifShow: ifShow}),
+        onClickToggler: (toggledParamName) => dispatch({type: actionTypes.TOGGLER, toggledParamName: toggledParamName})
     };
 };
 

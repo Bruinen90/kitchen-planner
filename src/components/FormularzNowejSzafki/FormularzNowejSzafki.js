@@ -170,7 +170,10 @@ class FormularzNowejSzafki extends Component {
                         value={window.innerWidth>950 ? "Zapisz zmiany" : <ion-icon name="save"></ion-icon>}
                         onClick={this.props.onClickSaveCabinet}
                     />}
-                    <div className={this.props.kitchenCabinetsValid ? "kitchenDone" : "szafkaNieprawidlowa"} style={this.props.canAddCabinet ? {opacity: "0"} : null}>
+                    <div
+                        className={this.props.kitchenCabinetsValid ? "kitchenDone" : "szafkaNieprawidlowa"}
+                        style={this.props.canAddCabinet ? {display: "none"} : {display: "block"}}
+                    >
                         {errorsArray}
                     </div>
             </div>

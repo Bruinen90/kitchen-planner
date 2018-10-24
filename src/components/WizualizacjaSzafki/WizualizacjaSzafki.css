@@ -28,3 +28,9 @@
 .prawa {
     float: right;
 }
+
+@media (max-width: 950px) {
+    .wizualizacjaSzafki {
+        margin-bottom: 110px;
+    }
+}

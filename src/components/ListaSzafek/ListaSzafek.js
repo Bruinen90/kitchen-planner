@@ -35,8 +35,11 @@ class ListaSzafek extends Component {
                 </Auxx>
             )
         })
+        const showList = {
+            bottom: this.props.show ? "70px" : "-900px",
+        }
         return (
-          <div className={"listaWrapper " + this.props.hide}>
+          <div className="listaWrapper " style={showList}>
               <div className="naglowekListySzafek">
               </div>
               <div className="naglowekListySzafek">
