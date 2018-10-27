@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import WykazFormatek from '../../components/WykazFormatek/WykazFormatek';
-import ListaOkuc from '../../components/ListaOkuc/ListaOkuc';
-import ListaNarzedzi from '../../components/ListaNarzedzi/ListaNarzedzi';
+import WykazFormatek from '../../components/ListyZakupow/ListaFormatek/ListaFormatek';
+import ListaOkuc from '../../components/ListyZakupow/ListaOkuc/ListaOkuc';
+import ListaNarzedzi from '../../components/ListyZakupow/ListaNarzedzi/ListaNarzedzi';
 import './ListaZakupow.css';
 import {connect} from 'react-redux';
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';

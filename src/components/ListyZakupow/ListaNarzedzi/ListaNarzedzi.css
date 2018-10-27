@@ -20,6 +20,17 @@
     text-decoration: underline;
 }
 
+div.toolTypeHeader {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--red-color);
+        border-bottom: 2px solid var(--red-color);
+        width: 100%;
+        box-sizing: border-box;
+        grid-column: 1/3;
+        margin-top: 14px;
+    }
+
 @media (max-width: 950px) {
     .toolsListWrapper {
         max-width: 100vw;

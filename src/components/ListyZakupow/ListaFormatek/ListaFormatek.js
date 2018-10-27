@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './Wykaz.css';
+import './ListaFormatek.css';
 
 import {connect} from 'react-redux';
 

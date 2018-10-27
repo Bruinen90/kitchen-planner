@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import './ListaOkuc.css';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actionTypes from '../../../store/actions/actionTypes';
 
 class ListaOkuc extends Component {
     render() {
