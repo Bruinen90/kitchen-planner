@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import WykazFormatek from '../../components/WykazFormatek/WykazFormatek';
 import ListaOkuc from '../../components/ListaOkuc/ListaOkuc';
+import ListaNarzedzi from '../../components/ListaNarzedzi/ListaNarzedzi';
 import './ListaZakupow.css';
 import {connect} from 'react-redux';
 import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 import Auxx from '../../Auxx';
+import MobileButton from '../../components/UI/MobileButton/MobileButton';
 
 class ListaZakupow extends Component {
     componentWillMount() {
@@ -20,13 +22,14 @@ class ListaZakupow extends Component {
             <div className="ListaZakupowWrapper">
                 <WykazFormatek />
                 <ListaOkuc />
+                <ListaNarzedzi />
             </div>
             {window.innerWidth>950 ? null :
-                <SaveAndContinueButton
-                href='/projekt/kreator-szafki'
-                resetErrors={this.props.calculateForms}
-                active={true}
-                back={true}
+                <MobileButton
+                    color="green"
+                    ionicIconName="arrow-round-back"
+                    whenClicked={()=>this.props.history.push("/projekt/kreator-szafki")}
+                    position={0}
                 />
             }
         </Auxx>

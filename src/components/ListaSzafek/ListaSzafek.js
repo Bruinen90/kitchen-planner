@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Auxx from '../../Auxx';
 import './ListaSzafek.css';
+import {connect} from 'react-redux';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 class ListaSzafek extends Component {
     render() {
@@ -15,6 +17,7 @@ class ListaSzafek extends Component {
                     break;
                 case "szuflady":
                     fullCabinetType = "Szafka z szufladami"
+                    break;
                 default:
                     fullCabinetType = "Zmywarka";
             }
@@ -29,8 +32,11 @@ class ListaSzafek extends Component {
                 <div>
                     {cabinet.cabinetWidth} mm
                 </div>
-                <div>
-                    ico
+                <div className="ikonaEdycjiSzafki" onClick={()=>this.props.onClickEditCabinet(cabinet.cabinetId)}>
+                    <ion-icon name="create"></ion-icon>
+                </div>
+                <div className="ikonaUsuwaniaSzafki" onClick={()=>this.props.onClickDeleteCabinet(cabinet.cabinetId)}>
+                    <ion-icon name="close"></ion-icon>
                 </div>
                 </Auxx>
             )
@@ -43,17 +49,35 @@ class ListaSzafek extends Component {
               <div className="naglowekListySzafek">
               </div>
               <div className="naglowekListySzafek">
-                Rodzaj szafki
+                Lista szafek
               </div>
               <div className="strzalkiSzerokosc naglowekListySzafek">
                 <ion-icon name="arrow-round-back"></ion-icon><ion-icon name="arrow-round-forward"></ion-icon>
               </div>
               <div className="naglowekListySzafek">
               </div>
-
+              <div className="naglowekListySzafek ikonaNaglowka" onClick={this.props.clickHide}>
+                  <ion-icon name="arrow-dropdown"></ion-icon>
+              </div>
               {listaSzafek}
           </div>
         );
     }
 }
-export default ListaSzafek;
+
+const mapStateToProps = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onClickEditCabinet: (cabinetId) =>
+            dispatch({type: actionTypes.EDIT_CABINET, cabinetId: cabinetId}),
+        onClickDeleteCabinet: (cabinetId) =>
+            dispatch({type: actionTypes.DELETE_CABINET, cabinetId: cabinetId}),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListaSzafek);

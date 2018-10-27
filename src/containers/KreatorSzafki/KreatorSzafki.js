@@ -77,7 +77,9 @@ class KreatorSzafki extends Component {
                 hide={this.props.cabinets.length === 0}
                 whenClicked={()=>this.props.onClickToggler("showCabinetsList")}
                 position={1}
-                alreadyClicked={this.props.showCabinetsList}
+                ifAlternative = {this.props.showCabinetsList}
+                alternativeIconName="arrow-dropdown"
+                alternativeCss={{fontSize: "72px"}}
             />
             <MobileButton
                 color="white"
@@ -89,7 +91,8 @@ class KreatorSzafki extends Component {
             Suma szerokości szafek jest za mała - dodaj lub edytuj szafki</div> : null}
             <ListaSzafek
                 cabinets = {this.props.cabinets}
-                show = {this.props.showCabinetsList}
+                show = {this.props.showCabinetsList && this.props.cabinets.length > 0}
+                clickHide = {()=>this.props.onClickToggler("showCabinetsList")}
             />
         </Auxx>
     );

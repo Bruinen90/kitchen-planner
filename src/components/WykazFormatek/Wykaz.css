@@ -1,6 +1,9 @@
 .outputFormatki {
-    width: 400px;
-    margin: 0px 30px;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
 }
 
 .parent {

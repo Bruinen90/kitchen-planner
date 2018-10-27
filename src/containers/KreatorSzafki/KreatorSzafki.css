@@ -1,11 +1,3 @@
-.devicesContainer {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    z-index: 5;
-    background-color: #eee;
-}
-
 .szafkaNieprawidlowa {
     color: var(--red-color);
     line-height: 1.2rem;

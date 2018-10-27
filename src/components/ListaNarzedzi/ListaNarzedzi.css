@@ -1,0 +1,32 @@
+.toolsListWrapper {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.toolsListWrapper div {
+    border-bottom: 1px solid #ccc;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toolsListWrapper div a {
+    color: black;
+    text-decoration: underline;
+}
+
+@media (max-width: 950px) {
+    .toolsListWrapper {
+        max-width: 100vw;
+        box-sizing: border-box;
+    }
+
+    .toolsListWrapper div {
+        padding: 0 10px;
+    }
+}

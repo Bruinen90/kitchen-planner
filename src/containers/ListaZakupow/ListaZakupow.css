@@ -1,12 +1,19 @@
 .ListaZakupowWrapper {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 30% 30% 40%;
+    width: 100%;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-column-gap: 40px;
+    box-sizing: border-box;
 }
 
 @media (max-width: 950px) {
     .ListaZakupowWrapper {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        grid-template-columns: auto;
+        max-width: 100vw;
+        box-sizing: border-box;
+        margin-bottom: 70px;
     }
 }

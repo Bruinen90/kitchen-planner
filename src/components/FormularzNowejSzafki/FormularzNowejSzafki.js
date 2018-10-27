@@ -5,6 +5,7 @@ import FormularzSprzetu from './FormularzSprzetow/FormularzSprzetow';
 import FormularzGornejSzafki from './FormularzGornejSzafki/FormularzGornejSzafki';
 import './FormularzNowejSzafki.css';
 import * as actionTypes from '../../store/actions/actionTypes';
+import MobileButton from '../UI/MobileButton/MobileButton';
 
 import {connect} from 'react-redux';
 
@@ -135,7 +136,7 @@ class FormularzNowejSzafki extends Component {
 
                     <br />
                 </div>
-                Szerokość szafek (mm):
+                Szerokość szaf{this.props.kitchenType.includes('edenRzad') ? "ki" : "ek"} (mm):
                     <input
                         className="cabinetWidthInput"
                         type="number"
@@ -152,6 +153,8 @@ class FormularzNowejSzafki extends Component {
                         disabled={!this.props.canFillCabinetWidth}
                     />
                     <br />
+                    Pozostałe miejsce na szafki: <b>{this.props.leftSpace}mm</b>
+                    <br />
                     {!this.props.editInProgress ?
                     <div className="wrapper">
                     <input
@@ -163,13 +166,23 @@ class FormularzNowejSzafki extends Component {
                     />
                     </div>
                      :
-                    <input
+                     window.innerWidth>950 ?
+                    <div
                         className="confirmCabinetButton blue"
                         type="button"
                         disabled={!this.props.canAddCabinet}
-                        value={window.innerWidth>950 ? "Zapisz zmiany" : <ion-icon name="save"></ion-icon>}
                         onClick={this.props.onClickSaveCabinet}
-                    />}
+                    >
+                        Zapisz zmiany
+                    </div> :
+                    <MobileButton
+                        position={-1}
+                        ionicIconName="save"
+                        whenClicked={this.props.onClickSaveCabinet}
+                        disabled={!this.props.canAddCabinet}
+                        color="blue"
+                    />
+                    }
                     <div
                         className={this.props.kitchenCabinetsValid ? "kitchenDone" : "szafkaNieprawidlowa"}
                         style={this.props.canAddCabinet ? {display: "none"} : {display: "block"}}
@@ -198,6 +211,7 @@ const mapStateToProps = state => {
         kitchenSink: state.kitchenSink,
         hob: state.hob,
         kitchenType: state.kitchenType,
+        leftSpace: state.leftSpace,
     }
 }
 
