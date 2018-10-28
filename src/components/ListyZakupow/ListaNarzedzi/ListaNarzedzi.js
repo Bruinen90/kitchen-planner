@@ -31,7 +31,7 @@ class ListaNarzedzi extends Component {
         const toolsList = [
             {
                 name: "Wiertło do konfirmatów",
-                price: 12,
+                price: 15,
             },
             {
                 name: "Wiertło 2mm do nawierceń pod śruby",
@@ -71,13 +71,22 @@ class ListaNarzedzi extends Component {
                 price: 250,
             },
             {
-                name: "Wyrzynarka do otworów pod sprzęt AGD",
+                name: "Wyrzynarka",
                 price: 200,
             },
+            {
+                name: "Poziomica minimum 1 metr",
+                price: 40,
+            }
 
         ];
 
-
+        if(this.props.gorneSzafki) {
+            toolsList.push({
+                name: "Wiertarka udarowa",
+                price: 200,
+            })
+        }
         const toolsListWithTypes = toolsList.map(tool => {
             let typeSymbol = "others";
             for (let type of toolsTypes) {

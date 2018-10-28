@@ -22,7 +22,9 @@ class ListaZakupow extends Component {
             <div className="ListaZakupowWrapper">
                 <WykazFormatek />
                 <ListaOkuc />
-                <ListaNarzedzi />
+                <ListaNarzedzi
+                    gorneSzafki = {this.props.gorneSzafki}
+                />
             </div>
             {window.innerWidth>950 ? null :
                 <MobileButton
@@ -40,6 +42,7 @@ class ListaZakupow extends Component {
 const mapStateToProps = state => {
     return{
         validKitchen: state.kitchenCabinetsValid,
+        gorneSzafki: !state.kitchenType.includes("edenRzad"),
     }
 }
 export default connect(mapStateToProps)(ListaZakupow);

@@ -18,7 +18,7 @@ class KreatorSzafki extends Component {
   render() {
     return (
         <Auxx>
-        {/* {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> } */}
+        {this.props.kitchenParamsValid ? null : <Redirect to="/projekt/parametry-kuchni" /> }
             <div className="kreatorNowejSzafki">
                 <div className="formularzCol">
                     <FormularzNowejSzafki

@@ -567,7 +567,7 @@ const reducer = (state = initialState, action) => {
                     productCode: "Nóżka Wurth",
                     price: 3,
                     type: "acc",
-
+                    longScrewsToHold: 4,
                 },
                 {
                     name: "handles",
@@ -611,6 +611,39 @@ const reducer = (state = initialState, action) => {
                     price: 0.13,
                     type: "screw",
                 },
+                {
+                    name: "wallBrackets",
+                    fullname: "Zawieszki górnej szafki prawa + lewa",
+                    count: 0,
+                    productCode: "Zawieszka Blum L+P",
+                    price: 8,
+                    type: "acc",
+                    longScrewsToHold: 4,
+                },
+                {
+                    name: "hangingRail",
+                    fullname: "Szyna do montażu górnych szafek 2 metry",
+                    count: 0,
+                    productCode: "Szyna montażowa do szafek",
+                    price: 20,
+                    type: "acc",
+                },
+                {
+                    name: "hangingScrews",
+                    fullname: "Wkręty do montażu szafek górnych z kołkami rozporowymi",
+                    count: 0,
+                    productCode: "Fischer duopower z wkrętem 8x65",
+                    price: 1.5,
+                    type: "screw",
+                },
+                {
+                    name: "3.5x40",
+                    fullname: "Wkręty 3,5x40mm",
+                    count: 0,
+                    productCode: "Wkręty SPAX 3,5x40mm",
+                    price: 0.15,
+                    type: "screw"
+                }
 
             ]
             const addAcc = (accessorieName, count) => {
@@ -631,6 +664,7 @@ const reducer = (state = initialState, action) => {
                 //płyty i akcesoria na górne szafki
                 if(!state.kitchenType.includes("edenRzad")){
                     addAcc("confirmats", 8);
+                    addAcc("wallBrackets", 2);
                     primaryAllFormsArray.plyta18mm.push({
                         wymiary: state.upperCabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
                         okleina: state.upperCabinetDepth < state.upperCabinetHeight ? 'd1' : 'k1',
@@ -829,7 +863,10 @@ const reducer = (state = initialState, action) => {
             allAccessories.map(acc => {
                 if(acc.screwsToHold) {
                     addAcc("3.5x16", acc.count*acc.screwsToHold)
-                }
+                };
+                if(acc.longScrewsToHold) {
+                    addAcc("3.5x40", acc.count*acc.longScrewsToHold)
+                };
             })
 
             let blenda = {
@@ -853,6 +890,11 @@ const reducer = (state = initialState, action) => {
                 iloscFrontow = iloscFrontow + front.ilosc;
             };
             addAcc("handles", iloscFrontow);
+
+            if(!state.kitchenType.includes("edenRzad")) {
+                addAcc("hangingRail", Math.ceil(state.kitchenWidth/2000));
+                addAcc("hangingScrews", Math.ceil(state.kitchenWidth/200));
+            }
 
 
             primaryAllFormsArray.plyta18mm = summarizeForms(primaryAllFormsArray.plyta18mm);
