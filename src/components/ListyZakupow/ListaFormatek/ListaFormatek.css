@@ -31,6 +31,19 @@
     }
 }
 
+.descriptionPrint {
+    display: none;
+}
+
+@media print {
+    .descriptionPrint {
+        display: block;
+    }
+    .outputFormatki {
+        max-width: none;
+    }
+}
+
 .typeHeader {
     font-size: 16px;
     font-weight: bold;
@@ -48,6 +61,7 @@
     border-bottom: 1px solid #ccc;
     width: 100%;
     justify-content: center;
+    position: relative;
 }
 
 .col {
@@ -57,6 +71,33 @@
     margin-left: auto;
     margin-right: auto;
     align-self: center;
+}
+
+.descriptionOverflow {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    left: 105%;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--red-color);
+    color: white;
+    z-index: 1;
+    top: 7px;
+}
+
+.descriptionOverflow:after {
+    content: "";
+    background-color: var(--red-color);
+    width: 28.5px;
+    height: 28.5px;
+    position: absolute;
+    transform: rotate(45deg);
+    top: 5.5px;
+    left: -14px;
+
 }
 
 .okleina {

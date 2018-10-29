@@ -4,7 +4,6 @@ import ListaOkuc from '../../components/ListyZakupow/ListaOkuc/ListaOkuc';
 import ListaNarzedzi from '../../components/ListyZakupow/ListaNarzedzi/ListaNarzedzi';
 import './ListaZakupow.css';
 import {connect} from 'react-redux';
-import SaveAndContinueButton from '../../components/UI/SaveAndContinueButton/SaveAndContinueButton';
 import Auxx from '../../Auxx';
 import MobileButton from '../../components/UI/MobileButton/MobileButton';
 

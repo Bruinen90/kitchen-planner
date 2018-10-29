@@ -82,10 +82,16 @@ class ListaNarzedzi extends Component {
         ];
 
         if(this.props.gorneSzafki) {
-            toolsList.push({
-                name: "Wiertarka udarowa",
-                price: 200,
-            })
+            toolsList.push(
+                {
+                    name: "Wiertarka udarowa",
+                    price: 200,
+                },
+                {
+                    name: "Wiertło 8mm do betonu",
+                    price: 5,
+                },
+            )
         }
         const toolsListWithTypes = toolsList.map(tool => {
             let typeSymbol = "others";

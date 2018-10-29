@@ -64,6 +64,9 @@ const initialState = {
 
     showMobileMenu: false,
     defaultsButtonText: "?",
+
+    showFormDescription: false,
+    showFormDescriptionKey: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -149,6 +152,13 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.SHOW_FORM_DESCRIPTION):
+            return {
+                ...state,
+                showFormDescription: action.show,
+                showFormDescriptionKey: action.form_key,
+            }
+        
         case(actionTypes.TOGGLER):
             return{
                 ...state,
@@ -669,17 +679,20 @@ const reducer = (state = initialState, action) => {
                         wymiary: state.upperCabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
                         okleina: state.upperCabinetDepth < state.upperCabinetHeight ? 'd1' : 'k1',
                         ilosc: 2,
+                        opis: "Trawersy szafek górnych",
                     });
                     primaryAllFormsArray.plyta18mm.push({
                         wymiary: state.upperCabinetDepth.toString()+"x"+state.upperCabinetHeight.toString()+"mm",
                         okleina: state.upperCabinetDepth > cabinet.cabinetWidth-36? 'k1' : 'd1',
                         ilosc: 2,
+                        opis: "Ścianki boczne szafek górnych",
                     });
                     if(cabinet.upperShelfsCount>0) {
                         primaryAllFormsArray.plyta16mm.push({
                             wymiary: (state.upperCabinetDepth-5).toString()+"x"+(cabinet.cabinetWidth-37).toString()+"mm",
                             okleina: state.upperCabinetDepth > cabinet.cabinetWidth-37? 'k1' : 'd1',
                             ilosc: cabinet.upperShelfsCount,
+                            opis: "Półki szafek górnych",
                         });
                         addAcc("shelfHolders", cabinet.upperShelfsCount*4);
                     }
@@ -691,6 +704,7 @@ const reducer = (state = initialState, action) => {
                                 ((cabinet.cabinetWidth-state.spaceBetweenDrawers-state.spaceBetweenCabinets/2)/2).toString()+"mm",
                             okleina: "full",
                             ilosc: 2,
+                            opis: "Frony szafek górnych",
                         });
                         addAcc("hinges", Math.ceil(state.upperCabinetHeight/399)*2);
                     } else {
@@ -701,6 +715,7 @@ const reducer = (state = initialState, action) => {
                                 (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                             okleina: "full",
                             ilosc: 1,
+                            opis: "Frony szafek górnych",
                         });
                         addAcc("hinges", Math.ceil(state.upperCabinetHeight/399));
                     }
@@ -711,17 +726,20 @@ const reducer = (state = initialState, action) => {
                         wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
                         okleina: state.cabinetDepth > cabinet.cabinetWidth-36? 'k1' : 'd1',
                         ilosc: 2,
+                        opis: "Trawersy szafek dolnych",
                     }
                     if(cabinet.kitchenSink) {
                         trawers = {
                             wymiary: state.cabinetDepth.toString()+"x"+(cabinet.cabinetWidth-36).toString()+"mm",
                             okleina: state.cabinetDepth > cabinet.cabinetWidth-36? 'k1' : 'd1',
                             ilosc: 1,
+                            opis: "Trawers dolny szafki ze zlewozmywakiem",
                         };
                         primaryAllFormsArray.plyta18mm.push({
                             wymiary: "80x"+(cabinet.cabinetWidth-36).toString()+"mm",
                             okleina: 'd2',
                             ilosc: 2,
+                            opis: "Trawersy górne szafki ze zlewozmywakiem",
                         });
                         addAcc("confirmats", 4)
                     }
@@ -730,6 +748,7 @@ const reducer = (state = initialState, action) => {
                         wymiary: state.cabinetDepth.toString()+"x"+state.cabinetHeight.toString()+"mm",
                         okleina: state.cabinetDepth < state.cabinetHeight ? 'd1' : 'k1',
                         ilosc: 2,
+                        opis: "Ścianki boczne szafek dolnych",
                     });
 
                     if(cabinet.shelfsCount>0) {
@@ -737,6 +756,7 @@ const reducer = (state = initialState, action) => {
                             wymiary: (state.cabinetDepth-5).toString()+"x"+(cabinet.cabinetWidth-37).toString()+"mm",
                             okleina: state.cabinetDepth > cabinet.cabinetWidth-37? 'k1' : 'd1',
                             ilosc: cabinet.shelfsCount,
+                            opis: "Półki szafek dolnych"
                         });
                         addAcc("shelfHolders", cabinet.shelfsCount*4);
                     }
@@ -751,6 +771,7 @@ const reducer = (state = initialState, action) => {
                                     ((cabinet.cabinetWidth-state.spaceBetweenDrawers-state.spaceBetweenCabinets/2)/2).toString()+"mm",
                                 okleina: "full",
                                 ilosc: 2,
+                                opis: "Drzwi podwójne szafek dolnych",
                             });
                             addAcc("hinges", 4);
                         } else {
@@ -761,6 +782,7 @@ const reducer = (state = initialState, action) => {
                                     (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                                 okleina: "full",
                                 ilosc: 1,
+                                opis: "Drzwi pojedyncze szafek dolnych",
                             });
                             addAcc("hinges", 2);
                         }
@@ -772,6 +794,7 @@ const reducer = (state = initialState, action) => {
                                 (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                             okleina: "full",
                             ilosc: 1,
+                            opis: "Fronty szuflad",
                         });
 
                         if(cabinet.doubleDoors) {
@@ -782,6 +805,7 @@ const reducer = (state = initialState, action) => {
                                     ((cabinet.cabinetWidth-state.spaceBetweenDrawers-state.spaceBetweenCabinets/2)/2).toString()+"mm",
                                 okleina: "full",
                                 ilosc: 2,
+                                opis: "Drzwi podwójne szafek dolnych",
                             });
                             addAcc("hinges", 4)
                         } else {
@@ -792,6 +816,7 @@ const reducer = (state = initialState, action) => {
                                     (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                                 okleina: "full",
                                 ilosc: 1,
+                                opis: "Drzwi pojedyncze szafek dolnych",
                             });
                             addAcc("hinges", 2)
                         }
@@ -807,11 +832,13 @@ const reducer = (state = initialState, action) => {
                             wymiary: wymiaryPlecow,
                             okleina: 'd1',
                             ilosc: 1,
+                            opis: "Ścianki tylne szuflad",
                         });
                         primaryAllFormsArray.plyta16mm.push({
                             wymiary: (cabinet.cabinetWidth-111).toString()+"x476mm",
                             okleina: null,
                             ilosc: cabinet.drawersHeights.length,
+                            opis: "Dna szuflad",
                         });
                     } else if (cabinet.cabinetType === 'szuflady') {
                         const allDrawers = cabinet.drawersHeights;
@@ -823,6 +850,7 @@ const reducer = (state = initialState, action) => {
                                     (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                                 okleina: "full",
                                 ilosc: 1,
+                                opis: "Fronty szuflad",
                             })
                             if (wysokoscFrontu < 224) {
                                 wymiaryPlecow = cabinet.cabinetWidth-123+"x84mm";
@@ -836,12 +864,14 @@ const reducer = (state = initialState, action) => {
                                     wymiary: wymiaryPlecow,
                                     okleina: 'd1',
                                     ilosc: 1,
+                                    opis: "Plecy szuflad",
                                 });
                         });
                         primaryAllFormsArray.plyta16mm.push({
                             wymiary: (cabinet.cabinetWidth-111).toString()+"x476mm",
                             okleina: null,
                             ilosc: cabinet.drawersHeights.length,
+                            opis: "Dna szuflad",
                         });
                     }
 
@@ -855,6 +885,7 @@ const reducer = (state = initialState, action) => {
                             (cabinet.cabinetWidth-state.spaceBetweenCabinets/2).toString()+"mm",
                         okleina: "full",
                         ilosc: 1,
+                        opis: "Front do zmywarki"
                     });
                     addAcc("legs", 4);
                 }
@@ -873,6 +904,7 @@ const reducer = (state = initialState, action) => {
                 wymiary: calculateCabinestWidthSum()+"x"+state.legsHeight+"mm",
                 okleina: null,
                 ilosc: 1,
+                opis: "Blenda zakrywająca nóżki pod meblami",
             };
             if(calculateCabinestWidthSum()>2700) {
                 const iloscBlend = Math.ceil(calculateCabinestWidthSum()/2700);
@@ -880,6 +912,7 @@ const reducer = (state = initialState, action) => {
                     wymiary: calculateCabinestWidthSum()/iloscBlend+"x"+state.legsHeight+"mm",
                     okleina: null,
                     ilosc: iloscBlend,
+                    opis: "Blenda zakrywająca nóżki pod meblami",
                 }
             }
             primaryAllFormsArray.plyta18mm.push(blenda);

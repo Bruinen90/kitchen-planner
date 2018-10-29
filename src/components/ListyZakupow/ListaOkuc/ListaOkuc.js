@@ -2,10 +2,27 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import './ListaOkuc.css';
 import * as actionTypes from '../../../store/actions/actionTypes';
+import Auxx from '../../../Auxx';
 
 class ListaOkuc extends Component {
     render() {
         let totalAccessoriesPrice = 0;
+
+        const accTypes = [
+            {
+                symbol: "acc",
+                fullName: "Akcesoria meblowe",
+            },
+            {
+                symbol: "drawer",
+                fullName: "Szuflady",
+            },
+            {
+                symbol: "screw",
+                fullName: "Śruby montażowe",
+            },
+        ];
+
         const elementyNiskiejSzuflady = [
             {
                 name: "bokL",
@@ -148,68 +165,83 @@ class ListaOkuc extends Component {
             )
         };
 
-        const listaOkuc = this.props.okucia.map(okucie => {
-            if(okucie.type !== "drawer" && okucie.count > 0) {
-                totalAccessoriesPrice = totalAccessoriesPrice + (okucie.price * okucie.count);
-                let legsHeight = "";
-                if(okucie.name==="legs") {
-                    legsHeight = this.props.legsHeight+" mm";
+        const kategorieOkuc = accTypes.map(type => {
+            let listaOkuc = [];
+            for (let okucie of this.props.okucia) {
+                if(okucie.type === type.symbol) {
+                    if(okucie.type !== "drawer" && okucie.count > 0) {
+                        totalAccessoriesPrice = totalAccessoriesPrice + (okucie.price * okucie.count);
+                        let legsHeight = "";
+                        if(okucie.name==="legs") {
+                            legsHeight = this.props.legsHeight+" mm";
+                        }
+                        listaOkuc.push(
+                            <div className="row" key={okucie.name}>
+                                <div className="col toggleButton"></div>
+                                <div className="col">
+                                    <a
+                                        target="_blank" title="Wyszukaj okucia w Google"
+                                        href={"http://www.google.com/search?q="+okucie.productCode+" "+legsHeight}>
+                                        {okucie.fullname+ " " + legsHeight}
+                                    </a>
+                                </div>
+                                <div className="col narrow">{okucie.count} szt</div>
+                                <div className="col narrow">{(okucie.price * okucie.count).toFixed(2)} zł</div>
+                            </div>
+                        )
+                    } else if(okucie.name === "lowDrawers" && okucie.count > 0) {
+                        drawerPrice = 0;
+                        const lowDrawersDetails = drawerDetails(elementyNiskiejSzuflady, okucie.count);
+                        totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
+                        listaOkuc.push (
+                            [   drawerHeader(okucie, drawerPrice),
+                                <div
+                                    className="drawersDetailsWrapper"
+                                    style={this.props.lowDrawers ? {maxHeight: "600px", overflow: "1"} : null}
+                                    key="drawersDetails"
+                                    >
+                                        {lowDrawersDetails}
+                                    </div>,
+                                ]
+                            );
+                        } else if(okucie.name === "highDrawers" && okucie.count > 0) {
+                            drawerPrice = 0;
+                            const highDrawersDetails = drawerDetails(elementyWysokiejSzuflady, okucie.count);
+                            totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
+                            listaOkuc.push (
+                                [
+                                    drawerHeader(okucie, drawerPrice),
+                                    <div
+                                        className="drawersDetailsWrapper"
+                                        style={this.props.highDrawers ? {maxHeight: "600px", overflow: "1"} : null}
+                                        key="drawersDetails"
+                                        >
+                                            {highDrawersDetails}
+                                        </div>,
+                                    ]
+                                );
+                            };
                 }
-                return(
-                    <div className="row" key={okucie.name}>
-                        <div className="col toggleButton"></div>
-                        <div className="col">
-                            <a
-                                target="_blank" title="Wyszukaj okucia w Google"
-                                href={"http://www.google.com/search?q="+okucie.productCode+" "+legsHeight}>
-                                    {okucie.fullname+ " " + legsHeight}
-                            </a>
+            };
+            if(listaOkuc.length > 0) {
+                return (
+                    <Auxx>
+                        <div className="typeHeader">
+                            {type.fullName}
                         </div>
-                        <div className="col narrow">{okucie.count} szt</div>
-                        <div className="col narrow">{(okucie.price * okucie.count).toFixed(2)} zł</div>
-                    </div>
+                        {listaOkuc}
+                    </Auxx>
                 )
-            } else if(okucie.name === "lowDrawers" && okucie.count > 0) {
-                drawerPrice = 0;
-                const lowDrawersDetails = drawerDetails(elementyNiskiejSzuflady, okucie.count);
-                totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
-                return (
-                    [   drawerHeader(okucie, drawerPrice),
-                        <div
-                            className="drawersDetailsWrapper"
-                            style={this.props.lowDrawers ? {maxHeight: "600px", overflow: "1"} : null}
-                            key="drawersDetails"
-                        >
-                            {lowDrawersDetails}
-                        </div>,
-                    ]
-                );
-            } else if(okucie.name === "highDrawers" && okucie.count > 0) {
-                drawerPrice = 0;
-                const highDrawersDetails = drawerDetails(elementyWysokiejSzuflady, okucie.count);
-                totalAccessoriesPrice = totalAccessoriesPrice + drawerPrice;
-                return (
-                    [
-                        drawerHeader(okucie, drawerPrice),
-                        <div
-                            className="drawersDetailsWrapper"
-                            style={this.props.highDrawers ? {maxHeight: "600px", overflow: "1"} : null}
-                            key="drawersDetails"
-                        >
-                            {highDrawersDetails}
-                        </div>,
-                    ]
-                );
-            } else return null;
-        });
-
+            } else {
+                return null;
+            }
+        })
         return(
             <div className="outputOkucia">
                 <h1 className="innerHeaders">Lista okuć do zamówienia</h1>
                 <div className="formatki">
                     <div className="parent">
-                        <div className="typeHeader">Okucia meblowe</div>
-                            {listaOkuc}
+                            {kategorieOkuc}
                         <div className="row sumaOkuc">
                         Suma: {totalAccessoriesPrice.toFixed(2)}zł
                         </div>

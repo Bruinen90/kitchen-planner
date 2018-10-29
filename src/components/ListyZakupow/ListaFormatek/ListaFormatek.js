@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './ListaFormatek.css';
+import * as actionTypes from '../../../store/actions/actionTypes';
 
 import {connect} from 'react-redux';
 
@@ -7,11 +8,24 @@ class Wykaz extends Component {
     render() {
         const wykazFormatek = (formsArray) => {
             return(formsArray.map(formatka => {
+                let showFormDescription = {opacity: "0"};
+                if(
+                    formatka.wymiary+formatka.okleina ===
+                    this.props.showFormDescriptionKey && this.props.showFormDescription) {
+                        showFormDescription.opacity = "1";
+                    }
                 return(
-                    <div className="row" key={formatka.wymiary+formatka.okleina}>
+                    <div
+                        className="row"
+                        key={formatka.wymiary+formatka.okleina}
+                        onMouseOver={()=>this.props.onHoverForms(formatka.wymiary+formatka.okleina, true)}
+                        onMouseOut={()=>this.props.onHoverForms(formatka.wymiary+formatka.okleina, false)}
+                    >
                         <div className="col">{formatka.wymiary}</div>
                         <div className="col narrow">{formatka.ilosc}szt</div>
                         <div className="col"><div className={formatka.okleina + ' okleina'}></div></div>
+                        <div className="col descriptionPrint">{formatka.opis}</div>
+                        <div className="descriptionOverflow" style={showFormDescription}>{formatka.opis}</div>
                     </div>
                 )
             }))
@@ -46,7 +60,15 @@ const mapStateToProps = state => {
         fronty: state.formatki.fronty,
         frontyGorne: state.formatki.frontyGorne,
         plyta16mm: state.formatki.plyta16mm,
+        showFormDescription: state.showFormDescription,
+        showFormDescriptionKey: state.showFormDescriptionKey,
     }
 }
 
-export default connect(mapStateToProps)(Wykaz);
+const mapDispatchToProps = dispatch => {
+    return {
+        onHoverForms: (form_key, show)=>dispatch({type: actionTypes.SHOW_FORM_DESCRIPTION, form_key: form_key, show: show})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wykaz);
