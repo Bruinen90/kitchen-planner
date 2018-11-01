@@ -8,11 +8,11 @@ class Wykaz extends Component {
     render() {
         const wykazFormatek = (formsArray) => {
             return(formsArray.map(formatka => {
-                let showFormDescription = {opacity: "0"};
+                let showFormDescription = {left: "3000px"};
                 if(
                     formatka.wymiary+formatka.okleina ===
                     this.props.showFormDescriptionKey && this.props.showFormDescription) {
-                        showFormDescription.opacity = "1";
+                        showFormDescription.left = "105%";
                     }
                 return(
                     <div
@@ -32,7 +32,7 @@ class Wykaz extends Component {
         }
         return(
             <div className="outputFormatki">
-                <h1 className="innerHeaders">Wymiary formatek do zamówienia</h1>
+                <h1 className="innerHeaders">Formatki do zamówienia</h1>
                 <div className="formatki">
                     <div className="parent">
                         <div className="typeHeader">Płyta meblowa 18mm:</div>

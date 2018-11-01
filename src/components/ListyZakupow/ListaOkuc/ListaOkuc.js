@@ -177,7 +177,7 @@ class ListaOkuc extends Component {
                         }
                         listaOkuc.push(
                             <div className="row" key={okucie.name}>
-                                <div className="col toggleButton"></div>
+                                {/* <div className="col toggleButton"></div> */}
                                 <div className="col">
                                     <a
                                         target="_blank" title="Wyszukaj okucia w Google"
@@ -225,7 +225,7 @@ class ListaOkuc extends Component {
             };
             if(listaOkuc.length > 0) {
                 return (
-                    <Auxx>
+                    <Auxx key={type.fullName}>
                         <div className="typeHeader">
                             {type.fullName}
                         </div>
@@ -238,14 +238,14 @@ class ListaOkuc extends Component {
         })
         return(
             <div className="outputOkucia">
-                <h1 className="innerHeaders">Lista okuć do zamówienia</h1>
+                <h1 className="innerHeaders">Okucia do zamówienia</h1>
                 <div className="formatki">
                     <div className="parent">
                             {kategorieOkuc}
                         <div className="row sumaOkuc">
-                        Suma: {totalAccessoriesPrice.toFixed(2)}zł
+                            Suma: {totalAccessoriesPrice.toFixed(2)}zł
                         </div>
-                        </div>
+                    </div>
                 </div>
             </div>
         )

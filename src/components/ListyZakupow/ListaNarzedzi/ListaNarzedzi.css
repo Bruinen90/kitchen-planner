@@ -2,9 +2,9 @@
     display: grid;
     grid-template-columns: 80% 20%;
     width: 100%;
-    max-width: 600px;
+    /* max-width: 600px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; */
 }
 
 .toolsListWrapper div {

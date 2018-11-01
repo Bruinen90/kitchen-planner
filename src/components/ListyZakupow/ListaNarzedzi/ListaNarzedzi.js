@@ -140,7 +140,7 @@ class ListaNarzedzi extends Component {
 
         return(
             <div className="outputTools">
-                <h1 className="innerHeaders">Lista potrzebnych narzędzi</h1>
+                <h1 className="innerHeaders">Potrzebne narzędzia</h1>
                 <div className="toolsListWrapper">
                     {outputTools}
                 </div>
