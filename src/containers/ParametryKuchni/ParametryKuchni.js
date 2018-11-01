@@ -18,6 +18,18 @@ import spaceBetweenCabinets from '../../img/schematy/spaceBetweenCabinets.gif';
 import legsHeight from '../../img/schematy/legsHeight.png';
 
 class ParametryKuchni extends Component {
+    constructor(props) {
+        super(props);
+        this.inputsArr = [];
+        this.scrollToElement = (index) => {
+            window.scrollTo({top: this.inputsArr[index].offsetTop, behavior: 'smooth'})
+        }
+    }
+
+    componentDidMount () {
+        window.scrollTo(0, 0);
+    }
+
   render() {
       const formInputsArray = [
           {
@@ -94,9 +106,9 @@ class ParametryKuchni extends Component {
           )
       }
 
-      const formInputs = formInputsArray.map(input => {
+      const formInputs = formInputsArray.map((input, index) => {
           return (
-              <div className="wrapper" key={input.type}>
+              <div className="wrapper" key={input.type} ref={(ref) => this.inputsArr[index] = ref}>
                   <ParamsInput
                       paramDescription={input.description}
                       changeInputValue={
@@ -106,16 +118,20 @@ class ParametryKuchni extends Component {
                               input.minValue,
                               input.maxValue
                           )}
-                      focusParamInput={()=>this.props.onFocusParamInput(input.type)}
+                      focused={()=>this.props.onFocusParamInput(input.type)}
                       value={this.props[input.type]}
                       typedValue={this.props[input.type]}
                       minValue={input.minValue}
                       maxValue={input.maxValue}
                       error={input.error}
-                      autofocus={input.type==="kitchenWidth"}
+                      autofocus={window.innerWidth > 950 ? input.type==="kitchenWidth" : null}
                       showErrors={this.props.showErrors}
                       valid={this.props.validParams[input.type]}
                       placeholder={input.minValue+"-"+input.maxValue+"mm"}
+                      focusParamInput = {
+                          window.innerWidth >950 ?
+                          ()=>this.props.onFocusParamInput(input.type) :
+                          ()=>this.scrollToElement(index)}
                   />
             </div>
           )
@@ -275,7 +291,8 @@ const mapDispatchToProps = dispatch => {
         onClickShowErrors: (ifShow)=> dispatch({type: actionTypes.SHOW_ERRORS, ifShow: ifShow}),
         onClickSetDefaults: ()=> dispatch({type: actionTypes.SET_DEFAULTS_PARAMS}),
         onChangeKitchenType: (event)=> dispatch({type: actionTypes.CHANGE_KITCHEN_TYPE, event: event}),
-        onClickDefaults: (event)=> dispatch({type: actionTypes.CLICK_DEFAULTS, event:event})
+        onClickDefaults: (event)=> dispatch({type: actionTypes.CLICK_DEFAULTS, event:event}),
+        onFocusScrollToTop: ()=> dispatch({type: actionTypes.SCROLL_TO_TOP}),
     };
 };
 

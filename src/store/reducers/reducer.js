@@ -67,6 +67,7 @@ const initialState = {
 
     showFormDescription: false,
     showFormDescriptionKey: false,
+    showCabinetsList: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -152,13 +153,19 @@ const reducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
+        case(actionTypes.SCROLL_TO_TOP):
+            console.log("scrolling");
+            window.scrollTo(0, 0);
+            return {
+                ...state
+            };
         case(actionTypes.SHOW_FORM_DESCRIPTION):
             return {
                 ...state,
                 showFormDescription: action.show,
                 showFormDescriptionKey: action.form_key,
             }
-        
+
         case(actionTypes.TOGGLER):
             return{
                 ...state,
@@ -263,6 +270,7 @@ const reducer = (state = initialState, action) => {
                 upperShelfsCount: cabinetToBeEdited.upperShelfsCount,
                 hob: cabinetToBeEdited.hob,
                 kitchenSink: cabinetToBeEdited.kitchenSink,
+                showCabinetsList: false,
             }
 
         case(actionTypes.SAVE_CABINET):

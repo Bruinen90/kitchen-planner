@@ -10,6 +10,14 @@ import MobileButton from '../UI/MobileButton/MobileButton';
 import {connect} from 'react-redux';
 
 class FormularzNowejSzafki extends Component {
+    constructor (props) {
+        super(props);
+        this.cabinetWidthField = React.createRef();
+
+        this.onFocusCabinetWidthField = () => {
+            window.scrollTo({top: this.cabinetWidthField.current.offsetTop, behavior: 'smooth'})
+        }
+    }
     componentDidUpdate () {
         this.props.onCabinetFormUpdate();
     }
@@ -107,28 +115,29 @@ class FormularzNowejSzafki extends Component {
                     </div>
                     Zmywarka
                     </label>
-
-                    <FormularzSzuflad
-                        wysokoscSzuflady={this.props.wysokoscSzuflady}
-                        changeDrawerCount = {this.props.changeDrawerCount}
-                        ilosc={this.props.ilosc}
-                    />
-                    <FormularzDrzwi
-                    />
-                    <FormularzSprzetu
-                        visible={this.props.cabinetType === "jedneDrzwi"}
-                        pelnaNazwaSzafki="Szafka ze zlewozmywakiem"
-                        clicked={()=>this.props.toggleDevice("kitchenSink")}
-                        checked={this.props.kitchenSink}
-                        ifDisabled={this.props.hob}
-                    />
-                    <FormularzSprzetu
-                        visible={this.props.cabinetType !== "zmywarka" && this.props.cabinetType !== ""}
-                        pelnaNazwaSzafki="Szafka z płytą grzewczą"
-                        clicked={()=>this.props.toggleDevice("hob")}
-                        ifDisabled={this.props.kitchenSink}
-                        checked={this.props.hob}
-                    />
+                    <div className="formularzeDodatkowe">
+                        <FormularzSzuflad
+                            wysokoscSzuflady={this.props.wysokoscSzuflady}
+                            changeDrawerCount = {this.props.changeDrawerCount}
+                            ilosc={this.props.ilosc}
+                        />
+                        <FormularzDrzwi
+                        />
+                        <FormularzSprzetu
+                            visible={this.props.cabinetType === "jedneDrzwi"}
+                            pelnaNazwaSzafki="Szafka ze zlewozmywakiem"
+                            clicked={()=>this.props.toggleDevice("kitchenSink")}
+                            checked={this.props.kitchenSink}
+                            ifDisabled={this.props.hob}
+                        />
+                        <FormularzSprzetu
+                            visible={this.props.cabinetType !== "zmywarka" && this.props.cabinetType !== ""}
+                            pelnaNazwaSzafki="Szafka z płytą grzewczą"
+                            clicked={()=>this.props.toggleDevice("hob")}
+                            ifDisabled={this.props.kitchenSink}
+                            checked={this.props.hob}
+                        />
+                    </div>
                     {this.props.cabinetType !== "" && !this.props.kitchenType.includes("edenRzad") ?
                         <FormularzGornejSzafki
                         /> : null
@@ -143,7 +152,9 @@ class FormularzNowejSzafki extends Component {
                         min="300"
                         max="900"
                         onChange={this.props.changeWidth}
+                        onFocus={()=>this.onFocusCabinetWidthField()}
                         value={this.props.szerokoscSzafki}
+                        ref={this.cabinetWidthField}
                     />
                     <input
                         type="button"

@@ -14,6 +14,11 @@ class ListaZakupow extends Component {
             window.location.reload();
         }
     }
+
+    componentDidMount () {
+        window.scrollTo(0, 0);
+    }
+    
   render() {
     return (
         <Auxx>

@@ -8,27 +8,42 @@ import * as actionTypes from '../../../store/actions/actionTypes';
 import {connect} from 'react-redux';
 
 class FormularzSzuflad extends Component {
+    constructor(props) {
+        super(props);
+        this.drawersForm = React.createRef();
+    }
+
     componentDidUpdate () {
         this.props.onCabinetFormUpdate();
+    }
+
+    focusDrawer = (drawerId) => {
+        this.props.onActiveDrawer(drawerId);
+        window.scrollTo({top: this.drawersForm.current.offsetTop, behavior: 'smooth'})
     }
 
     render() {
 
         return(
-            this.props.drawersHeights.length > 0 ?
+            this.props.cabinetType.includes("szufla") ?
                 <div className="formularzSzuflad">
-                {this.props.drawersHeights.length >1 ?
+                {this.props.cabinetType==="szuflady" ?
                 <div>
-                Liczba szuflad:
-                <input
-                    type="number"
-                    min="2"
-                    max="4"
-                    onChange={this.props.changeDrawerCount}
-                    value={this.props.ilosc}
-                    required
-                /><br/></div> : null}
-                    Wysokość szuflad{this.props.drawersHeights.length === 1 ? "y" : null} (mm):
+                        <select
+                            onChange={this.props.changeDrawerCount}
+                            value={this.props.ilosc}
+                            required
+                            className="iloscPolek"
+                        >
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        Liczba szuflad
+                    </div>: null}
+                    <span ref={this.drawersForm}>
+                        Wysokość szuflad{this.props.drawersHeights.length === 1 ? "y" : null} (mm):
+                    </span>
                     {this.props.drawersHeights.map((wysokosc, id) => {
                         let blockButtonClasses = "poleFormularzaSzuflad";
                         if (this.props.blockedDrawers[id]) {
@@ -53,7 +68,7 @@ class FormularzSzuflad extends Component {
                                 zmianaWysokosci={(event) => this.props.onDrawerHeightChange(event, id)}
                                 iloscSzuflad={this.props.drawersHeights.length}
                                 wysokosc={wysokosc}
-                                aktywnaSzuflada = {() => this.props.onActiveDrawer(id)}
+                                aktywnaSzuflada = {()=>this.focusDrawer(id)}
                                 nieaktywnaSzuflada = {this.props.onDisactiveDrawer}
                                 zablokowana = {this.props.blockedDrawers[id]}
                             />
@@ -92,6 +107,7 @@ const mapStateToProps = state => {
         drawersHeights: state.drawersHeights,
         errorTypes: state.errorTypes,
         blockedDrawers: state.blockedDrawers,
+        cabinetType: state.cabinetType,
     }
 }
 

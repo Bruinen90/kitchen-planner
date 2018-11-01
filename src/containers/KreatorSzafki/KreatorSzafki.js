@@ -15,6 +15,10 @@ import * as actionTypes from '../../store/actions/actionTypes';
 import {Redirect} from 'react-router-dom';
 
 class KreatorSzafki extends Component {
+    componentDidMount () {
+        window.scrollTo(0, 0);
+    }
+    
   render() {
     return (
         <Auxx>

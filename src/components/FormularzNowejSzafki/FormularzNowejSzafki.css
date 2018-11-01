@@ -8,6 +8,11 @@
     text-align: left;
 }
 
+.formularzeDodatkowe {
+    margin: 1rem 2rem;
+    margin-right: 0;
+}
+
 .confirmCabinetButton {
     font-size: 20px;
     font-weight: 600;

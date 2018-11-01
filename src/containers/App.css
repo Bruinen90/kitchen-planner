@@ -148,7 +148,7 @@ input:focus {
 
 .checkboxSwitch {
     display: inline-block;
-    margin: 0px 10px;
+    margin-right: 10px;
     position: relative;
     width: 36px;
     height: 24px;
@@ -156,7 +156,7 @@ input:focus {
 
 .radioSwitch {
     display: block;
-    margin: 0px 10px;
+    margin-right: 10px;
     position: relative;
     width: 24px;
     height: 24px;
