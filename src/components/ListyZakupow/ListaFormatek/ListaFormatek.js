@@ -8,11 +8,13 @@ class Wykaz extends Component {
     render() {
         const wykazFormatek = (formsArray) => {
             return(formsArray.map(formatka => {
-                let showFormDescription = {left: "3000px"};
+                let showFormDescription = window.innerWidth > 950 ? {left: "3000px"} : {opacity: "0"};
                 if(
                     formatka.wymiary+formatka.okleina ===
                     this.props.showFormDescriptionKey && this.props.showFormDescription) {
-                        showFormDescription.left = "105%";
+                        window.innerWidth > 950 ?
+                            showFormDescription.left = "105%" :
+                            showFormDescription.opacity = "1"
                     }
                 return(
                     <div
@@ -20,12 +22,19 @@ class Wykaz extends Component {
                         key={formatka.wymiary+formatka.okleina}
                         onMouseOver={()=>this.props.onHoverForms(formatka.wymiary+formatka.okleina, true)}
                         onMouseOut={()=>this.props.onHoverForms(formatka.wymiary+formatka.okleina, false)}
+                        onClick={()=>this.props.onHoverForms(formatka.wymiary+formatka.okleina, !this.props.showFormDescription)}
                     >
                         <div className="col">{formatka.wymiary}</div>
                         <div className="col narrow">{formatka.ilosc}szt</div>
                         <div className="col"><div className={formatka.okleina + ' okleina'}></div></div>
                         <div className="col descriptionPrint">{formatka.opis}</div>
-                        <div className="descriptionOverflow" style={showFormDescription}>{formatka.opis}</div>
+                        <div className="descriptionOverflow" style={showFormDescription}>
+                            {formatka.opis}
+                            {window.innerWidth < 951 ? 
+                            <div className="hideDescriptionIcon">
+                                <ion-icon name="close"></ion-icon>
+                            </div> : null}
+                        </div>
                     </div>
                 )
             }))

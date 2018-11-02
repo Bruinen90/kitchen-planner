@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import WykazFormatek from '../../components/ListyZakupow/ListaFormatek/ListaFormatek';
+import ListaFormatek from '../../components/ListyZakupow/ListaFormatek/ListaFormatek';
 import ListaOkuc from '../../components/ListyZakupow/ListaOkuc/ListaOkuc';
 import ListaNarzedzi from '../../components/ListyZakupow/ListaNarzedzi/ListaNarzedzi';
 import './ListaZakupow.css';
@@ -18,13 +18,13 @@ class ListaZakupow extends Component {
     componentDidMount () {
         window.scrollTo(0, 0);
     }
-    
+
   render() {
     return (
         <Auxx>
             <h1>Lista Zakupów</h1>
             <div className="ListaZakupowWrapper">
-                <WykazFormatek />
+                <ListaFormatek />
                 <ListaOkuc />
                 <ListaNarzedzi
                     gorneSzafki = {this.props.gorneSzafki}

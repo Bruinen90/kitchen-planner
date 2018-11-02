@@ -17,8 +17,6 @@ const initialState = {
     legsHeight: "",
     scale: 6,
     uniqueId: 1,
-    kitchenSink: false,
-    hob: false,
 
     cabinetId: 1,
     cabinetType: "",
@@ -34,6 +32,8 @@ const initialState = {
     errorTypes: [],
     cabinetValid: false,
     cabinetError: "noCabinetType",
+    kitchenSink: false,
+    hob: false,
 
     formatki: [],
     editInProgress: false,
@@ -912,7 +912,7 @@ const reducer = (state = initialState, action) => {
                 wymiary: calculateCabinestWidthSum()+"x"+state.legsHeight+"mm",
                 okleina: null,
                 ilosc: 1,
-                opis: "Blenda zakrywająca nóżki pod meblami",
+                opis: "Blenda pod meblami",
             };
             if(calculateCabinestWidthSum()>2700) {
                 const iloscBlend = Math.ceil(calculateCabinestWidthSum()/2700);
