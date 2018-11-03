@@ -18,7 +18,13 @@ class KreatorSzafki extends Component {
     componentDidMount () {
         window.scrollTo(0, 0);
     }
-    
+
+    componentDidUpdate () {
+        if(this.props.kitchenCabinetsValid) {
+            window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})
+        }
+    }
+
   render() {
     return (
         <Auxx>

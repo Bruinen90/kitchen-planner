@@ -154,11 +154,23 @@ const reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case(actionTypes.SCROLL_TO_TOP):
-            console.log("scrolling");
             window.scrollTo(0, 0);
             return {
                 ...state
             };
+
+        case(actionTypes.CLICK_FORM_DESCRIPTION):
+            let showFormDescription = true;
+            if(action.form_key === state.showFormDescriptionKey && state.showFormDescription) {
+                showFormDescription = false;
+            }
+
+            return {
+                ...state,
+                showFormDescription: showFormDescription,
+                showFormDescriptionKey: action.form_key,
+            }
+
         case(actionTypes.SHOW_FORM_DESCRIPTION):
             return {
                 ...state,
@@ -395,7 +407,6 @@ const reducer = (state = initialState, action) => {
         case(actionTypes.AUTO_ADJUST_DRAWERS):
             const curDrawers = [...state.drawersHeights];
             const unBlockedDrawersCount = [...state.blockedDrawers].filter((a)=> a!==true).length;
-                        console.log(unBlockedDrawersCount);
             const blockedDrawers = curDrawers.map((height, id) => {
                 if(state.blockedDrawers[id]) {
                     return state.drawersHeights[id]
@@ -979,29 +990,6 @@ const reducer = (state = initialState, action) => {
                 validForm: validForm,
             }
 
-        // case(actionTypes.SAVE_PARAMS):
-        //     const curProjects = [];
-        //     axios.get('/projekty.json')
-        //         .then(res => {
-        //             for(let key in res.data) {
-        //                 curProjects.push(res.data[key])
-        //             }
-        //
-        //         });
-        //     console.log(curProjects.length)
-        //     const kitchenParams = {
-        //         kitchenWidth: state.kitchenWidth,
-        //         kitchenHeight: state.kitchenHeight,
-        //         spaceBetweenDrawers: state.spaceBetweenDrawers,
-        //         spaceDrawersToTop: state.spaceDrawersToTop,
-        //         spaceBetweenCabinets: state.spaceBetweenCabinets,
-        //         cabinetDepth: state.cabinetDepth,
-        //         cabinetHeight: state.cabinetHeight,
-        //     }
-        //     axios.post('/projekty.json', {projectKey: curProjects.length, kitchenParams: kitchenParams,})
-        //         .then(response => console.log(response))
-        //         .catch(error => console.log(error));
-
         case(actionTypes.FOCUS_INPUT):
             return{
                 ...state,
@@ -1048,7 +1036,6 @@ const reducer = (state = initialState, action) => {
             }
 
         case(actionTypes.TOGGLE_DRAWERS_DETAILS):
-            console.log(action.drawerSize)
             if(action.drawerSize === "highDrawers") {
                 return {
                     ...state,
