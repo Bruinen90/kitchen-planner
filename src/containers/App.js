@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 
 import MenuBar from '../components/UI/MenuBar/MenuBar';
-import Instrukcja from '../components/Porady/JakKorzystac';
-import ListaZakupow from './ListaZakupow/ListaZakupow';
-import KreatorSzafki from './KreatorSzafki/KreatorSzafki';
+import ShoppingList from './ShoppingList/ShoppingList';
+import CabinetCreator from './CabinetCreator/CabinetCreator';
 import Home from './Home/Home';
-import ParametryKuchni from './ParametryKuchni/ParametryKuchni';
+import KitchenParams from './KitchenParams/KitchenParams';
 import ProjectBar from '../components/UI/ProjectBar/ProjectBar';
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
@@ -15,29 +14,27 @@ import {Route, Switch, withRouter} from 'react-router-dom';
 
 class App extends Component {
   render() {
+      const {
+          cabinets,
+          showMobileMenu,
+          onClickMenu,
+          onClickHideMenu,
+      } = this.props;
     return (
       <div className="App">
         <MenuBar
-            inProgress = {this.props.cabinets.length > 0}
-            clickMenu = {this.props.onClickMenu}
-            hideMenu = {this.props.onClickHideMenu}
-            showMobileMenu = {this.props.showMobileMenu}
+            inProgress = {cabinets.length > 0}
+            clickMenu = {onClickMenu}
+            hideMenu = {onClickHideMenu}
+            showMobileMenu = {showMobileMenu}
         />
         <Route path="/projekt/" component={ProjectBar} />
         <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/instrukcja/" component={Instrukcja}/>
-            <Route path="/projekt/kreator-szafki" component={KreatorSzafki} />
-            <Route path="/projekt/parametry-kuchni" component={ParametryKuchni} />
-            <Route path="/projekt/lista-zakupow" component={ListaZakupow} />
+            <Route path="/projekt/kreator-szafki" component={CabinetCreator} />
+            <Route path="/projekt/parametry-kuchni" component={KitchenParams} />
+            <Route path="/projekt/lista-zakupow" component={ShoppingList} />
         </Switch>
-        {/* <h1 className="header">Kitchen planner<span className="redDot">.</span></h1> */}
-
-
-        {/* <SizeInput
-            enterSize={(event) => this.props.onChangeRoomSize(event)}
-        /> */}
-
       </div>
     );
   }
@@ -46,32 +43,12 @@ class App extends Component {
 const mapStateToProps = state => {
     return {
         cabinets: state.cabinets,
-        sizeW: state.kitchenWidth,
-        sizeH: state.kitchenHeight,
-        scale: state.scale,
-        szczelina: state.spaceBetweenDrawers,
-        wysokoscSzafek: state.cabinetHeight,
-        glebokoscSzafek: state.cabinetDepth,
-        iloscSzafek: state.cabinetsCount,
-        formatki: state.formatki,
-        drawersHeights: state.drawersHeights,
-        activeDrawer: state.activeDrawer,
-        iloscSzuflad: state.drawersHeights.length,
-        canAddCabinet: state.cabinetValid,
-        cabinetWidth: state.cabinetWidth,
-        cabinetType: state.cabinetType,
-        showForms: state.showForms,
         showMobileMenu: state.showMobileMenu,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onChangeRoomSize: (event) => dispatch({type: actionTypes.CHANGE_ROOM_SIZE, event: event}),
-        onChangeCabinetType: (event) => dispatch({type: actionTypes.CHANGE_CABINET_TYPE, event: event}),
-        onChangeDrawerCount: (event) => dispatch({type: actionTypes.CHANGE_DRAWER_COUNT, event: event}),
-        onChangeCabinetWidth: (event) => dispatch({type: actionTypes.CHANGE_CABINET_WIDTH, event: event}),
-        onAddCabinet: () => dispatch({type: actionTypes.ADD_CABINET}),
         onClickMenu: () => dispatch({type: actionTypes.CLICK_MENU}),
         onClickHideMenu: () => dispatch({type: actionTypes.HIDE_MENU})
     };

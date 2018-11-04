@@ -1,10 +1,9 @@
 import React from 'react';
-import Auxx from '../../../../Auxx';
 
 import {Link} from 'react-router-dom';
 
 const MenuItems = (props) => (
-    <Auxx>
+    <React.Fragment>
         <div className="menuItem" onClick={props.clickMenuItem}>Pierwsze kroki</div>
         <div className="menuItem" onClick={props.clickMenuItem}>Zamawianie płyt i okuć meblowych</div>
         <div className="menuItem" onClick={props.clickMenuItem}>FAQ</div>
@@ -12,6 +11,6 @@ const MenuItems = (props) => (
         <Link to="/projekt/parametry-kuchni" className="newProjectButton" onClick={props.clickMenuItem}>
             {props.inProgress ? "Edytuj" : "Nowy"} Projekt
         </Link>
-    </Auxx>
+    </React.Fragment>
 );
 export default MenuItems;

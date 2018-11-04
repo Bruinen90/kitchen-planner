@@ -1,6 +1,5 @@
 import React from 'react';
 import MenuItems from './MenuItems/MenuItems';
-import Auxx from '../../../Auxx';
 
 import {Link} from 'react-router-dom';
 
@@ -8,7 +7,7 @@ import './MenuBar.css';
 
 const MenuBar = (props) => {
     return(
-        <Auxx>
+        <React.Fragment>
             <div className="menuBar">
                 <Link to="/" className="header menuLogo" onClick={props.hideMenu}>Kitchen planner<span className="redDot">.</span></Link>
                 <div className="desktopMenuItems">
@@ -31,7 +30,7 @@ const MenuBar = (props) => {
                     clickMenuItem = {props.hideMenu}
                 />
             </div>
-        </Auxx>
+        </React.Fragment>
     )
 };
 
