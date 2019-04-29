@@ -7,6 +7,7 @@ import CabinetCreator from './CabinetCreator/CabinetCreator';
 import Home from './Home/Home';
 import KitchenParams from './KitchenParams/KitchenParams';
 import ProjectBar from '../components/UI/ProjectBar/ProjectBar';
+import WIP from '../components/WIP/WIP'; 
 import {connect} from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
 
@@ -34,6 +35,7 @@ class App extends Component {
             <Route path="/projekt/kreator-szafki" component={CabinetCreator} />
             <Route path="/projekt/parametry-kuchni" component={KitchenParams} />
             <Route path="/projekt/lista-zakupow" component={ShoppingList} />
+            <Route path="" component={WIP} />
         </Switch>
       </div>
     );

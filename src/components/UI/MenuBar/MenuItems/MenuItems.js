@@ -1,16 +1,46 @@
 import React from 'react';
+import './MenuItems.css'
 
 import {Link} from 'react-router-dom';
 
-const MenuItems = (props) => (
+const MenuItems = (props) => {
+    const links = [
+        {
+            target: "pierwsze-kroki",
+            description: "Pierwsze kroki",
+        },
+        {
+            target: "zamawianie",
+            description: "Zamawianie płyt i okuć meblowych",
+        },
+        {
+            target: "faq",
+            description: "FAQ",
+        },
+        {
+            target: "kontakt",
+            description: "Kontakt",
+        },
+        {
+            target: "projekt/parametry-kuchni",
+            description: "Nowy projekt",
+            button: true,
+        },
+    ];
+    const linksOutput = links.map(link => {
+        return(
+            <Link
+                to={'/'+link.target}
+                className={link.button ? "newProjectButton" : "menuItem" }
+                key={link.target}
+            >
+                {link.description}
+            </Link>
+        )
+    })
+    return(
     <React.Fragment>
-        <div className="menuItem" onClick={props.clickMenuItem}>Pierwsze kroki</div>
-        <div className="menuItem" onClick={props.clickMenuItem}>Zamawianie płyt i okuć meblowych</div>
-        <div className="menuItem" onClick={props.clickMenuItem}>FAQ</div>
-        <div className="menuItem" onClick={props.clickMenuItem}>Kontakt</div>
-        <Link to="/projekt/parametry-kuchni" className="newProjectButton" onClick={props.clickMenuItem}>
-            {props.inProgress ? "Edytuj" : "Nowy"} Projekt
-        </Link>
+        {linksOutput}
     </React.Fragment>
-);
+)};
 export default MenuItems;

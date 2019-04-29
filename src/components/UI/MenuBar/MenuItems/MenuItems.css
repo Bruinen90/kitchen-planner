@@ -1,0 +1,46 @@
+.menuBar a {
+    text-decoration: none;
+}
+
+.menuItem {
+    display: inline-block;
+    margin-right: 30px;
+    color: inherit;
+}
+
+.menuItem:hover {
+    color: var(--red-color);
+}
+
+.newProjectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--red-color);
+    height: 30px;
+    width: 120px;
+    padding: 4px;
+    color: white;
+    box-shadow: 3px 3px 5px #999;
+    cursor: pointer;
+}
+
+.newProjectButton:hover {
+    background-color: var(--light-red-color);
+}
+
+.newProjectButton:active {
+    transform: scale(0.9);
+}
+
+@media (max-width: 1200px) {
+    .menuItem {
+        font-size: .9rem;
+    }
+
+    .newProjectButton {
+        height: 25px;
+        width: 100px;
+        font-size: .9rem;
+    }
+}
